@@ -4,7 +4,9 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            TravelPlannerApp.TravelPlanner travelPlanner = new();
+
+            travelPlanner.Start();
         }
     }
 }

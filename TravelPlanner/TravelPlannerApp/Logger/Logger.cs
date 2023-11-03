@@ -1,4 +1,4 @@
-﻿namespace TravelPlanner.TravelPlannerApp
+﻿namespace TravelPlanner.TravelPlannerApp.Logger
 {
     //Singleton design pattern from https://csharpindepth.com/Articles/Singleton
     internal class Logger
@@ -26,12 +26,22 @@
 
         public static void LogError(string message, Exception? exception = null)
         {
-            Console.WriteLine($"[Error]\t{exception?.Message} -- {message}");
+            string formatedMessage = $"[Error]\t{exception?.Message} -- {message}";
+
+            WriteToLog(formatedMessage);
         }
 
         public static void LogInfo(string message)
         {
-            Console.WriteLine($"[Info]\t{message}");
+            string formatedMessage = $"[Info]\t\t{message}";
+
+            WriteToLog(formatedMessage);
+        }
+
+        private static void WriteToLog(string formatedMessage)
+        {
+            FileHandler.WriteToFile(formatedMessage);
+            Console.WriteLine(formatedMessage);
         }
     }
 }

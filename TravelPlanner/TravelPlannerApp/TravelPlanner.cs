@@ -1,4 +1,5 @@
 ﻿using TravelPlanner.TravelPlannerApp.Logger;
+using TravelPlanner.TravelPlannerApp.Object;
 
 namespace TravelPlanner.TravelPlannerApp
 {

@@ -12,7 +12,7 @@ namespace TravelPlanner.UnitTests.TravelPlannerApp.Logger
         [SetUp]
         public void Setup_CreateNewFile()
         {
-            FileHandler.WriteToFile("", fullPath.ToString(), false);
+            FileHandler.WriteToFile("", fullPath, false);
         }
 
         [TearDown]
@@ -30,7 +30,7 @@ namespace TravelPlanner.UnitTests.TravelPlannerApp.Logger
         [Test]
         public void WriteToFile_AddText_TextIsAdded()
         {
-            FileHandler.WriteToFile("X", fullPath.ToString(), false);
+            FileHandler.WriteToFile("X", fullPath, false);
             string? textFromFile = FileHandler.ReadFromFile(fullPath);
 
             Assert.That(textFromFile, Does.Contain('X'));

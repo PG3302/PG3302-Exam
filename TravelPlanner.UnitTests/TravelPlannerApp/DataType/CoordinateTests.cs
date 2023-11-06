@@ -24,6 +24,7 @@ namespace TravelPlanner.UnitTests.TravelPlannerApp.DataType
             double distance = cord1 - cord2;
 
             Assert.That(distance, Is.EqualTo(2));
+            Assert.That(distance, Is.Not.EqualTo(1));
         }
     }
 }

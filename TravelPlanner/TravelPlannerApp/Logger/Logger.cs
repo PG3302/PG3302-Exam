@@ -1,7 +1,7 @@
 ﻿namespace TravelPlanner.TravelPlannerApp.Logger
 {
     //Singleton design pattern from https://csharpindepth.com/Articles/Singleton
-    internal class Logger
+    public class Logger
     {
         private static Logger? _instance = null;
         private static readonly object _constructLock = new();
@@ -24,24 +24,24 @@
             return _instance;
         }
 
-        public static void LogError(string message, Exception? exception = null)
+        public static void LogError(string message, Exception? exception = null, string? path = null, bool append = true)
         {
             string formatedMessage = $"[Error]\t{exception?.Message} -- {message}";
 
-            WriteToLog(formatedMessage);
+            WriteToLog(formatedMessage, path, append);
         }
 
-        public static void LogInfo(string message)
+        public static void LogInfo(string message, string? path = null, bool append = true)
         {
             string formatedMessage = $"[Info]\t\t{message}";
 
-            WriteToLog(formatedMessage);
+            WriteToLog(formatedMessage, path, append);
         }
 
-        private static void WriteToLog(string formatedMessage)
+        private static void WriteToLog(string formatedMessage, string? path = null, bool append = true)
         {
-            FileHandler.WriteToFile(formatedMessage);
-            Console.WriteLine(formatedMessage);
+            FileHandler.WriteToFile(formatedMessage, path);
+            Console.WriteLine(formatedMessage, path, append);
         }
     }
 }

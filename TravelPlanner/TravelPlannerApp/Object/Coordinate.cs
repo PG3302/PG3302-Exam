@@ -2,27 +2,27 @@
 {
     internal class Coordinate
     {
-        public double X { get; private set; }
-        public double Y { get; private set; }
+        public double Longitude { get; private set; }
+        public double Latitude { get; private set; }
 
-        public Coordinate(double x, double y)
+        public Coordinate(double longitude, double latitude)
         {
-            this.X = x;
-            this.Y = y;
+            Longitude = longitude;
+            Latitude = latitude;
         }
 
         //Find distance between two coordinates
         public static double operator -(Coordinate coordinate1, Coordinate coordinate2)
         {
-            double shortX = Math.Pow(coordinate1.X - coordinate2.X, 2);
-            double shortY = Math.Pow(coordinate1.Y - coordinate2.Y, 2);
+            double longitudePower = Math.Pow(coordinate1.Longitude - coordinate2.Longitude, 2);
+            double latitudePower = Math.Pow(coordinate1.Latitude - coordinate2.Latitude, 2);
 
-            return Math.Sqrt(shortX + shortY);
+            return Math.Sqrt(longitudePower + latitudePower);
         }
 
         public override string ToString()
         {
-             return $"X: {X}, Y: {Y}";
+             return $"X: {Longitude}, Y: {Latitude}";
         }
     }
 }

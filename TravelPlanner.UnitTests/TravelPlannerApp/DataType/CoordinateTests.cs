@@ -1,4 +1,4 @@
-﻿using TravelPlanner.TravelPlannerApp.DataType;
+﻿using TravelPlanner.TravelPlannerApp.Other.DataType;
 
 namespace TravelPlanner.UnitTests.TravelPlannerApp.DataType
 {

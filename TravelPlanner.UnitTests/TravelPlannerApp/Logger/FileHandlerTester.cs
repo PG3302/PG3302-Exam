@@ -1,5 +1,4 @@
-﻿using System.Text;
-using TravelPlanner.TravelPlannerApp.Logger;
+﻿using TravelPlanner.TravelPlannerApp.Other.Handlers;
 
 namespace TravelPlanner.UnitTests.TravelPlannerApp.Logger
 {

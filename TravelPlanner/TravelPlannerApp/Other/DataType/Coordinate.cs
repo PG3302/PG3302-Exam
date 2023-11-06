@@ -1,4 +1,4 @@
-﻿namespace TravelPlanner.TravelPlannerApp.DataType
+﻿namespace TravelPlanner.TravelPlannerApp.Other.DataType
 {
     public class Coordinate
     {
@@ -22,7 +22,7 @@
 
         public override string ToString()
         {
-             return $"X: {Longitude}, Y: {Latitude}";
+            return $"X: {Longitude}, Y: {Latitude}";
         }
     }
 }

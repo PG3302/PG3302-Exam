@@ -1,4 +1,6 @@
-﻿namespace TravelPlanner.TravelPlannerApp.Logger
+﻿using TravelPlanner.TravelPlannerApp.Other.Log;
+
+namespace TravelPlanner.TravelPlannerApp.Other.Handlers
 {
     public static class FileHandler
     {
@@ -29,7 +31,7 @@
                     using StreamReader? content = new(filePath);
                     return content.ReadToEnd();
                 }
-            } 
+            }
             catch (IOException error)
             {
                 Logger.LogError("Error when reading from file.", error);
@@ -41,7 +43,7 @@
         {
             string filePath = path ?? _defaultFullPath;
 
-            lock(_fileLock)
+            lock (_fileLock)
             {
                 File.Delete(filePath);
             }

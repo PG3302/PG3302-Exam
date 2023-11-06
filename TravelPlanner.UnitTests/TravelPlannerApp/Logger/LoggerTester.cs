@@ -1,4 +1,5 @@
-﻿using TravelPlanner.TravelPlannerApp.Logger;
+﻿using TravelPlanner.TravelPlannerApp.Other.Handlers;
+using TravelPlanner.TravelPlannerApp.Other.Log;
 
 namespace TravelPlanner.UnitTests.TravelPlannerApp.Logger
 {
@@ -30,7 +31,7 @@ namespace TravelPlanner.UnitTests.TravelPlannerApp.Logger
                 _ = oneItemArray[100];
             } catch (Exception error)
             {
-                TravelPlanner.TravelPlannerApp.Logger.Logger.LogError("Test123", error, fullPath, false);
+                TravelPlanner.TravelPlannerApp.Other.Log.Logger.LogError("Test123", error, fullPath, false);
             } finally
             {
                 textFromFile = FileHandler.ReadFromFile(fullPath);
@@ -50,7 +51,7 @@ namespace TravelPlanner.UnitTests.TravelPlannerApp.Logger
         {
             string? textFromFile;
 
-            TravelPlanner.TravelPlannerApp.Logger.Logger.LogInfo("Info987", fullPath, false);
+            TravelPlanner.TravelPlannerApp.Other.Log.Logger.LogInfo("Info987", fullPath, false);
 
             textFromFile = FileHandler.ReadFromFile(fullPath);
 

@@ -1,7 +1,4 @@
-﻿using TravelPlanner.TravelPlannerApp.Logger;
-using TravelPlanner.TravelPlannerApp.Object;
-
-namespace TravelPlanner.TravelPlannerApp
+﻿namespace TravelPlanner.TravelPlannerApp
 {
     internal class TravelPlanner
     {

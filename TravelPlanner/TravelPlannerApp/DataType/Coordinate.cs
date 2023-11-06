@@ -1,6 +1,6 @@
-﻿namespace TravelPlanner.TravelPlannerApp.Object
+﻿namespace TravelPlanner.TravelPlannerApp.DataType
 {
-    internal class Coordinate
+    public class Coordinate
     {
         public double Longitude { get; private set; }
         public double Latitude { get; private set; }

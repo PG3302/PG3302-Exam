@@ -1,5 +1,4 @@
 ﻿using TravelPlanner.TravelPlannerApp.Other.Handlers;
-using TravelPlanner.TravelPlannerApp.Other.Log;
 
 namespace TravelPlanner.UnitTests.TravelPlannerApp.Logger
 {

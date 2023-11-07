@@ -13,10 +13,10 @@ namespace TravelPlanner.TravelPlannerApp.Repository.Models
         public string Name { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
-        public IList<TravelPath> UserPaths { get; set; } = new List<TravelPath>(); //????? not real pls fix but need to make it list of users "traveled paths", or travel paths in general? failed paths? idk just something
+        //public IList<TravelPath> UserPaths { get; set; } = new List<TravelPath>(); //????? not real pls fix but need to make it list of users "traveled paths", or travel paths in general? failed paths? idk just something
         public override string ToString()
         {
-            return $"ID:${Id}\nUser name: ${Name}|Email: ${Email}\n${UserPaths}";
+            return $"ID:${Id}\nUser name: ${Name}|Email: ${Email}";
         }
     }
 }

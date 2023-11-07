@@ -10,7 +10,7 @@ namespace TravelPlanner.TravelPlannerApp.Repository.Models
     {
         private Destination dest = new Destination();
 
-
+        //Dont really know what to put here yet
 
 
         public TravelPath(Destination destination) 

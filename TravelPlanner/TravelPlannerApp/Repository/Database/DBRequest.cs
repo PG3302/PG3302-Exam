@@ -8,6 +8,5 @@ namespace TravelPlanner.TravelPlannerApp.Repository.Database
 {
     internal class DBRequest
     {
-
     }
 }

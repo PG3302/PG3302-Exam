@@ -22,7 +22,7 @@
 
         public override string ToString()
         {
-            return $"X: {Longitude}, Y: {Latitude}";
+            return $"Longitude: {Longitude}, Latitude: {Latitude}";
         }
     }
 }

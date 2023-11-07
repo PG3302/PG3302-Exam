@@ -12,7 +12,7 @@ namespace TravelPlanner.TravelPlannerApp.Other.Handlers
         {
             if (Console.ReadKey(true).Key == ConsoleKey.UpArrow)
             {
-                Console.WriteLine("YAYAYA");
+
             }
 
             Console.WriteLine(Console.ReadKey(true).KeyChar.ToString());

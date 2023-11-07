@@ -9,8 +9,6 @@
 
   <ItemGroup>
     <Folder Include="TravelPlannerApp\Controller\" />
-    <Folder Include="TravelPlannerApp\Repository\Database\" />
-    <Folder Include="TravelPlannerApp\Repository\Models\" />
     <Folder Include="TravelPlannerApp\Service\" />
   </ItemGroup>
 

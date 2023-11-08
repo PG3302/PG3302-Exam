@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace UserDatabase.Migrations
+namespace TravelDatabase.Migrations
 {
     /// <inheritdoc />
     public partial class initUserDb : Migration

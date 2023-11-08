@@ -6,7 +6,7 @@ using TravelDatabase.DataAccess.SqLite;
 
 #nullable disable
 
-namespace UserDatabase.Migrations
+namespace TravelDatabase.Migrations
 {
     [DbContext(typeof(TravelDbContext))]
     [Migration("20231102205433_initUserDb")]
@@ -18,7 +18,7 @@ namespace UserDatabase.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.13");
 
-            modelBuilder.Entity("UserDatabase.Entities.Trip", b =>
+            modelBuilder.Entity("TravelDatabase.Entities.Trip", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -40,7 +40,7 @@ namespace UserDatabase.Migrations
                     b.ToTable("Trip");
                 });
 
-            modelBuilder.Entity("UserDatabase.Entities.User", b =>
+            modelBuilder.Entity("TravelDatabase.Entities.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -60,9 +60,9 @@ namespace UserDatabase.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("UserDatabase.Entities.Trip", b =>
+            modelBuilder.Entity("TravelDatabase.Entities.Trip", b =>
                 {
-                    b.HasOne("UserDatabase.Entities.User", "User")
+                    b.HasOne("TravelDatabase.Entities.User", "User")
                         .WithMany("Trip")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -71,7 +71,7 @@ namespace UserDatabase.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("UserDatabase.Entities.User", b =>
+            modelBuilder.Entity("TravelDatabase.Entities.User", b =>
                 {
                     b.Navigation("Trip");
                 });

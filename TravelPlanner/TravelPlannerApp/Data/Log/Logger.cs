@@ -1,4 +1,4 @@
-﻿using TravelPlanner.TravelPlannerApp.Other.Handlers;
+﻿using TravelPlanner.TravelPlannerApp.Data.Handlers;
 
 namespace TravelPlanner.TravelPlannerApp.Other.Log
 {

@@ -1,6 +1,6 @@
-﻿using TravelPlanner.TravelPlannerApp.Other.Log;
+﻿using TravelPlanner.TravelPlannerApp.Data.Log;
 
-namespace TravelPlanner.TravelPlannerApp.Other.Handlers
+namespace TravelPlanner.TravelPlannerApp.Data.Handlers
 {
     public static class FileHandler
     {

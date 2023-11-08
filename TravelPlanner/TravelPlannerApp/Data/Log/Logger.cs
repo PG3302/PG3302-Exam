@@ -1,6 +1,6 @@
 ﻿using TravelPlanner.TravelPlannerApp.Data.Handlers;
 
-namespace TravelPlanner.TravelPlannerApp.Other.Log
+namespace TravelPlanner.TravelPlannerApp.Data.Log
 {
     //Singleton design pattern from https://csharpindepth.com/Articles/Singleton
     public class Logger

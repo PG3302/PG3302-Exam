@@ -4,7 +4,7 @@ namespace TravelPlanner.TravelPlannerApp.Data.Objects
 {
     public class Location
     {
-        public int Id { get; private set; }
+        public long Id { get; private set; }
         public string Name { get; private set; }
         public Coordinate Coordinate { get; private set; }
         public Continent Continent { get; private set; }

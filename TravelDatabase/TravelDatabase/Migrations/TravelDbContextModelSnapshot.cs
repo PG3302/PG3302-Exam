@@ -28,11 +28,11 @@ namespace TravelDatabase.Migrations
                     b.Property<string>("Continent")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Latitude")
-                        .HasColumnType("INTEGER");
+                    b.Property<decimal>("Latitude")
+                        .HasColumnType("TEXT");
 
-                    b.Property<int>("Longitude")
-                        .HasColumnType("INTEGER");
+                    b.Property<decimal>("Longitude")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 

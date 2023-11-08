@@ -2,14 +2,13 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using UserDatabase.DataAccess.SqLite;
+using TravelDatabase.DataAccess.SqLite;
 
 #nullable disable
 
 namespace UserDatabase.Migrations
 {
-    [DbContext(typeof(UserDbContext))]
+    [DbContext(typeof(TravelDbContext))]
     [Migration("20231102205433_initUserDb")]
     partial class initUserDb
     {

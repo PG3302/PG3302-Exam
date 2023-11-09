@@ -1,4 +1,5 @@
-﻿using TravelPlanner.TravelPlannerApp.Data.Log;
+﻿using TravelPlanner.TravelPlannerApp.Data.DataType;
+using TravelPlanner.TravelPlannerApp.Data.Log;
 using TravelPlanner.TravelPlannerApp.Data.Objects;
 
 namespace TravelPlanner.TravelPlannerApp.Repository.Database
@@ -10,9 +11,12 @@ namespace TravelPlanner.TravelPlannerApp.Repository.Database
 
         public MockCapitalDatabase()
         {
-            AddCapital(new("Oslo", new(10, 10), Data.DataType.Continent.Europe));
-            AddCapital(new("Washington", new(-30, -30), Data.DataType.Continent.NorthAmerica));
-            AddCapital(new("Cape Town", new(10, -50), Data.DataType.Continent.Africa));
+            AddCapital(new("Oslo", new(59.91666667, 10.75), Continent.Europe));
+            AddCapital(new("Washington", new(38.883333, -77), Continent.NorthAmerica));
+            AddCapital(new("Cape Town", new(-25.7, 28.216667), Continent.Africa));
+            AddCapital(new("Stockholm", new(59.33333333, 18.05), Continent.Europe));
+            AddCapital(new("Cairo", new(30.05, 31.25), Continent.Africa));
+            AddCapital(new("Wellington", new(-41.3, 174.783333), Continent.Oceania));
         }
 
         public Capital AddCapital(Capital capital)

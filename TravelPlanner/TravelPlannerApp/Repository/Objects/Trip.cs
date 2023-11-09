@@ -1,6 +1,6 @@
 ﻿namespace TravelPlanner.TravelPlannerApp.Data.Objects
 {
-    internal class Trip
+    public class Trip
     {
         public long Id { get; set; }
         public User User { get; private set; }

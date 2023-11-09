@@ -7,9 +7,12 @@ namespace TravelPlanner.TravelPlannerApp.Service
     {
         private readonly MockTripDatabase tripDatabase = new();
 
-        public Trip AddTrip(User user, Capital startingCapital, Capital destinationCapital)
+        public Trip AddTrip(User user, Capital start, Capital destination)
         {
-            Trip newTrip = new(user, startingCapital, destinationCapital);
+            Trip newTrip = new(user, start, destination)
+            {
+                Price = CalculateTripPrice(start, destination)
+            };
 
             return tripDatabase.AddTrip(newTrip);
         }
@@ -24,6 +27,14 @@ namespace TravelPlanner.TravelPlannerApp.Service
         public Trip? GetTripById(long id)
         {
             return tripDatabase.GetTripById(id);
+        }
+
+        private int CalculateTripPrice(Capital start, Capital destination)
+        {
+            int distance = (int)(start.Coordinate - destination.Coordinate);
+            int price = distance * 100;
+
+            return price;
         }
     }
 }

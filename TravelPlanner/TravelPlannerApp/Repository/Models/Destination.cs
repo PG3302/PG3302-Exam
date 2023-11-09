@@ -13,6 +13,7 @@ namespace TravelPlanner.TravelPlannerApp.Repository.Models
         public string Continent { get; set; } = string.Empty;
         public double PriceRating { get; set; } = double.MinValue;
         public string Airport {  get; set; } = string.Empty;
+        public int Population { get; set; } = 0;
 
         public override string ToString()
         {

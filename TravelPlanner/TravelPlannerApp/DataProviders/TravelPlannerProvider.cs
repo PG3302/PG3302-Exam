@@ -12,5 +12,7 @@ namespace TravelPlanner.TravelPlannerApp
         Destination? GetDestination(int Id);
         Destination? CreateDestination(int Id); //Fill with create data as we go along
 
+        public IList<Destination> GetDestination();
+
     }
 }

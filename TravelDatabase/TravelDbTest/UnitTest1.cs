@@ -7,7 +7,7 @@ namespace TravelDbTest {
 		}
 
 		[Test]
-		public void AddTestUserToDbReturnNameOfUser() {
+		public void TestAddUser() {
 			int userId = TravelDatabase.Program.AddUser("test", new TravelDatabase.Entities.Capital(), 0);
 			Assert.AreEqual(userId , 1);
 		} // test DB can be found \\TravelDatabase\TravelDbTest\bin\Debug\net6.0\Resources

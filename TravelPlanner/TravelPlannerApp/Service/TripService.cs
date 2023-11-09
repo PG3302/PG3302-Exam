@@ -31,8 +31,9 @@ namespace TravelPlanner.TravelPlannerApp.Service
 
         private int CalculateTripPrice(Capital start, Capital destination)
         {
-            int distance = (int)(start.Coordinate - destination.Coordinate);
-            int price = distance * 100;
+            double distance = start.Coordinate - destination.Coordinate;
+            double absoluteDistance = Math.Abs(distance);
+            int price = Convert.ToInt32(absoluteDistance * 100);
 
             return price;
         }

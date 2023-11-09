@@ -30,14 +30,14 @@ namespace TravelPlanner.TravelPlannerApp.Repository.Database
             return (capital);
         }
 
-        public Capital? GetUserByName(string name)
+        public Capital? GetCapitalByName(string name)
         {
             Capital? requestedCapital = _capitalList.Find(n => n.Name == name);
 
             return requestedCapital;
         }
 
-        public Capital? GetUserById(long id)
+        public Capital? GetCapitalById(long id)
         {
             Capital? requestedCapital = _capitalList.Find(i => i.Id == id);
 

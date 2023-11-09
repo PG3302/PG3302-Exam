@@ -6,7 +6,7 @@ namespace TravelPlanner.TravelPlannerApp.Service
 {
     public class UserService
     {
-        MockUserDatabase userDatabase = new();
+        private readonly MockUserDatabase userDatabase = new();
 
         public User AddUser(string username, Capital capital, bool isAdmin = false)
         {

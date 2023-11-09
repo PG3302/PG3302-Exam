@@ -35,7 +35,7 @@ namespace TravelPlanner.TravelPlannerApp.Repository.Database
             return requestedTrip;
         }
 
-        public Trip? GetUserById(long id)
+        public Trip? GetTripById(long id)
         {
             Trip? requestedTrip = _tripList.Find(i => i.Id == id);
 

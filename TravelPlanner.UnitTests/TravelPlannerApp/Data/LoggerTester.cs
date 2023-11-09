@@ -1,6 +1,7 @@
 ﻿using TravelPlanner.TravelPlannerApp.Data.Handlers;
+using TravelPlanner.TravelPlannerApp.Data.Log;
 
-namespace TravelPlanner.UnitTests.TravelPlannerApp.Data.Logger
+namespace TravelPlanner.UnitTests.TravelPlannerApp.Data
 {
     internal class LoggerTester
     {
@@ -32,7 +33,7 @@ namespace TravelPlanner.UnitTests.TravelPlannerApp.Data.Logger
             }
             catch (Exception error)
             {
-                TravelPlanner.TravelPlannerApp.Data.Log.Logger.LogError("Test123", error, fullPath, false);
+                Logger.LogError("Test123", error, fullPath, false);
             }
             finally
             {
@@ -53,7 +54,7 @@ namespace TravelPlanner.UnitTests.TravelPlannerApp.Data.Logger
         {
             string? textFromFile;
 
-            TravelPlanner.TravelPlannerApp.Data.Log.Logger.LogInfo("Info987", fullPath, false);
+            Logger.LogInfo("Info987", fullPath, false);
 
             textFromFile = FileHandler.ReadFromFile(fullPath);
 

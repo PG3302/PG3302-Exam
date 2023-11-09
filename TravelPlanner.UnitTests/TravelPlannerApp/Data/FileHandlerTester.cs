@@ -1,6 +1,6 @@
 ﻿using TravelPlanner.TravelPlannerApp.Data.Handlers;
 
-namespace TravelPlanner.UnitTests.TravelPlannerApp.Data.Logger
+namespace TravelPlanner.UnitTests.TravelPlannerApp.Data
 {
     internal class FileHandlerTester
     {

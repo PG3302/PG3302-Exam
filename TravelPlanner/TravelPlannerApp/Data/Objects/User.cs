@@ -16,7 +16,7 @@
 
         public override string ToString()
         {
-            return $"{Id}: {Username} from {Address}";
+            return $"{Id}: {Username} from {Address.Name}";
         }
     }
 }

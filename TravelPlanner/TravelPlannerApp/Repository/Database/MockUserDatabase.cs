@@ -3,20 +3,27 @@ using TravelPlanner.TravelPlannerApp.Data.Objects;
 
 namespace TravelPlanner.TravelPlannerApp.Repository.Database
 {
-    internal class MockUserDatabase : IMockDatabase
+    public class MockUserDatabase : IMockDatabase
     {
-        private List<User> userList = new();
+        private readonly List<User> _userList = new();
         private long _mockCurrentId = 0;
+
+        //Adding mock data to userList
+        public MockUserDatabase()
+        {
+            AddUser(new("Ole", new("Oslo", new(10, 10), Data.DataType.Continent.Europe)));
+            AddUser(new("Dole", new("Washington", new(-30, -30), Data.DataType.Continent.NorthAmerica)));
+            AddUser(new("Doffen", new("Cape Town", new(10, -50), Data.DataType.Continent.Africa)));
+        }
 
         public User AddUser(User user)
         {
             ConnectDatabase();
 
-            user.Id = _mockCurrentId;
-
             //Mock
+            user.Id = _mockCurrentId;
             _mockCurrentId++;
-            userList.Add(user);
+            _userList.Add(user);
 
             Logger.LogInfo($"User {user.Username} added.");
 
@@ -26,14 +33,14 @@ namespace TravelPlanner.TravelPlannerApp.Repository.Database
 
         public User? GetUserByUsername(string username)
         {
-            User? requestedUser = userList.Find(u => u.Username == username);
+            User? requestedUser = _userList.Find(u => u.Username == username);
 
             return requestedUser;
         }
 
         public User? GetUserById(long id)
         {
-            User? requestedUser = userList.Find(i => i.Id == id);
+            User? requestedUser = _userList.Find(i => i.Id == id);
 
             return requestedUser;
         }

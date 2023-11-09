@@ -2,24 +2,22 @@
 {
     internal class Trip
     {
-        public long Id { get; private set; }
+        public long Id { get; set; }
         public User User { get; private set; }
-        public Capital StartingLocation { get; private set; }
-        public Capital DestinationLocation { get; private set; }
-        public int Price { get; private set; }
+        public Capital StartingCapital { get; private set; }
+        public Capital DestinationCapital { get; private set; }
+        public int Price { get; set; }
 
-        public Trip(long id, User user, Capital startingLocation, Capital destinationLocation, int price)
+        public Trip(User user, Capital startingCapital, Capital destinationCapital)
         {
-            Id = id;
             User = user;
-            StartingLocation = startingLocation;
-            DestinationLocation = destinationLocation;
-            Price = price;
+            StartingCapital = startingCapital;
+            DestinationCapital = destinationCapital;
         }
 
         public override string ToString()
         {
-            return $"{Id}: {User} -- {StartingLocation} -> {DestinationLocation} ({Price})";
+            return $"{Id}: {User} -- {StartingCapital} -> {DestinationCapital} ({Price})";
         }
     }
 }

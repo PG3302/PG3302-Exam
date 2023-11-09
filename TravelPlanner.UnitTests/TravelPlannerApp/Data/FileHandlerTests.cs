@@ -2,7 +2,7 @@
 
 namespace TravelPlanner.UnitTests.TravelPlannerApp.Data
 {
-    internal class FileHandlerTester
+    internal class FileHandlerTests
     {
         private static readonly string folderLocation = Directory.GetCurrentDirectory();
         private static readonly string fileName = "FileHandlerTest.txt";
@@ -11,7 +11,7 @@ namespace TravelPlanner.UnitTests.TravelPlannerApp.Data
         [SetUp]
         public void Setup_CreateNewFile()
         {
-            FileHandler.WriteToFile("", fullPath, false);
+            FileHandler.WriteToFile("", fullPath);
         }
 
         [TearDown]
@@ -29,7 +29,7 @@ namespace TravelPlanner.UnitTests.TravelPlannerApp.Data
         [Test]
         public void WriteToFile_AddText_TextIsAdded()
         {
-            FileHandler.WriteToFile("X", fullPath, false);
+            FileHandler.WriteToFile("X", fullPath);
             string? textFromFile = FileHandler.ReadFromFile(fullPath);
 
             Assert.That(textFromFile, Does.Contain('X'));

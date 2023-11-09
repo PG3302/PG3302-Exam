@@ -4,7 +4,7 @@ using TravelPlanner.TravelPlannerApp.Repository.Database;
 
 namespace TravelPlanner.TravelPlannerApp.Service
 {
-    internal class UserService
+    public class UserService
     {
         MockUserDatabase userDatabase = new();
 

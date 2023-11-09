@@ -3,7 +3,7 @@ using TravelPlanner.TravelPlannerApp.Data.Log;
 
 namespace TravelPlanner.UnitTests.TravelPlannerApp.Data
 {
-    internal class LoggerTester
+    internal class LoggerTests
     {
         private static readonly string folderLocation = Directory.GetCurrentDirectory();
         private static readonly string fileName = "LoggerTests.txt";
@@ -12,7 +12,7 @@ namespace TravelPlanner.UnitTests.TravelPlannerApp.Data
         [SetUp]
         public void Setup_CreateNewFile()
         {
-            FileHandler.WriteToFile("", fullPath, false);
+            FileHandler.WriteToFile("", fullPath);
         }
 
         [TearDown]
@@ -33,7 +33,7 @@ namespace TravelPlanner.UnitTests.TravelPlannerApp.Data
             }
             catch (Exception error)
             {
-                Logger.LogError("Test123", error, fullPath, false);
+                Logger.LogError("Test123", error, fullPath);
             }
             finally
             {
@@ -54,7 +54,7 @@ namespace TravelPlanner.UnitTests.TravelPlannerApp.Data
         {
             string? textFromFile;
 
-            Logger.LogInfo("Info987", fullPath, false);
+            Logger.LogInfo("Info987", fullPath);
 
             textFromFile = FileHandler.ReadFromFile(fullPath);
 

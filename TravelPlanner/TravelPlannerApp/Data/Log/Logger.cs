@@ -26,24 +26,25 @@ namespace TravelPlanner.TravelPlannerApp.Data.Log
             return _instance;
         }
 
-        public static void LogError(string message, Exception? exception = null, string? path = null, bool append = true)
+        public static void LogError(string message, Exception? exception = null, string? path = null, bool writeToConsole = false)
         {
-            string formatedMessage = $"[Error]\t{exception?.Message} -- {message}";
+            string formatedMessage = $"[Error] {exception?.Message} -- {message}";
 
-            WriteToLog(formatedMessage, path, append);
+            WriteToLog(formatedMessage, path, writeToConsole);
         }
 
-        public static void LogInfo(string message, string? path = null, bool append = true)
+        public static void LogInfo(string message, string? path = null, bool writeToConsole = false)
         {
-            string formatedMessage = $"[Info]\t\t{message}";
+            string formatedMessage = $"[Info] {message}";
 
-            WriteToLog(formatedMessage, path, append);
+            WriteToLog(formatedMessage, path, writeToConsole);
         }
 
-        private static void WriteToLog(string formatedMessage, string? path = null, bool append = true)
+        private static void WriteToLog(string formatedMessage, string? path, bool writeToConsole)
         {
-            FileHandler.WriteToFile(formatedMessage, path, append);
-            Console.WriteLine(formatedMessage);
+            FileHandler.WriteToFile(formatedMessage, path);
+            if (writeToConsole)
+                Console.WriteLine(formatedMessage);
         }
     }
 }

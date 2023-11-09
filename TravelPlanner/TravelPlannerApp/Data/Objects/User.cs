@@ -2,14 +2,16 @@
 {
     public class User
     {
-        public int Id { get; private set; }
+        public long Id { get; set; }
         public string Username { get; private set; }
-        public Location Address { get; private set; }
+        public Capital Address { get; private set; }
+        public bool IsAdmin { get; set; }
 
-        public User(string username, Location address)
+        public User(string username, Capital address, bool isAdmin = false)
         {
             Username = username;
             Address = address;
+            IsAdmin = isAdmin;
         }
 
         public override string ToString()

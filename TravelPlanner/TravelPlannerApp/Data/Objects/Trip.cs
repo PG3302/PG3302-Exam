@@ -4,12 +4,13 @@
     {
         public long Id { get; private set; }
         public User User { get; private set; }
-        public Location StartingLocation { get; private set; }
-        public Location DestinationLocation { get; private set; }
+        public Capital StartingLocation { get; private set; }
+        public Capital DestinationLocation { get; private set; }
         public int Price { get; private set; }
 
-        public Trip(User user, Location startingLocation, Location destinationLocation, int price)
+        public Trip(long id, User user, Capital startingLocation, Capital destinationLocation, int price)
         {
+            Id = id;
             User = user;
             StartingLocation = startingLocation;
             DestinationLocation = destinationLocation;

@@ -2,15 +2,16 @@
 
 namespace TravelPlanner.TravelPlannerApp.Data.Objects
 {
-    public class Location
+    public class Capital
     {
         public long Id { get; private set; }
         public string Name { get; private set; }
         public Coordinate Coordinate { get; private set; }
         public Continent Continent { get; private set; }
 
-        public Location(string name, Coordinate coordinate, Continent continent)
+        public Capital(long id, string name, Coordinate coordinate, Continent continent)
         {
+            Id = id;
             Name = name;
             Coordinate = coordinate;
             Continent = continent;

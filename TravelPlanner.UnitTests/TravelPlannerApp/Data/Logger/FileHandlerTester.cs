@@ -1,6 +1,6 @@
-﻿using TravelPlanner.TravelPlannerApp.Other.Handlers;
+﻿using TravelPlanner.TravelPlannerApp.Data.Handlers;
 
-namespace TravelPlanner.UnitTests.TravelPlannerApp.Logger
+namespace TravelPlanner.UnitTests.TravelPlannerApp.Data.Logger
 {
     internal class FileHandlerTester
     {
@@ -22,7 +22,7 @@ namespace TravelPlanner.UnitTests.TravelPlannerApp.Logger
 
         [Test]
         public void WriteToFile_CreateNewFile_FileIsCreated()
-        { 
+        {
             Assert.That(File.Exists(fileName), Is.True);
         }
 

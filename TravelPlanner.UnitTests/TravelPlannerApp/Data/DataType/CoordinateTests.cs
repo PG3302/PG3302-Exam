@@ -1,6 +1,6 @@
-﻿using TravelPlanner.TravelPlannerApp.Other.DataType;
+﻿using TravelPlanner.TravelPlannerApp.Data.DataType;
 
-namespace TravelPlanner.UnitTests.TravelPlannerApp.DataType
+namespace TravelPlanner.UnitTests.TravelPlannerApp.Data.DataType
 {
     internal class CoordinateTests
     {

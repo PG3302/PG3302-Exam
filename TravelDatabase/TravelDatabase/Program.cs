@@ -11,7 +11,7 @@ namespace TravelDatabase
 {
     public class Program {
 		static void Main() {
-			InitDatabases.InitFromCsv();
+			InitDatabase.InitFromCsv();
 		}
 	}
 }

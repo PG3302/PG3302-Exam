@@ -5,6 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace TravelDatabase.Repositories {
-	internal class CapitalRepository {
+	public class CapitalRepository {
 	}
 }

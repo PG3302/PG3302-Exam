@@ -8,7 +8,7 @@ using TravelDatabase.Entities;
 
 namespace TravelDatabase.Repositories {
 	public class UserRepository {
-		public int AddUser(string username , Capital city , int admin) {
+		public static int AddUser(string username , Capital city , int admin) {
 			if (admin == 0 || admin == 1) {
 				User user = new();
 				{
@@ -24,5 +24,6 @@ namespace TravelDatabase.Repositories {
 			}
 			throw new Exception("Admin value not allowed");
 		}
+
 	}
 }

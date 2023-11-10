@@ -1,10 +1,15 @@
-﻿using TravelPlanner.TravelPlannerApp.Data.Model;
+﻿using TravelPlanner.TravelPlannerApp.Controller.Menu;
+using TravelPlanner.TravelPlannerApp.Data.Log;
+using TravelPlanner.TravelPlannerApp.Data.Model;
 
 namespace TravelPlanner.TravelPlannerApp.Controller
 {
     internal class InterfaceController
     {
         private User? _currentUser = null;
+        private int _selectedMenuIndex = 0;
+        private List<MenuObject> _menuObjects = new();
+        private UserController userController = new();
 
         public void Start()
         {
@@ -13,46 +18,65 @@ namespace TravelPlanner.TravelPlannerApp.Controller
 
         private void MainMenu()
         {
-            //bool currentUserAdmin = CurrentUser.IsAdmin;
-            //int menuChoice;
-            //Console.Clear();
+            _menuObjects.Add(new("Login."/*, MethodName here */));
+            _menuObjects.Add(new("Search."/*, MethodName here */));
+            _menuObjects.Add(new("Exit."/*, MethodName here */));
 
-            int menuIndex = 1;
+           GetUserSelectedMenu("Welcome to Kristiania Travel Planner...");
+        }
 
-            Console.Write($"Welcome to Kristiania Travel Planner..." +
-                "\n1. Login." +
-                "\n2. Create travel plan." +
-                "\n3. See previous travels." +
-                "\n4. Log out." +
-                $"{(currentUserAdmin ? "\n5. Admin stuff." : "")}" +
-                "\nSelected Menu: ");
+        private void PrintMenu(string title)
+        {
+            Console.Clear();
+            Console.WriteLine(title);
 
-            menuChoice = currentUserAdmin ? UserController.GetUserMenuChoice(1, 5) : UserController.GetUserMenuChoice(1, 4);
+            for (int i = 0; i < _menuObjects.Count; i++)
+            {
+                if (i == _selectedMenuIndex)
+                    Console.Write("[O]");
+                else
+                    Console.Write("[ ]");
 
-            if (menuChoice == 1)
-            {
-                Console.WriteLine("Find location coming later...");
-                MainMenu();
+                Console.WriteLine($" {_menuObjects[i].Text}");
             }
-            else if (menuChoice == 2)
+        }
+
+        private ConsoleKey? GetUserSelectedMenu(string title)
+        {
+            bool menuSelected = false;
+            List<ConsoleKey> allowedKeys = new();
+            ConsoleKey keyPressed;
+
+            while(!menuSelected)
             {
-                TravelPlanLocation();
+                PrintMenu(title);
+
+                allowedKeys.Clear();
+
+                if (_selectedMenuIndex > 0)
+                    allowedKeys.Add(ConsoleKey.UpArrow);
+                if (_selectedMenuIndex < _menuObjects.Count - 1)
+                    allowedKeys.Add(ConsoleKey.DownArrow);
+
+                keyPressed = userController.GetUserMenuChoiceKey(allowedKeys);
+
+                if (keyPressed == ConsoleKey.Enter || keyPressed == ConsoleKey.Escape)
+                {
+                    _menuObjects.Clear();
+                    return keyPressed;
+                }
+                else if (keyPressed == ConsoleKey.UpArrow)
+                {
+                    _selectedMenuIndex--;
+                }
+                else if (keyPressed == ConsoleKey.DownArrow)
+                {
+                    _selectedMenuIndex++;
+                }
             }
-            else if (menuChoice == 3)
-            {
-                Console.WriteLine("Previous travels coming later...");
-                MainMenu();
-            }
-            else if (menuChoice == 4)
-            {
-                CurrentUser = null;
-                Console.Clear();
-                Start();
-            }
-            else if (menuChoice == 5)
-            {
-                AdminMenu();
-            }
+
+            Logger.LogError("Interface controller error when getting keys.", new ArgumentNullException());
+            return null;
         }
     }
 }

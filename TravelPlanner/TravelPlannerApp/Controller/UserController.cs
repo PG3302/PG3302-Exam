@@ -51,7 +51,6 @@
                 {
                     if (keyPressed == key)
                     {
-                        Console.WriteLine("uigrhuirgu");
                         validValue = true;
                         break;
                     }

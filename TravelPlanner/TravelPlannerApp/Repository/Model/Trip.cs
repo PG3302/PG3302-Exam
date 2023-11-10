@@ -1,4 +1,4 @@
-﻿namespace TravelPlanner.TravelPlannerApp.Data.Objects
+﻿namespace TravelPlanner.TravelPlannerApp.Data.Model
 {
     public class Trip
     {

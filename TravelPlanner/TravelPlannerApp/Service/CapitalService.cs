@@ -1,4 +1,4 @@
-﻿using TravelPlanner.TravelPlannerApp.Data.Objects;
+﻿using TravelPlanner.TravelPlannerApp.Data.Model;
 using TravelPlanner.TravelPlannerApp.Repository.Database;
 
 namespace TravelPlanner.TravelPlannerApp.Service

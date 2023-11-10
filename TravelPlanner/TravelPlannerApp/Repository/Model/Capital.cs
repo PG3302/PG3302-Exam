@@ -1,6 +1,6 @@
 ﻿using TravelPlanner.TravelPlannerApp.Data.DataType;
 
-namespace TravelPlanner.TravelPlannerApp.Data.Objects
+namespace TravelPlanner.TravelPlannerApp.Data.Model
 {
     public class Capital
     {

@@ -1,4 +1,6 @@
-﻿using TravelPlanner.TravelPlannerApp.Controller.Menu;
+﻿using System.Data;
+using System;
+using TravelPlanner.TravelPlannerApp.Controller.Menu;
 using TravelPlanner.TravelPlannerApp.Data.Log;
 using TravelPlanner.TravelPlannerApp.Data.Model;
 
@@ -18,11 +20,36 @@ namespace TravelPlanner.TravelPlannerApp.Controller
 
         private void MainMenu()
         {
-            _menuObjects.Add(new("Login."/*, MethodName here */));
-            _menuObjects.Add(new("Search."/*, MethodName here */));
-            _menuObjects.Add(new("Exit."/*, MethodName here */));
+            _menuObjects.Add(new("Login.", LoginMenu));
+            _menuObjects.Add(new("Search.", SearchMenu));
+            _menuObjects.Add(new("Exit.", ExitConsole));
 
-           GetUserSelectedMenu("Welcome to Kristiania Travel Planner...");
+           GetUserSelectedMenu("Welcome to Kristiania Travel Planner...", ExitConsole);
+        }
+
+        private void LoginMenu()
+        {
+            _menuObjects.Add(new("Wrong.", NotMe));
+
+            GetUserSelectedMenu("This is the login menu...", MainMenu);
+        }
+
+        private void SearchMenu()
+        {
+            _menuObjects.Add(new("Wrong.", NotMe));
+
+            GetUserSelectedMenu("This is the search menu...", MainMenu);
+        }
+
+        private void ExitConsole()
+        {
+            Console.WriteLine("Bye...");
+        }
+
+        //REMOVE
+        private void NotMe()
+        {
+            Console.WriteLine("This is wrong");
         }
 
         private void PrintMenu(string title)
@@ -41,31 +68,32 @@ namespace TravelPlanner.TravelPlannerApp.Controller
             }
         }
 
-        private ConsoleKey? GetUserSelectedMenu(string title)
+        private void GetUserSelectedMenu(string title, Action previousMenu)
         {
-            bool menuSelected = false;
             List<ConsoleKey> allowedKeys = new();
             ConsoleKey keyPressed;
+            Action? selectedMenu = null;
+            Action nextMethod;
 
-            while(!menuSelected)
+            while(selectedMenu == null)
             {
                 PrintMenu(title);
 
                 allowedKeys.Clear();
 
                 if (_selectedMenuIndex > 0)
+                {
                     allowedKeys.Add(ConsoleKey.UpArrow);
+                }
+
                 if (_selectedMenuIndex < _menuObjects.Count - 1)
+                {
                     allowedKeys.Add(ConsoleKey.DownArrow);
+                }
 
                 keyPressed = userController.GetUserMenuChoiceKey(allowedKeys);
 
-                if (keyPressed == ConsoleKey.Enter || keyPressed == ConsoleKey.Escape)
-                {
-                    _menuObjects.Clear();
-                    return keyPressed;
-                }
-                else if (keyPressed == ConsoleKey.UpArrow)
+                if (keyPressed == ConsoleKey.UpArrow)
                 {
                     _selectedMenuIndex--;
                 }
@@ -73,10 +101,21 @@ namespace TravelPlanner.TravelPlannerApp.Controller
                 {
                     _selectedMenuIndex++;
                 }
+                else if (keyPressed == ConsoleKey.Enter)
+                {
+                    selectedMenu = _menuObjects[_selectedMenuIndex].Method;
+                } 
+                else if (keyPressed == ConsoleKey.Escape)
+                {
+                    break;
+                }
             }
 
-            Logger.LogError("Interface controller error when getting keys.", new ArgumentNullException());
-            return null;
+            nextMethod = selectedMenu ?? previousMenu;
+
+            _menuObjects.Clear();
+
+            nextMethod();
         }
     }
 }

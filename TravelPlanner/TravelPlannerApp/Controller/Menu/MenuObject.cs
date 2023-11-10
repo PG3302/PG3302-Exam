@@ -2,15 +2,13 @@
 {
     internal class MenuObject
     {
-        //Fix later
-        public Func<int, int> Method { get; private set; }
-        //public int Index { get; set; }
+        public Action Method { get; private set; }
         public string Text { get; set; }
 
-        public MenuObject(string text)
+        public MenuObject(string text, Action method)
         {
-            //this.Index = index;
-            this.Text = text;
+            Method = method;
+            Text = text;
         }
     }
 }

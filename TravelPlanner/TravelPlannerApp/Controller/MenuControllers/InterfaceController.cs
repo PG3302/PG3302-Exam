@@ -152,20 +152,18 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
                     _selectedMenuIndex = 0;
                     pageOfList = CreatePageOfList(list, currentPage);
                 }
-                else if (keyPressed == ConsoleKey.Enter)
+                else if (keyPressed == ConsoleKey.Enter && _selectedMenuIndex < _menuObjects.Count) //Menu object
                 {
-                    if (_selectedMenuIndex < _menuObjects.Count)
-                    {
-                        selectedMenu = _menuObjects[_selectedMenuIndex].Method;
-                    }
-                    else
-                    {
-                        _currentModel = pageOfList[_selectedMenuIndex - _menuObjects.Count];
-                        break;
-                    }
+                    selectedMenu = _menuObjects[_selectedMenuIndex].Method;
+                }
+                else if (keyPressed == ConsoleKey.Enter) //Model objet
+                {
+                    _currentModel = pageOfList[_selectedMenuIndex - _menuObjects.Count];
+                    break;
                 }
                 else if (keyPressed == ConsoleKey.Escape)
                 {
+                    selectedModelMenu = null;
                     break;
                 }
             }

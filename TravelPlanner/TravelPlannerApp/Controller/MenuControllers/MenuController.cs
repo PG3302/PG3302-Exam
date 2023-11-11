@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-using TravelPlanner.TravelPlannerApp.Controller.ConsoleControllers;
-using TravelPlanner.TravelPlannerApp.Controller.UserControllers;
+﻿using TravelPlanner.TravelPlannerApp.Controller.UserControllers;
 using TravelPlanner.TravelPlannerApp.Data.DataType;
 using TravelPlanner.TravelPlannerApp.Data.Models;
 using TravelPlanner.TravelPlannerApp.Repository.Models;

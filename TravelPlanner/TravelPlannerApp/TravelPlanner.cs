@@ -1,4 +1,5 @@
-﻿using TravelPlanner.TravelPlannerApp.Controller.MenuControllers;
+﻿using TravelPlanner.TravelPlannerApp.Controller.ConsoleControllers;
+using TravelPlanner.TravelPlannerApp.Controller.MenuControllers;
 
 namespace TravelPlanner.TravelPlannerApp
 {
@@ -6,9 +7,9 @@ namespace TravelPlanner.TravelPlannerApp
     {
         public void Start()
         {
-            //Console.WriteLine("I am the main program.");
+            ConsoleController.SetConsoleDisplay();
 
-            InterfaceController interfaceController = new();
+            MenuController interfaceController = new();
             interfaceController.Start();
         }
     }

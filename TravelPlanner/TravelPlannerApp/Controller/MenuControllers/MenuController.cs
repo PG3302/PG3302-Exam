@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using TravelPlanner.TravelPlannerApp.Controller.ConsoleControllers;
 using TravelPlanner.TravelPlannerApp.Controller.UserControllers;
 using TravelPlanner.TravelPlannerApp.Data.DataType;
 using TravelPlanner.TravelPlannerApp.Data.Models;
@@ -6,7 +6,7 @@ using TravelPlanner.TravelPlannerApp.Repository.Models;
 
 namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
 {
-    internal class InterfaceController
+    internal class MenuController
     {
         private User? _currentUser = null;
         private Model? _currentModel = null;
@@ -48,7 +48,6 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             //Remove
             TmpCreateMockList();
 
-            Console.CursorVisible = false;
             MainMenu();
         }
 
@@ -129,7 +128,6 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
                 PrintMenu(title, pageOfList);
 
                 allowedKeys = CreateListOfAllowedKeys(currentPage, pageOfList.Count, list);
-
                 keyPressed = userController.GetUserMenuChoiceKey(allowedKeys);
 
                 if (keyPressed == ConsoleKey.UpArrow)
@@ -156,7 +154,7 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
                 {
                     selectedMenu = _menuObjects[_selectedMenuIndex].Method;
                 }
-                else if (keyPressed == ConsoleKey.Enter) //Model objet
+                else if (keyPressed == ConsoleKey.Enter) //Model object
                 {
                     _currentModel = pageOfList[_selectedMenuIndex - _menuObjects.Count];
                     break;

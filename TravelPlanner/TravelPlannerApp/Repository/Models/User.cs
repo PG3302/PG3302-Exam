@@ -1,6 +1,8 @@
-﻿namespace TravelPlanner.TravelPlannerApp.Data.Model
+﻿using TravelPlanner.TravelPlannerApp.Repository.Models;
+
+namespace TravelPlanner.TravelPlannerApp.Data.Models
 {
-    public class User
+    public class User : Model
     {
         public long Id { get; set; }
         public string Username { get; private set; }

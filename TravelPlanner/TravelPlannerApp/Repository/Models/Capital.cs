@@ -1,8 +1,9 @@
 ﻿using TravelPlanner.TravelPlannerApp.Data.DataType;
+using TravelPlanner.TravelPlannerApp.Repository.Models;
 
-namespace TravelPlanner.TravelPlannerApp.Data.Model
+namespace TravelPlanner.TravelPlannerApp.Data.Models
 {
-    public class Capital
+    public class Capital : Model
     {
         public long Id { get; set; }
         public string Name { get; private set; }

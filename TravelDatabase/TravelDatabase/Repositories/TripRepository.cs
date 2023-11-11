@@ -18,5 +18,10 @@ namespace TravelDatabase.Repositories {
 			db.Add(trip);
 			db.SaveChanges();
 		}
+		 public List<Trip> GetAllUserTrips(int userId) {
+			using var travelDbContext = new TravelDbContext();
+				return travelDbContext.Trip.Where(trip => trip.UserId == userId ).ToList();
+
+		}
 	}
 }

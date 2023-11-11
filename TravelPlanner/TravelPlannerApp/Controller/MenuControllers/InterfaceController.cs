@@ -1,9 +1,9 @@
-﻿using TravelPlanner.TravelPlannerApp.Controller.Menu;
+﻿using TravelPlanner.TravelPlannerApp.Controller.UserControllers;
 using TravelPlanner.TravelPlannerApp.Data.DataType;
 using TravelPlanner.TravelPlannerApp.Data.Models;
 using TravelPlanner.TravelPlannerApp.Repository.Models;
 
-namespace TravelPlanner.TravelPlannerApp.Controller
+namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
 {
     internal class InterfaceController
     {
@@ -23,19 +23,21 @@ namespace TravelPlanner.TravelPlannerApp.Controller
             _menuObjects.Add(new("List.", ListMenu));
             _menuObjects.Add(new("Exit.", ExitConsole));
 
-           GetUserSelectedMenu("Welcome to Kristiania Travel Planner...", ExitConsole);
+            GetUserSelectedMenu("Welcome to Kristiania Travel Planner...", ExitConsole);
         }
 
         private void ListMenu()
         {
-            List<Capital> myList = new();
+            _menuObjects.Add(new("Wrong.", NotMe));
 
-            for (int i = 0; i < 100; i++)
+            List<Model> myList = new();
+
+            for (int i = 0; i < 95; i++)
             {
-                myList.Add(new Capital($"{i}", new Coordinate(0,0), Continent.Antarctica));
+                myList.Add(new Capital($"{i}", new Coordinate(0, 0), Continent.Antarctica));
             }
 
-            //GetUserSelectedList("List of capitals...", MainMenu, myList);
+            GetUserSelectedMenu("List of capitals...", MainMenu, myList);
         }
 
         private void LoginMenu()
@@ -100,18 +102,17 @@ namespace TravelPlanner.TravelPlannerApp.Controller
 
         private void GetUserSelectedMenu(string title, Action previousMenu, List<Model>? list = null)
         {
+            int numberOfPages = (int)Math.Ceiling((list?.Count ?? 0) / 10.0);
+            int currentPage = 0;
             List<ConsoleKey> allowedKeys = new();
+            List<Model>? pageOfList = CreatePageOfList(list, currentPage);
             ConsoleKey keyPressed;
             Action? selectedMenu = null;
             Action nextMethod;
 
-            Capital capital = new("Bob", new Coordinate(0, 0), Continent.NorthAmerica);
-            list = new() { capital, capital };
-
-
-            while(selectedMenu == null)
+            while (selectedMenu == null)
             {
-                PrintMenu(title, list);
+                PrintMenu(title, pageOfList);
 
                 allowedKeys.Clear();
 
@@ -125,6 +126,16 @@ namespace TravelPlanner.TravelPlannerApp.Controller
                     allowedKeys.Add(ConsoleKey.DownArrow);
                 }
 
+                if (list?.Count > 0 && currentPage > 0)
+                {
+                    allowedKeys.Add(ConsoleKey.LeftArrow);
+                }
+
+                if (list?.Count > 0 && currentPage < numberOfPages - 1)
+                {
+                    allowedKeys.Add(ConsoleKey.RightArrow);
+                }
+
                 keyPressed = userController.GetUserMenuChoiceKey(allowedKeys);
 
                 if (keyPressed == ConsoleKey.UpArrow)
@@ -135,10 +146,20 @@ namespace TravelPlanner.TravelPlannerApp.Controller
                 {
                     _selectedMenuIndex++;
                 }
+                else if (keyPressed == ConsoleKey.LeftArrow)
+                {
+                    currentPage--;
+                    pageOfList = CreatePageOfList(list, currentPage);
+                }
+                else if (keyPressed == ConsoleKey.RightArrow)
+                {
+                    currentPage++;
+                    pageOfList = CreatePageOfList(list, currentPage);
+                }
                 else if (keyPressed == ConsoleKey.Enter)
                 {
                     selectedMenu = _menuObjects[_selectedMenuIndex].Method;
-                } 
+                }
                 else if (keyPressed == ConsoleKey.Escape)
                 {
                     break;
@@ -147,65 +168,23 @@ namespace TravelPlanner.TravelPlannerApp.Controller
 
             nextMethod = selectedMenu ?? previousMenu;
 
+            _selectedMenuIndex = 0;
             _menuObjects.Clear();
 
             nextMethod();
         }
 
-        /*
-        private void GetUserSelectedList(string title, Action previousMenu, List<Capital> list)
+        private List<Model> CreatePageOfList(List<Model>? list, int page, int itemsEachPage = 10)
         {
-            List<ConsoleKey> allowedKeys = new();
-            ConsoleKey keyPressed;
+            List<Model> pageOfList = new();
+            int startPageIndex = page * itemsEachPage;
 
-            //Make wildcard
-            Capital? selectedModel = null;
-
-            //Action? selectedMenu = null;
-            //Action nextMethod;
-
-            while (selectedModel == null)
+            for (int i = startPageIndex; i < list?.Count && i < startPageIndex + itemsEachPage; i++)
             {
-                PrintMenu(title);
-
-                allowedKeys.Clear();
-
-                if (_selectedMenuIndex > 0)
-                {
-                    allowedKeys.Add(ConsoleKey.UpArrow);
-                }
-
-                if (_selectedMenuIndex < _menuObjects.Count - 1)
-                {
-                    allowedKeys.Add(ConsoleKey.DownArrow);
-                }
-
-                keyPressed = userController.GetUserMenuChoiceKey(allowedKeys);
-
-                if (keyPressed == ConsoleKey.UpArrow)
-                {
-                    _selectedMenuIndex--;
-                }
-                else if (keyPressed == ConsoleKey.DownArrow)
-                {
-                    _selectedMenuIndex++;
-                }
-                else if (keyPressed == ConsoleKey.Enter)
-                {
-                    selectedMenu = _menuObjects[_selectedMenuIndex].Method;
-                }
-                else if (keyPressed == ConsoleKey.Escape)
-                {
-                    break;
-                }
+                pageOfList.Add(list[i]);
             }
 
-            nextMethod = selectedMenu ?? previousMenu;
-
-            _menuObjects.Clear();
-
-            nextMethod();
+            return pageOfList;
         }
-                */
     }
 }

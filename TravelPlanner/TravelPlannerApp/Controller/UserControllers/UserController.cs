@@ -1,4 +1,4 @@
-﻿namespace TravelPlanner.TravelPlannerApp.Controller
+﻿namespace TravelPlanner.TravelPlannerApp.Controller.UserControllers
 {
     public class UserController
     {
@@ -47,7 +47,7 @@
 
             while (!validValue)
             {
-                foreach(ConsoleKey key in arrowKeysAllowed)
+                foreach (ConsoleKey key in arrowKeysAllowed)
                 {
                     if (keyPressed == key)
                     {
@@ -56,7 +56,7 @@
                     }
                 }
 
-                if (!validValue) 
+                if (!validValue)
                     keyPressed = Console.ReadKey(true).Key;
             }
 

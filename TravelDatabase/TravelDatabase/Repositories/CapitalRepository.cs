@@ -17,5 +17,9 @@ namespace TravelDatabase.Repositories {
 			using var travelDbContext = new TravelDbContext();
 			return travelDbContext.Capital.First(capital => capital.Id == id);
 		}
+		public void EditCapital(int capitalId , string name , Continent continent , decimal longitude , decimal latitude) {
+			using var travelDbContext = new TravelDbContext();
+			var oldCapital = travelDbContext.Capital.First(capital => capital.Id == capitalId); 
+		}
 	}
 }

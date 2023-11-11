@@ -9,11 +9,11 @@ using TravelDatabase.Entities;
 
 namespace TravelDatabase.Repositories {
 	public class TripRepository {
-		public static void AddTrip(int userId , int departlocation , int arrivalLocation) {
+		public static void AddTrip(int userId , int departLocation , int arrivalLocation) {
 			using var travelDbContext = new TravelDbContext();
 			Trip trip = new() {
 				UserId = userId ,
-				DepartureId = departlocation ,
+				DepartureId = departLocation ,
 				ArrivalId = arrivalLocation ,
 			};
 			travelDbContext.Add(trip);
@@ -27,6 +27,14 @@ namespace TravelDatabase.Repositories {
 			using var travelDbContext = new TravelDbContext();
 			var trip = 	travelDbContext.Trip.First(trip => trip.Id == tripId);
 			travelDbContext.Trip.Remove(trip);
+			travelDbContext.SaveChanges();
+		}
+		public void EditTrip(int tripId, int userId, int departLocation, int arrivalLocation) {
+			using var travelDbContext = new TravelDbContext();
+			var oldTrip = travelDbContext.Trip.First(trip => trip.Id == tripId);
+			oldTrip.UserId = userId;
+			oldTrip.DepartureId = departLocation;
+			oldTrip.ArrivalId = arrivalLocation;
 			travelDbContext.SaveChanges();
 		}
 	}

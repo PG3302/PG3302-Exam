@@ -16,9 +16,9 @@ namespace TravelDatabase.Repositories {
 					user.CityId = city.Id; //needs city selected from Capital table
 					user.Admin = admin;
 				}
-				using TravelDbContext db = new();
-				db.User.Add(user);
-				db.SaveChanges();
+				using TravelDbContext travelDbContext = new();
+				travelDbContext.User.Add(user);
+				travelDbContext.SaveChanges();
 
 				return user.Id;
 			}

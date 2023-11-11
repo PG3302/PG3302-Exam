@@ -1,5 +1,5 @@
 ﻿using TravelPlanner.TravelPlannerApp.Data.Log;
-using TravelPlanner.TravelPlannerApp.Data.Model;
+using TravelPlanner.TravelPlannerApp.Data.Models;
 using TravelPlanner.TravelPlannerApp.Repository.Database;
 
 namespace TravelPlanner.TravelPlannerApp.Service

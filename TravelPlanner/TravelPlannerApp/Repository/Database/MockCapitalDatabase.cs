@@ -1,6 +1,6 @@
 ﻿using TravelPlanner.TravelPlannerApp.Data.DataType;
 using TravelPlanner.TravelPlannerApp.Data.Log;
-using TravelPlanner.TravelPlannerApp.Data.Model;
+using TravelPlanner.TravelPlannerApp.Data.Models;
 
 namespace TravelPlanner.TravelPlannerApp.Repository.Database
 {

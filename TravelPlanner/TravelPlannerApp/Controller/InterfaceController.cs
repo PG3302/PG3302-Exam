@@ -98,7 +98,7 @@ namespace TravelPlanner.TravelPlannerApp.Controller
             }
         }
 
-        private void GetUserSelectedMenu(string title, Action previousMenu)
+        private void GetUserSelectedMenu(string title, Action previousMenu, List<Model>? list = null)
         {
             List<ConsoleKey> allowedKeys = new();
             ConsoleKey keyPressed;
@@ -106,11 +106,12 @@ namespace TravelPlanner.TravelPlannerApp.Controller
             Action nextMethod;
 
             Capital capital = new("Bob", new Coordinate(0, 0), Continent.NorthAmerica);
+            list = new() { capital, capital };
 
 
             while(selectedMenu == null)
             {
-                PrintMenu(title, new List<Model> { capital, capital });
+                PrintMenu(title, list);
 
                 allowedKeys.Clear();
 

@@ -1,4 +1,5 @@
-﻿using TravelPlanner.TravelPlannerApp.Controller.ConsoleControllers;
+﻿using System.Drawing;
+using TravelPlanner.TravelPlannerApp.Controller.ConsoleControllers;
 using TravelPlanner.TravelPlannerApp.Controller.UserControllers;
 using TravelPlanner.TravelPlannerApp.Data.DataType;
 using TravelPlanner.TravelPlannerApp.Data.Models;
@@ -96,11 +97,15 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
 
                 if (i == _selectedMenuIndex)
                 {
+                    Console.ForegroundColor = ConsoleColor.Blue;
                     Console.Write("[O]");
+                    Console.ResetColor();
                 }
                 else
                 {
+                    Console.ForegroundColor = ConsoleColor.DarkBlue;
                     Console.Write("[ ]");
+                    Console.ResetColor();
                 }
 
                 if (i < _menuObjects.Count)

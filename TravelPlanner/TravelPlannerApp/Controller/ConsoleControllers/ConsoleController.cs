@@ -5,8 +5,9 @@
         public static void SetConsoleDisplay()
         {
             Console.CursorVisible = false;
-            Console.ForegroundColor = ConsoleColor.Red;
+            //Console.ForegroundColor = ConsoleColor.Red;
             Console.Title = "Kristiania Travel Planner";
+
         }
     }
 }

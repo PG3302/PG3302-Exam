@@ -47,37 +47,27 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             GetUserSelectedMenu("This is the login menu...", MainMenu);
         }
 
-        private void SearchMenu()
-        {
-            _menuObjects.Add(new("Wrong.", NotMe));
-
-            GetUserSelectedMenu("This is the search menu...", MainMenu);
-        }
-
         private void ExitConsole()
         {
-            Console.WriteLine("Bye...");
+            Console.Clear();
+            Console.WriteLine("Quit stuff complete... Bye...");
+            Console.ReadKey();
         }
 
         //REMOVE
         private void NotMe()
         {
+            Console.Clear();
             Console.WriteLine("This is wrong");
+            Console.ReadKey();
         }
 
         private void PrintMenu(string title, List<Model>? list = null)
         {
-            //int menuCount = _menuObjects.Count;
-
-            //menucount = 4
-            //listcount = 5
-
             Console.Clear();
             Console.WriteLine(title);
 
             //IF __selectedMenuIndex WORKS FOR LIST, MERGE FOR LOOPS
-
-            //i = 0 - 3
             for (int i = 0; i < _menuObjects.Count; i++)
             {
                 if (i == _selectedMenuIndex)
@@ -88,7 +78,6 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
                 Console.WriteLine($" {_menuObjects[i].Text}");
             }
 
-            //i = 4 - 8
             for (int i = _menuObjects.Count; i < _menuObjects.Count + list?.Count; i++)
             {
                 if (i == _selectedMenuIndex)
@@ -120,8 +109,7 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
                 {
                     allowedKeys.Add(ConsoleKey.UpArrow);
                 }
-
-                if (_selectedMenuIndex < _menuObjects.Count - 1)
+                if (_selectedMenuIndex < (_menuObjects.Count + pageOfList.Count) - 1)
                 {
                     allowedKeys.Add(ConsoleKey.DownArrow);
                 }

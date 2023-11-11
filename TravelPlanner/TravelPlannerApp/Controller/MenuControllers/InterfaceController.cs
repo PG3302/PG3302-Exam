@@ -8,12 +8,30 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
     internal class InterfaceController
     {
         private User? _currentUser = null;
+        private Model? _currentModel = null;
         private int _selectedMenuIndex = 0;
         private List<MenuObject> _menuObjects = new();
         private UserController userController = new();
 
+
+        //REMOVE BELOW
+        List<Model>? _tmpList;
+        private void TmpCreateMockList()
+        {
+            _tmpList = new();
+
+            for (int i = 0; i < 95; i++)
+            {
+                _tmpList.Add(new Capital($"{i}", new Coordinate(0, 0), Continent.Antarctica));
+            }
+        }
+        //REMOVE ABOVE
+
+
         public void Start()
         {
+            TmpCreateMockList();
+
             MainMenu();
         }
 
@@ -30,14 +48,7 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
         {
             _menuObjects.Add(new("Wrong.", NotMe));
 
-            List<Model> myList = new();
-
-            for (int i = 0; i < 95; i++)
-            {
-                myList.Add(new Capital($"{i}", new Coordinate(0, 0), Continent.Antarctica));
-            }
-
-            GetUserSelectedMenu("List of capitals...", MainMenu, myList);
+            GetUserSelectedMenu("List of capitals...", MainMenu, _tmpList);
         }
 
         private void LoginMenu()
@@ -67,25 +78,25 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             Console.Clear();
             Console.WriteLine(title);
 
-            //IF __selectedMenuIndex WORKS FOR LIST, MERGE FOR LOOPS
-            for (int i = 0; i < _menuObjects.Count; i++)
+            for (int i = 0; i < _menuObjects.Count + list?.Count; i++)
             {
                 if (i == _selectedMenuIndex)
+                {
                     Console.Write("[O]");
+                }
                 else
+                {
                     Console.Write("[ ]");
+                }
 
-                Console.WriteLine($" {_menuObjects[i].Text}");
-            }
-
-            for (int i = _menuObjects.Count; i < _menuObjects.Count + list?.Count; i++)
-            {
-                if (i == _selectedMenuIndex)
-                    Console.Write("[O]");
+                if (i < _menuObjects.Count)
+                {
+                    Console.WriteLine($" {_menuObjects[i].Text}");
+                } 
                 else
-                    Console.Write("[ ]");
-
-                Console.WriteLine($" {list?[i - _menuObjects.Count].ToString()}");
+                {
+                    Console.WriteLine($" {list?[i - _menuObjects.Count].ToString()}");
+                }
             }
         }
 
@@ -137,16 +148,28 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
                 else if (keyPressed == ConsoleKey.LeftArrow)
                 {
                     currentPage--;
+                    _selectedMenuIndex = 0;
                     pageOfList = CreatePageOfList(list, currentPage);
                 }
                 else if (keyPressed == ConsoleKey.RightArrow)
                 {
                     currentPage++;
+                    _selectedMenuIndex = 0;
                     pageOfList = CreatePageOfList(list, currentPage);
                 }
                 else if (keyPressed == ConsoleKey.Enter)
                 {
-                    selectedMenu = _menuObjects[_selectedMenuIndex].Method;
+                    if (_selectedMenuIndex < _menuObjects.Count)
+                    {
+                        selectedMenu = _menuObjects[_selectedMenuIndex].Method;
+                    }
+                    else
+                    {
+                        _currentModel = pageOfList[_selectedMenuIndex - _menuObjects.Count];
+                        Console.WriteLine($"You selected: {_currentModel}");
+                        Console.ReadKey();
+                        break;
+                    }
                 }
                 else if (keyPressed == ConsoleKey.Escape)
                 {

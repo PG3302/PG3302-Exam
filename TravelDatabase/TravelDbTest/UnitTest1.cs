@@ -1,11 +1,16 @@
 
 
+using TravelDatabase.DataAccess.SqLite;
 using TravelDatabase.Repositories;
 
 namespace TravelDbTest {
 	public class Tests {
 		[SetUp]
 		public void Setup() {
+			using TravelDbContext travelDbContext = new();
+			travelDbContext.RemoveRange(travelDbContext.Capital);
+			travelDbContext.SaveChanges();
+			InitDatabase.InitFromCsv();
 		}
 
 		[Test]
@@ -24,11 +29,13 @@ namespace TravelDbTest {
 			var allCapitals = new CapitalRepository().GetAllCapitals();
 			Assert.That(allCapitals.Any(capital => capital.CapitalName.Contains("test")));
 		}
-		/*[Test]
+		[Test]
 		public void EditCapitalTest() {
-			int capitalId = CapitalRepository.EditCapital(){
-			}
-		}*/
+			CapitalRepository.AddCapital("test" , 0 , 1 , 2);
+			int capitalId = CapitalRepository.EditCapital("newTest" , 0 , 1 , 2);
+			var allCapitals = new CapitalRepository().GetAllCapitals();
+			Assert.That(allCapitals.Any(capital => capital.CapitalName.Contains("newTest")));
+		}
 
 	}
 }

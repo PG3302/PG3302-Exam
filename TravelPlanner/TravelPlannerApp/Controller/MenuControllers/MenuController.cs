@@ -12,6 +12,8 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
         private int _selectedMenuIndex = 0;
         private List<MenuObject> _menuObjects = new();
         private UserController userController = new();
+        private bool isLoggedIn = false;
+        private bool isAdmin = false;
 
 
         //REMOVE BELOW
@@ -25,7 +27,31 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
                 MockCapitalList.Add(new Capital($"{i}", new Coordinate(RandomNumber(), RandomNumber()), Continent.Antarctica));
             }
         }
+        private void TmpLoginSomething()
+        {
+            Console.Clear();
+            _menuObjects.Add(new ("Login", LoginSubPage));
+            _menuObjects.Add(new("Create user", CreateUser));
+            _menuObjects.Add(new("Back.", MainMenu));
+            GetUserSelectedMenu("You are currently not logged in. Do you wish you log in or create a user?", MainMenu);
+        }
 
+        private void LoginSubPage()
+        {
+            Console.Clear();
+
+            _menuObjects.Add(new("Back.", MainMenu));
+            GetUserSelectedMenu("Login/login", MainMenu);
+        }
+
+        private void CreateUser()
+        {
+            Console.Clear();
+            Console.WriteLine("Abdi babdi");
+            _menuObjects.Add(new("Back.", MainMenu));
+            GetUserSelectedMenu("Login/login", MainMenu);
+
+        }
         private int RandomNumber()
         {
             Random rng = new();
@@ -68,9 +94,41 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
 
         private void LoginMenu()
         {
-            _menuObjects.Add(new("Back.", MainMenu));
+            if(isLoggedIn == false)
+            {
+               TmpLoginSomething();
+            }
+            else
+            {
+                if(isAdmin)
+                {                                
+                    _menuObjects.Add(new("Back.", MainMenu));
+                    GetUserSelectedMenu("logget inn som admin", AdminMenu);
 
-            GetUserSelectedMenu("This is the login menu... To be continued...", MainMenu);
+                }
+                else
+                {
+                    _menuObjects.Add(new("Back.", MainMenu));
+                    GetUserSelectedMenu("logget inn med vanlig acc", UserMenu);
+                }
+            }
+            _menuObjects.Add(new("Back.", MainMenu));
+        }
+
+        private void AdminMenu()
+        {
+            Console.WriteLine("Welcome, Mr.Admin *brutally tips fedora*");
+            _menuObjects.Add(new("Do admin thing nr 1", MainMenu));
+            _menuObjects.Add(new("Do admin thing nr 2", MainMenu));
+            _menuObjects.Add(new("Logout", MainMenu));
+        }
+
+        private void UserMenu()
+        {
+            Console.WriteLine("Welcome, *User*");   // Later add specified user-name 
+            _menuObjects.Add(new("saved searches? Forslag?", MainMenu));
+            _menuObjects.Add(new("search?", MainMenu));
+            _menuObjects.Add(new("Logout", MainMenu));
         }
 
         private void ExitConsole()

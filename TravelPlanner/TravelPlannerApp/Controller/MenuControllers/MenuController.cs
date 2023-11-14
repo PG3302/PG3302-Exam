@@ -1,6 +1,7 @@
 ﻿using TravelPlanner.TravelPlannerApp.Controller.UserControllers;
 using TravelPlanner.TravelPlannerApp.Data.DataType;
 using TravelPlanner.TravelPlannerApp.Data.Models;
+using TravelPlanner.TravelPlannerApp.Repository.Database;
 using TravelPlanner.TravelPlannerApp.Repository.Models;
 
 namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
@@ -12,6 +13,7 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
         private int _selectedMenuIndex = 0;
         private List<MenuObject> _menuObjects = new();
         private UserController userController = new();
+        private int permissionLevel = 0;
 
 
         //REMOVE BELOW
@@ -59,6 +61,7 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             GetUserSelectedMenu("Welcome to Kristiania Travel Planner...", ExitConsole);
         }
 
+
         private void ListMenu()
         {
             _menuObjects.Add(new("Back.", MainMenu));
@@ -68,9 +71,46 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
 
         private void LoginMenu()
         {
+            _menuObjects.Add(new("Login with username", LoginController));
             _menuObjects.Add(new("Back.", MainMenu));
 
-            GetUserSelectedMenu("This is the login menu... To be continued...", MainMenu);
+            GetUserSelectedMenu("User login:", MainMenu);
+            
+        }
+
+        private void LoginController()
+        {
+            MockUserDatabase uDb = new MockUserDatabase();
+            List<User> userList = uDb.GetAllUsers();
+            string userNameInput = "";
+            string userNamePassInput = "";
+            while (true)
+            {
+                Console.WriteLine("Please enter credentials. Username first, then password.");
+                userNameInput = Console.ReadLine();
+                //userNamePassInput = Console.ReadLine();
+                if (userNameInput != null)
+                {
+                    for (int i = 0; i < userList.Count; i++)
+                    {
+                        if (userNameInput == userList[i].Username)
+                        {
+                            uDb.GetUserByUsername(userNameInput);
+                            Console.WriteLine($"Success try {userNameInput}");
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Username not recognized, please try again.");
+                            i = userList.Count;
+                        }
+                    }
+                    break;
+                }
+            }
+            User currentUser = uDb.GetUserByUsername(userNameInput);
+            Console.WriteLine($"Logged in as {currentUser.Username}");
+            
         }
 
         private void ExitConsole()

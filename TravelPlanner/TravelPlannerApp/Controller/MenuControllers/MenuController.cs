@@ -1,6 +1,7 @@
 ﻿using TravelPlanner.TravelPlannerApp.Controller.UserControllers;
 using TravelPlanner.TravelPlannerApp.Data.DataType;
 using TravelPlanner.TravelPlannerApp.Data.Models;
+using TravelPlanner.TravelPlannerApp.Repository.Database;
 using TravelPlanner.TravelPlannerApp.Repository.Models;
 
 namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
@@ -47,7 +48,7 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
         private void CreateUser()
         {
             Console.Clear();
-            Console.WriteLine("Abdi babdi");
+            Console.WriteLine("Test");
             _menuObjects.Add(new("Back.", MainMenu));
             GetUserSelectedMenu("Login/login", MainMenu);
 
@@ -84,6 +85,7 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
 
             GetUserSelectedMenu("Welcome to Kristiania Travel Planner...", ExitConsole);
         }
+
 
         private void ListMenu()
         {

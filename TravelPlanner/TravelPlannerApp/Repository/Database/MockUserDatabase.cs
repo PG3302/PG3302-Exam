@@ -18,7 +18,7 @@ namespace TravelPlanner.TravelPlannerApp.Repository.Database
 
         public User AddUser(User user)
         {
-            ConnectDatabase();
+            ConnectDatabase(user.Username);
 
             //Mock
             user.Id = _mockCurrentId;
@@ -38,6 +38,11 @@ namespace TravelPlanner.TravelPlannerApp.Repository.Database
             return requestedUser;
         }
 
+        public List<User> GetAllUsers()
+        {
+            return _userList;
+        }
+
         public User? GetUserById(long id)
         {
             User? requestedUser = _userList.Find(i => i.Id == id);
@@ -45,14 +50,19 @@ namespace TravelPlanner.TravelPlannerApp.Repository.Database
             return requestedUser;
         }
 
-        public void ConnectDatabase()
+        public void ConnectDatabase(string username)
         {
-            Console.WriteLine("User Database Connected...");
+            Console.WriteLine($"User Database Connected, added ${username}...");
         }
 
         public void DisconnectDatabase()
         {
             Console.WriteLine("User Database Disconnected...");
+        }
+
+        public void ConnectDatabase()
+        {
+            throw new NotImplementedException();
         }
     }
 }

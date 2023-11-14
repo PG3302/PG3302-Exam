@@ -58,6 +58,12 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             isAdmin = true;
             MainMenu();
         }
+        private void LogOutMenu()
+        {
+            isLoggedIn = false;
+            isAdmin = false;
+            MainMenu();
+        }
 
         private void CreateUser()
         {
@@ -108,10 +114,7 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             _menuObjects.Add(new("Back.", MainMenu));
         }
 
-        private void LogOutMenu()
-        {
-            MainMenu();
-        }
+
         
         private int RandomNumber()
         {

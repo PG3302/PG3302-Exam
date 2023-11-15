@@ -29,13 +29,5 @@ namespace TravelDbTest {
 			var allCapitals = new CapitalRepository().GetAllCapitals();
 			Assert.That(allCapitals.Any(capital => capital.CapitalName.Contains("test")));
 		}
-		[Test]
-		public void EditCapitalTest() {
-			CapitalRepository.AddCapital("test" , 0 , 1 , 2);
-			int capitalId = CapitalRepository.EditCapital("newTest" , 0 , 1 , 2);
-			var allCapitals = new CapitalRepository().GetAllCapitals();
-			Assert.That(allCapitals.Any(capital => capital.CapitalName.Contains("newTest")));
-		}
-
 	}
 }

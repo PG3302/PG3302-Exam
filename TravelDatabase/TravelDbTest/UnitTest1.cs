@@ -21,7 +21,8 @@ namespace TravelDbTest {
 
 		[Test]
 		public void AddUserOutsideAdminSpecsFails() {
-			Assert.Throws<Exception>(() => UserRepository.AddUser("test" , new TravelDatabase.Entities.Capital() , 3)); //throws<exception> thinks it's recieving an int. lambda fix
+			Assert.Throws<Exception>(() => UserRepository.AddUser("test" , new TravelDatabase.Entities.Capital() , 3)); 
+			//throws<exception> thinks it's recieving an int. lambda fix
 		}
 		[Test]
 		public void AddCapitalTest() {

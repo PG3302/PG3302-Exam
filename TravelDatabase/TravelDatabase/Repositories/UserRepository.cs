@@ -44,5 +44,58 @@ namespace TravelDatabase.Repositories {
 			oldUser.Admin = Admin;
 			travelDbContext.SaveChanges();
 		}
+
+		public List<User> GetUsers(int? userId = null)
+        {
+
+			using var travelDbContext = new TravelDatabase();
+            List<User> userList = null;
+            using SqliteConnection con = new(_conString);
+            con.Open();
+
+            SqliteCommand cmd = con.CreateCommand();
+            //going to be changed with userDatabase Setup
+            cmd.CommandText = @"SELECT Id, Name, CityId FROM User";
+            if(userId != null)
+            {
+                cmd.CommandText += @"WHERE Id = $Id";
+                cmd.Parameters.AddWithValue("Id", userId);
+            }
+            cmd.CommandText += ";";
+
+            using SqliteDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                userList.Add(new() { 
+                    Id = reader.GetInt32(0),
+                    Name = reader.GetString(1),
+                    //City = reader.GetBoolean(2), City needs a ToString for this to work.
+                });
+            }
+            return userList;
+        }
+		public User? GetSingleUser(int userId)
+        {
+			using var travelDbContext = new TravelDatabase();
+            User? user = null;
+            if(userId <= 0)
+            {
+                return user;
+            }
+            using SqliteConnection con = new(_conString);
+            con.Open();
+            SqliteCommand cmd = con.CreateCommand();
+            cmd.CommandText = @"SELECT * FROM User";
+            cmd.CommandText += @"WHERE Id = $Id;";
+
+            cmd.Parameters.AddWithValue($"Id", userId);
+
+            using SqliteDataReader reader = cmd.ExecuteReader();
+            user.Id = reader.GetInt32(0);
+            user.Name = reader.GetString(1);
+            //Add more when database finnished
+
+            return user;
+        }
 	}
 }

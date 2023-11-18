@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TravelDatabase.DataAccess.SqLite;
 using TravelDatabase.Entities;
+using Microsoft.Data.Sqlite;
 
 namespace TravelDatabase.Repositories {
 	public class TripRepository {

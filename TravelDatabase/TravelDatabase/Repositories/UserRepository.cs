@@ -77,7 +77,7 @@ namespace TravelDatabase.Repositories {
 		public User? GetSingleUser(int userId)
         {
 			using var travelDbContext = new TravelDatabase();
-            User? user = null;
+			User? user = null;
             if(userId <= 0)
             {
                 return user;

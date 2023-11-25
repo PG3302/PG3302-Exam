@@ -7,7 +7,7 @@ namespace TravelPlanner.TravelPlannerApp.Repository.Database
     internal class MockCapitalDatabase : IMockDatabase
     {
         private readonly List<Capital> _capitalList = new();
-        private long _mockCurrentId = 0;
+        private int _mockCurrentId = 0;
 
         public MockCapitalDatabase()
         {

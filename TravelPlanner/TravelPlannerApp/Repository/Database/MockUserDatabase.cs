@@ -6,7 +6,7 @@ namespace TravelPlanner.TravelPlannerApp.Repository.Database
     public class MockUserDatabase : IMockDatabase
     {
         private readonly List<User> _userList = new();
-        private long _mockCurrentId = 0;
+        private int _mockCurrentId = 0;
 
         //Adding mock data to userList
         public MockUserDatabase()

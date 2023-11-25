@@ -4,12 +4,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TravelDatabase.Entities;
 using Microsoft.Data.Sqlite;
+using TravelPlanner.TravelPlannerApp.Data.Models;
+using TravelPlanner.TravelPlannerApp.Data.DataType;
 
 
 namespace TravelDatabase.DataAccess.SqLite
 {
+    /* TODO:
+     * GetAllTrips() 
+     * GetAllCapitals()
+     * What else?
+    */
     public class TravelDbContext : DbContext
     {
 
@@ -19,10 +25,10 @@ namespace TravelDatabase.DataAccess.SqLite
         public DbSet<User> User => Set<User>();
         public DbSet<Trip> Trip => Set<Trip>();
         public DbSet<Capital> Capital => Set<Capital>();
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite(@"data Source = Resources\Travel.db");
-        }
+        }*/
 
 
         public Trip? GetSingleTrip(int tripId)
@@ -34,27 +40,35 @@ namespace TravelDatabase.DataAccess.SqLite
                 Console.WriteLine("Invalid input for trip data request");
                 return trip;
             }
+
             using SqliteConnection con = new(_conString);
             con.Open();
 
-            //Add so we get all attributes of Trip object
-
-            SqliteCommand cmd = con.CreateCommand();
-            cmd.CommandText = @"SELECT * FROM Trip";
-            cmd.CommandText += @"WHERE Id = $Id;";
-
+            using SqliteCommand cmd = con.CreateCommand();
+            cmd.CommandText = @"
+                SELECT Id AS TripID, ArrivalID, DepartureID, UserID
+                FROM Trip
+                WHERE Id = $Id;
+            ";
 
             cmd.Parameters.AddWithValue("$Id", tripId);
 
             using SqliteDataReader reader = cmd.ExecuteReader();
-            trip.Id = reader.GetInt32(0);
-            trip.UserId = reader.GetInt32(1);
-            //trip.Arrival = reader.GetString(2);
-            //trip.Arrival = reader.GetString(3);
+
+            if (reader.Read())
+            {
+                trip = new Trip
+                (
+                    arrivalId: GetCapitalById(reader.GetInt32(1)),
+                    departureId: GetCapitalById(reader.GetInt32(2)),
+                    user: GetSingleUser(reader.GetInt32(0))
+                );
+            }
 
             con.Close();
-            return trip; //Edit so it returns correct values for each instance
+            return trip;
         }
+
         public User? GetSingleUser(int userId)
         {
             User? user = null;
@@ -72,40 +86,63 @@ namespace TravelDatabase.DataAccess.SqLite
 
             using SqliteDataReader reader = cmd.ExecuteReader();
             user.Id = reader.GetInt32(0);
-            user.Name = reader.GetString(1);
+            user.Username = reader.GetString(2);
+            user.Address = GetCapitalById(reader.GetInt32(3));
+            user.Email = reader.GetString(4);
+
+
             //Add more when database finnished
 
             return user;
         }
 
-        public List<User> GetUsers(int? userId = null)
+        public List<User> GetUsers()
         {
 
-            List<User> userList = null;
+            List<User> userList = new List<User>();
             using SqliteConnection con = new(_conString);
             con.Open();
 
             SqliteCommand cmd = con.CreateCommand();
             //going to be changed with userDatabase Setup
             cmd.CommandText = @"SELECT Id, Name, CityId FROM User";
-            if (userId != null)
-            {
-                cmd.CommandText += @"WHERE Id = $Id";
-                cmd.Parameters.AddWithValue("Id", userId);
-            }
             cmd.CommandText += ";";
 
             using SqliteDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                userList.Add(new()
-                {
-                    Id = reader.GetInt32(0),
-                    Name = reader.GetString(1),
-                    //City = reader.GetBoolean(2), City needs a ToString for this to work.
-                });
+                User tempUser = new User(
+                    username: reader.GetString(1),
+                    address: GetCapitalById(reader.GetInt32(2)),
+                    isAdmin: false, // Example value, replace with actual value
+                    email: reader.GetString(3)
+                );
+
+                userList.Add(tempUser);
             }
+
             return userList;
+        }
+
+        public Capital GetCapitalById(long capitalId)
+        {
+            Capital? capital = null;
+            if (capitalId <= 0)
+            {
+                return capital;
+            }
+            using SqliteConnection con = new(_conString);
+            con.Open();
+            SqliteCommand cmd = con.CreateCommand();
+            cmd.CommandText = @"SELECT * FROM Capital";
+            cmd.CommandText += @"WHERE Id = $Id;";
+
+            cmd.Parameters.AddWithValue($"Id", capitalId);
+            using SqliteDataReader reader = cmd.ExecuteReader();
+            capital.Id = reader.GetInt32(0);
+            capital.Name = reader.GetString(1);
+            capital.Continent = Enum.Parse<Continent>(reader.GetString(2));
+            return capital;
         }
     }
 }

@@ -25,4 +25,6 @@
             return $"Longitude: {Longitude}, Latitude: {Latitude}";
         }
     }
+
+       
 }

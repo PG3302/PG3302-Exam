@@ -6,7 +6,7 @@ namespace TravelPlanner.TravelPlannerApp.Repository.Database
     internal class MockTripDatabase : IMockDatabase
     {
         private readonly List<Trip> _tripList = new();
-        private int _mockCurrentId = 0;
+        private long _mockCurrentId = 0;
 
         public MockTripDatabase()
         {
@@ -22,7 +22,7 @@ namespace TravelPlanner.TravelPlannerApp.Repository.Database
             _mockCurrentId++;
             _tripList.Add(trip);
 
-            Logger.LogInfo($"Trip {trip.DepartureId} -> {trip.ArrivalId} added.");
+            Logger.LogInfo($"Trip {trip.StartingCapital} -> {trip.DestinationCapital} added.");
 
             //Statement
             return (trip);

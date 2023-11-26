@@ -4,23 +4,21 @@ namespace TravelPlanner.TravelPlannerApp.Data.Models
 {
     public class User : Model
     {
-        public int Id { get; set; }
-        public string Username { get;  set; }
-        public Capital Address { get;  set; }
+        public long Id { get; set; }
+        public string Username { get; private set; }
+        public Capital Address { get; private set; }
         public bool IsAdmin { get; set; }
-        public string Email { get; set; }
 
-        public User(string username, Capital address, bool isAdmin = false, string email = "")
+        public User(string username, Capital address, bool isAdmin = false)
         {
             Username = username;
             Address = address;
             IsAdmin = isAdmin;
-            Email = email;
         }
 
         public override string ToString()
         {
-            return $"{Id}: {Username}, {Email} from {Address.Name}";
+            return $"{Id}: {Username} from {Address.Name}";
         }
     }
 }

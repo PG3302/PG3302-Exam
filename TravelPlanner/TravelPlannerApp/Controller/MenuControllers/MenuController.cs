@@ -103,12 +103,14 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             {
                 if (isAdmin)
                 {
-                    AdminMenu();
+                    _menuObjects.Add(new("Back.", MainMenu));
+                    GetUserSelectedMenu("logget inn som admin", AdminMenu);
 
                 }
                 else
                 {
-                    UserMenu();
+                    _menuObjects.Add(new("Back.", MainMenu));
+                    GetUserSelectedMenu("logget inn med vanlig acc", UserMenu);
                 }
             }
             _menuObjects.Add(new("Back.", MainMenu));

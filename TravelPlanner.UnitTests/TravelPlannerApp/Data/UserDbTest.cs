@@ -17,7 +17,6 @@ namespace TravelDatabase.DataAccess.SqLite.Tests
         [SetUp]
         public void Setup()
         {
-            // Use a unique database for each test to avoid interference
             _testDatabasePath = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.db");
 
             var options = new DbContextOptionsBuilder<TravelDbContext>()
@@ -26,7 +25,6 @@ namespace TravelDatabase.DataAccess.SqLite.Tests
 
             _dbContext = new TravelDbContext(options);
 
-            // Ensure the database is created
             _dbContext.Database.EnsureCreated();
         }
 
@@ -35,10 +33,9 @@ namespace TravelDatabase.DataAccess.SqLite.Tests
         {
             var testCapital = new Capital("TestCapital", new Coordinate(0.0, 0.0), Continent.Asia);
             var newUser = _dbContext.AddUser("TestUser", testCapital, isAdmin: false, email: "test@example.com");
-            // Act
+
             _dbContext.AddUser(newUser);
 
-            // Assert
             var addedUser = _dbContext.User.FirstOrDefault(u => u.Username == "TestUser");
             Assert.IsNotNull(addedUser);
             Assert.AreEqual(newUser.Username, addedUser.Username);
@@ -49,7 +46,6 @@ namespace TravelDatabase.DataAccess.SqLite.Tests
         [Test]
         public void GetUserById_ShouldRetrieveUserFromDatabase()
         {
-            // Arrange
             var newUser = new User
             {
                 Username = "TestUser",

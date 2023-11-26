@@ -17,8 +17,6 @@ namespace TravelDatabase.DataAccess.SqLite
     */
     public class TravelDbContext : DbContext
     {
-        private readonly String _conString = @"Data Source = Resources\TravelDB.db";
-
         public TravelDbContext(DbContextOptions<TravelDbContext> options) : base(options)
         {
             
@@ -146,7 +144,7 @@ namespace TravelDatabase.DataAccess.SqLite
             return User.FirstOrDefault(u => u.Username == username);
         }
 
-        public User? GetUserById(int id)
+        public User? GetUserById(long id)
         {
             return User.Find(id);
         }
@@ -163,12 +161,8 @@ namespace TravelDatabase.DataAccess.SqLite
 
             try
             {
-                // Add the new user to the User DbSet
                 User.Add(newUser);
-
-                // Save changes to the database
                 SaveChanges();
-
                 return newUser;
             }
             catch (Exception ex)
@@ -270,7 +264,7 @@ namespace TravelDatabase.DataAccess.SqLite
         */
 
 
-        public Capital? GetCapitalById(int capitalId)
+        public Capital? GetCapitalById(long capitalId)
         {
             if (capitalId <= 0)
             {
@@ -373,7 +367,6 @@ namespace TravelDatabase.DataAccess.SqLite
                 return null;
             }
 
-            // Use EF Core to fetch Trip by Id
             return Trip
                 .Where(t => t.Id == tripId)
                 .Include(t => t.DestinationCapital)
@@ -391,7 +384,7 @@ namespace TravelDatabase.DataAccess.SqLite
                 return null;
             }
 
-            // Use EF Core to fetch Trip by UserId
+
             return Trip
                 .Where(t => t.User.Id == userId)
                 .Include(t => t.DestinationCapital)

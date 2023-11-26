@@ -1,11 +1,8 @@
 ﻿using TravelDatabase.DataAccess.SqLite;
 using TravelPlanner.TravelPlannerApp.Data.Log;
-using TravelPlanner.TravelPlannerApp.Data.Models;
-using TravelPlanner.TravelPlannerApp.Repository.Database;
 
-namespace TravelPlanner.TravelPlannerApp.Service
-{
-    public class UserService
+namespace TravelPlanner.TravelPlannerApp.Service {
+	public class UserService
     {
         private readonly TravelDbContext userDatabase = new();
 

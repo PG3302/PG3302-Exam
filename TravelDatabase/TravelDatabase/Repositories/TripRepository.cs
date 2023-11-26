@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
 using TravelDatabase.DataAccess.SqLite;
 using TravelDatabase.Entities;
-using Microsoft.Data.Sqlite;
 
 namespace TravelDatabase.Repositories {
 	public class TripRepository {
@@ -46,15 +40,20 @@ namespace TravelDatabase.Repositories {
 				return null;
 			}
 
-			return Trip
+			return travelDbContext.Trip
 				.Where(t => t.Id == tripId)
-				.Include(t => t.DestinationCapital)
-					.ThenInclude(c => c.Coordinate) // Assuming Coordinate is a navigation property
-				.Include(t => t.StartingCapital)
-					.ThenInclude(c => c.Coordinate) // Assuming Coordinate is a navigation property
+				.Include(t => t.Arrival)
+				.Include(t => t.Departure)
 				.Include(t => t.User)
 				.FirstOrDefault();
 		}
-
+		public List<Trip> GetAllTrips() {
+			using var travelDbContext = new TravelDbContext();
+			return travelDbContext.Trip
+				.Include(t => t.Arrival)
+				.Include(t => t.Departure)
+				.Include(t => t.User)
+				.ToList();
+		}
 	}
 }

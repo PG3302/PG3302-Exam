@@ -15,4 +15,12 @@
     <PackageReference Include="SQLite" Version="3.13.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="TravelPlannerApp\Data\DataAccess\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TravelDatabase\TravelDatabase\TravelDatabase.csproj" />
+  </ItemGroup>
+
 </Project>

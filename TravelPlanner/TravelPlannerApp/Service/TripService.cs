@@ -1,9 +1,7 @@
-﻿using TravelPlanner.TravelPlannerApp.Data.Models;
-using TravelPlanner.TravelPlannerApp.Repository.Database;
+﻿using TravelDatabase.Entities;
 
-namespace TravelPlanner.TravelPlannerApp.Service
-{
-    internal class TripService
+namespace TravelPlanner.TravelPlannerApp.Service {
+	internal class TripService
     {
         private readonly MockTripDatabase tripDatabase = new();
 

@@ -1,12 +1,8 @@
 ﻿using TravelPlanner.TravelPlannerApp.Controller.UserControllers;
 using TravelPlanner.TravelPlannerApp.Data.DataType;
-using TravelPlanner.TravelPlannerApp.Data.Models;
-using TravelPlanner.TravelPlannerApp.Repository.Database;
-using TravelPlanner.TravelPlannerApp.Repository.Models;
 
-namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
-{
-    internal class MenuController
+namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers {
+	internal class MenuController
     {
         private User? _currentUser = null;
         private Model? _currentModel = null;

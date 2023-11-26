@@ -2,6 +2,7 @@
 {
     public enum Continent
     {
+        None,
         Africa,
         Antarctica,
         Asia,

@@ -1,208 +1,19 @@
-﻿using System.Reflection;
-using TravelPlanner.TravelPlannerApp.Controller.UserControllers;
-using TravelPlanner.TravelPlannerApp.Data.DataType;
-using TravelPlanner.TravelPlannerApp.Data.Models;
-using TravelPlanner.TravelPlannerApp.Repository.Database;
-using TravelPlanner.TravelPlannerApp.Repository.Models;
+﻿using TravelPlanner.TravelPlannerApp.Controller.UserControllers;
 
 namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
 {
     internal class MenuController
     {
-        private User? _currentUser = null;
         private Model? _currentModel = null;
         private int _selectedMenuIndex = 0;
         private List<MenuObject> _menuObjects = new();
-        private UserController userController = new();
-        private bool isLoggedIn = false;
-        private bool isAdmin = false;
+        private UserController _userController = new();
 
-
-        //REMOVE BELOW
-        List<Model>? MockCapitalList;
-        private void TmpCreateMockList()
+        public void AddMenu(string menuText, Action menuMethod)
         {
-            MockCapitalList = new();
+            MenuObject menuObject = new(menuText, menuMethod);
 
-            for (int i = 0; i < 95; i++)
-            {
-                MockCapitalList.Add(new Capital($"{i}", new Coordinate(RandomNumber(), RandomNumber()), Continent.Antarctica));
-            }
-        }
-
-        // Login/Logout section
-        private void TmpLoginSomething()
-        {
-            Console.Clear();
-            _menuObjects.Add(new("Login", LoginSubPage));
-            _menuObjects.Add(new("Create user", CreateUser));
-            _menuObjects.Add(new("Back.", MainMenu));
-            GetUserSelectedMenu("You are currently not logged in. Do you wish you log in or create a user?", MainMenu);
-        }
-
-        private void LoginSubPage()
-        {
-            Console.Clear();
-            _menuObjects.Add(new("Standard User", LoginRegUser));
-            _menuObjects.Add(new("Admin user", LoginAdminUser));
-            _menuObjects.Add(new("Back.", MainMenu));
-            GetUserSelectedMenu("Login/login", MainMenu);
-        }
-
-        private void LoginRegUser()
-        {
-            isLoggedIn = true;
-            MainMenu();
-        }
-
-        private void LoginAdminUser()
-        {
-            isLoggedIn = true;
-            isAdmin = true;
-            MainMenu();
-        }
-        private void LogOutMenu()
-        {
-            isLoggedIn = false;
-            isAdmin = false;
-            MainMenu();
-        }
-
-        // Create user
-        private void CreateUser()
-        {
-            Console.Clear();
-            _menuObjects.Add(new("Back.", MainMenu));
-            GetUserSelectedMenu("Create user", MainMenu);
-        }
-
-        // Admin, user and login menu's
-        private void AdminMenu()
-        {
-            _menuObjects.Add(new("Edit user", MainMenu));
-            _menuObjects.Add(new("Edit trip", MainMenu));
-            _menuObjects.Add(new("Back.", MainMenu));
-            GetUserSelectedMenu("Welcome, Mr.Admin *brutally tips fedora*", MainMenu);
-        }
-
-        private void UserMenu()
-        {
-            _menuObjects.Add(new("Add trip/Search", MainMenu));
-            _menuObjects.Add(new("My upcomming trips", MainMenu));
-            _menuObjects.Add(new("Back.", MainMenu));
-            GetUserSelectedMenu("Welcome, *User*", MainMenu);// Later add specified user-name
-        }
-
-        private void LoginMenu()
-        {
-            if (isLoggedIn == false)
-            {
-                TmpLoginSomething();
-            }
-            else
-            {
-                if (isAdmin)
-                {
-                    _menuObjects.Add(new("Back.", MainMenu));
-                    GetUserSelectedMenu("logget inn som admin", AdminMenu);
-
-                }
-                else
-                {
-                    _menuObjects.Add(new("Back.", MainMenu));
-                    GetUserSelectedMenu("logget inn med vanlig acc", UserMenu);
-                }
-            }
-            _menuObjects.Add(new("Back.", MainMenu));
-        }
-
-
-
-        private int RandomNumber()
-        {
-            Random rng = new();
-            return rng.Next(-1000, 1000);
-        }
-
-        private void PrintCapital()
-        {
-            Console.Clear();
-            Console.WriteLine($"Your home capital is: {_currentModel}... Good choice. Press enter to continue...");
-            Console.ReadKey();
-            MainMenu();
-        }
-        //REMOVE ABOVE
-
-
-        public void Start()
-        {
-            //Remove
-            TmpCreateMockList();
-
-            MainMenu();
-        }
-
-        // Main Menu
-        private void MainMenu()
-        {
-            if (isLoggedIn == false)
-            {
-                _menuObjects.Add(new("Login.", LoginMenu));
-            }
-            else
-            {
-                _menuObjects.Add(new("Logout.", LogOutMenu));
-            }
-
-            _menuObjects.Add(new("List.", ListMenu));
-
-            if (isLoggedIn == true)
-            {
-                if (!isAdmin)
-                {
-                    _menuObjects.Add(new("My Trips", UserMenu));
-                }
-
-                if (isAdmin)
-                {
-                    _menuObjects.Add(new("Admin Page", AdminMenu));
-                }
-            }
-
-            _menuObjects.Add(new("Exit.", ExitConsole));
-
-            if (isLoggedIn == true)
-            {
-                if (isAdmin)
-                {
-                    GetUserSelectedMenu("Welcome to Kristiania Travel Planner, Admin", ExitConsole);
-                }
-                else
-                {
-                    GetUserSelectedMenu("Welcome to Kristiania Travel Planner, *User Name*", ExitConsole);
-                }
-            }
-            else
-            {
-                GetUserSelectedMenu("Welcome to Kristiania Travel Planner...", ExitConsole);
-            }
-
-        }
-
-
-        private void ListMenu()
-        {
-            _menuObjects.Add(new("Back.", MainMenu));
-
-            GetUserSelectedMenu("Please select your home capital...", MainMenu, MockCapitalList, PrintCapital);
-        }
-
-        private void ExitConsole()
-        {
-            Console.Clear();
-            Console.WriteLine("Quit stuff complete... Press any key to leave...");
-            Console.ReadKey();
-            Environment.Exit(0);
+            _menuObjects.Add(menuObject);
         }
 
         private void PrintMenu(string title, List<Model>? list = null)
@@ -241,7 +52,7 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             }
         }
 
-        private void GetUserSelectedMenu(string title, Action previousMenu, List<Model>? list = null, Action? selectedModelMenu = null)
+        public void RunMenu(string title, Action previousMenu, List<Model>? list = null, Action? selectedModelMenu = null)
         {
             int currentPage = 0;
             List<ConsoleKey> allowedKeys = new();
@@ -255,7 +66,7 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
                 PrintMenu(title, pageOfList);
 
                 allowedKeys = CreateListOfAllowedKeys(currentPage, pageOfList.Count, list);
-                keyPressed = userController.GetUserMenuChoiceKey(allowedKeys);
+                keyPressed = _userController.GetUserMenuChoiceKey(allowedKeys);
 
                 if (keyPressed == ConsoleKey.UpArrow)
                 {

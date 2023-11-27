@@ -8,7 +8,7 @@ namespace TravelDatabase.Repositories
 {
     public class UserRepository 
 		{
-		public static UserModel AddUser(UserModel newUser) {
+		public UserModel AddUser(UserModel newUser) {
 			using TravelDbContext travelDbContext = new();
 			if (!travelDbContext.User.Any(u => u.Email == newUser.Email)) //if input email does not exist in DB list w user emails 
 				{

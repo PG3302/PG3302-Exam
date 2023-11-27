@@ -10,10 +10,10 @@ namespace TravelPlanner.TravelPlannerApp.Service {
 
         public TripModel AddTrip(string userEmail, int departureCapitalId, int arrivalCapitalId)
         {
-            UserModel user = _userRepository.GetUserByUsername(userEmail);
+            UserModel? user = _userRepository.GetUserByEmail(userEmail);
             CapitalModel departureCapital = _capitalRepository.GetCapitalById(departureCapitalId);
             CapitalModel arrivalCapital = _capitalRepository.GetCapitalById(arrivalCapitalId);
-            TripModel newTrip = new(user, departureCapital, arrivalCapital);
+            TripModel newTrip = new(null, user, departureCapital, arrivalCapital);
 
             return _tripRepository.AddTrip(newTrip);
         }
@@ -35,7 +35,7 @@ namespace TravelPlanner.TravelPlannerApp.Service {
 
         public List<TripModel> GetTripByCapital(int capitalId)
         {
-            return _tripRepository.GetTripsByCapital(capitalId);
+            return _tripRepository.GetTripByCapital(capitalId);
         }
     }
 }

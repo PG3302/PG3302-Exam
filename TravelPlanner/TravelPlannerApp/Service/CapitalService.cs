@@ -26,21 +26,5 @@ namespace TravelPlanner.TravelPlannerApp.Service {
         {
             return _capitalRepository.GetCapitalByContinent(continent);
         }
-
-        /*
-        private readonly MockCapitalDatabase capitalDatabase = new();
-
-        public CapitalModel? GetCapitalByName(string name)
-        {
-            CapitalModel? requestedCapital = capitalDatabase.GetCapitalByName(name);
-
-            return requestedCapital;
-        }
-
-        public CapitalModel? GetCapitalById(long id)
-        {
-            return capitalDatabase.GetCapitalById(id);
-        }
-        */
     }
 }

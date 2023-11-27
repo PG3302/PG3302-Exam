@@ -46,7 +46,7 @@ namespace TravelDatabase.Repositories
 			Capital? capital = travelDbContext.Capital.First(capital => capital.CapitalName == name);
 			return MapCapital(capital);
 		}
-        public List<CapitalModel> GetCapitalsByContinent(Continent continent)
+        public List<CapitalModel> GetCapitalByContinent(Continent continent)
         {
             using TravelDbContext travelDbContext = new TravelDbContext();
 			List<Capital> capitals = travelDbContext.Capital.Include(c => c.Continent).Where(c => c.Continent == continent).ToList();

@@ -9,7 +9,7 @@ namespace TravelDatabase.Repositories
 {
     public class TripRepository
     {
-        public static TripModel AddTrip(TripModel newTrip)
+        public TripModel AddTrip(TripModel newTrip)
         {
             using TravelDbContext travelDbContext = new();
             Trip trip = new();
@@ -53,7 +53,7 @@ namespace TravelDatabase.Repositories
             return trips.Select(t => MapTrip(t)).ToList();
         }
 
-        public List<TripModel> GetTripsByCapital(Capital capital)
+        public List<TripModel> GetTripByCapital(Capital capital)
         {
             using TravelDbContext travelDbContext = new TravelDbContext();
             Logger.LogInfo($"Getting trips by capital: {capital}");

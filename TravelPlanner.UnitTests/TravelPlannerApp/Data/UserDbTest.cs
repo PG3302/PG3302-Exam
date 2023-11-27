@@ -3,13 +3,15 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using TravelDatabase.Data.DataType;
-using TravelDatabase.DataAccess.DataType;
+using TravelDatabase.Data.DataType.DataAccess.DataType;
+using TravelDatabase.Data.DataType.DataAccess.SqLite;
 using TravelPlanner.TravelPlannerApp.Data.DataType;
 using TravelPlanner.TravelPlannerApp.Data.Models;
 using TravelPlanner.TravelPlannerApp.Service;
 
-namespace TravelDatabase.DataAccess.SqLite.Tests {
-	[TestFixture]
+namespace TravelDatabase.DataAccess.SqLite.Tests
+{
+    [TestFixture]
     public class TravelDbContextTests
     {
         private TravelDbContext _dbContext;

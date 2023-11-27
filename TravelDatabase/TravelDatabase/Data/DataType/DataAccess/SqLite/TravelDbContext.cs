@@ -2,8 +2,9 @@
 using TravelDatabase.Entities;
 
 
-namespace TravelDatabase.DataAccess.SqLite {
-	public class TravelDbContext : DbContext
+namespace TravelDatabase.Data.DataType.DataAccess.SqLite
+{
+    public class TravelDbContext : DbContext
     {
         public DbSet<User> User => Set<User>();
         public DbSet<Trip> Trip => Set<Trip>();

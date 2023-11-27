@@ -1,10 +1,11 @@
 
 
-using TravelDatabase.DataAccess.SqLite;
+using TravelDatabase.Data.DataType.DataAccess.SqLite;
 using TravelDatabase.Repositories;
 
-namespace TravelDbTest {
-	public class Tests {
+namespace TravelDbTest
+{
+    public class Tests {
 		[SetUp]
 		public void Setup() {
 			using TravelDbContext travelDbContext = new();

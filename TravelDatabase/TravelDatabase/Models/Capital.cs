@@ -1,9 +1,10 @@
 ﻿using TravelDatabase.Data.DataType;
-using TravelDatabase.DataAccess.DataType;
+using TravelDatabase.Data.DataType.DataAccess.DataType;
 using TravelPlanner.TravelPlannerApp.Data.DataType;
 
-namespace TravelDatabase.Models {
-	public class Capital : Model {
+namespace TravelDatabase.Models
+{
+    public class Capital : Model {
 		public long Id {
 			get; set;
 		}

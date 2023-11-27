@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TravelDatabase.DataAccess.SqLite;
+using TravelDatabase.Data.DataType.DataAccess.SqLite;
 using TravelDatabase.Entities;
 
-namespace TravelDatabase.Repositories {
-	public class TripRepository {
+namespace TravelDatabase.Repositories
+{
+    public class TripRepository {
 		public static void AddTrip(int userId , int departLocation , int arrivalLocation) {
 			using TravelDbContext travelDbContext = new();
 			Trip trip = new() {

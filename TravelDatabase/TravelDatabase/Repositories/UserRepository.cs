@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TravelDatabase.DataAccess.SqLite;
+using TravelDatabase.Data.DataType.DataAccess.SqLite;
 using TravelDatabase.Entities;
 
-namespace TravelDatabase.Repositories {
-	public class UserRepository 
+namespace TravelDatabase.Repositories
+{
+    public class UserRepository 
 		{
 		public static int AddUser(string username , Capital city , int admin) {
 			if (admin == 0 || admin == 1) 

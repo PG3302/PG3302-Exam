@@ -1,8 +1,9 @@
-﻿using TravelDatabase.DataAccess.SqLite;
+﻿using TravelDatabase.Data.DataType.DataAccess.SqLite;
 using TravelDatabase.Entities;
 
-namespace TravelDatabase.Repositories {
-	public class CapitalRepository {
+namespace TravelDatabase.Repositories
+{
+    public class CapitalRepository {
 		public static int AddCapital(string name, Continent continent, decimal longitude, decimal latitude) {
 			using TravelDbContext travelDbContext = new();
 			Capital capital = new();

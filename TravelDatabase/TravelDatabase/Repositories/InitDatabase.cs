@@ -2,12 +2,13 @@
 using CsvHelper.Configuration;
 using System.Globalization;
 using TravelDatabase.Data.DataType;
-using TravelDatabase.DataAccess.DataType;
-using TravelDatabase.DataAccess.SqLite;
+using TravelDatabase.Data.DataType.DataAccess.DataType;
+using TravelDatabase.Data.DataType.DataAccess.SqLite;
 using TravelDatabase.Entities;
 
-namespace TravelDatabase.Repositories {
-	public class InitDatabase {
+namespace TravelDatabase.Repositories
+{
+    public class InitDatabase {
 		public static void InitFromCsv() {
 			CsvConfiguration config = new CsvConfiguration(CultureInfo.InvariantCulture) {
 				HasHeaderRecord = true

@@ -1,10 +1,9 @@
-﻿using TravelPlanner.TravelPlannerApp.Data.Log;
-using TravelPlanner.TravelPlannerApp.Data.Models;
+﻿using TravelDatabase.Models;
+using TravelPlanner.TravelPlannerApp.Data.Log;
 using TravelPlanner.TravelPlannerApp.Repository.Database;
 
-namespace TravelPlanner.TravelPlannerApp.Service
-{
-    public class UserService
+namespace TravelPlanner.TravelPlannerApp.Service {
+	public class UserService
     {
         private readonly MockUserDatabase userDatabase = new();
 

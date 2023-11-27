@@ -1,9 +1,10 @@
-﻿using TravelPlanner.TravelPlannerApp.Data.Handlers;
+﻿using TravelDatabase.Data.Handlers;
+using TravelDatabase.Data.Log;
+using TravelPlanner.TravelPlannerApp.Data.Handlers;
 using TravelPlanner.TravelPlannerApp.Data.Log;
 
-namespace TravelPlanner.UnitTests.TravelPlannerApp.Data
-{
-    internal class LoggerTests
+namespace TravelPlanner.UnitTests.TravelPlannerApp.Data {
+	internal class LoggerTests
     {
         private static readonly string folderLocation = Directory.GetCurrentDirectory();
         private static readonly string fileName = "LoggerTests.txt";

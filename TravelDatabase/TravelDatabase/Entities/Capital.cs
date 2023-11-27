@@ -1,4 +1,5 @@
-﻿using TravelPlanner.TravelPlannerApp.Data.DataType;
+﻿using TravelDatabase.Data.DataType;
+using TravelDatabase.DataAccess.DataType;
 
 namespace TravelDatabase.Entities {
 	public class Capital {

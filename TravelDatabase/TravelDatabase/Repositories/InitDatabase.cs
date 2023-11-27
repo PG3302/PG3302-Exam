@@ -1,9 +1,10 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
 using System.Globalization;
+using TravelDatabase.Data.DataType;
+using TravelDatabase.DataAccess.DataType;
 using TravelDatabase.DataAccess.SqLite;
 using TravelDatabase.Entities;
-using TravelPlanner.TravelPlannerApp.Data.DataType;
 
 namespace TravelDatabase.Repositories {
 	public class InitDatabase {

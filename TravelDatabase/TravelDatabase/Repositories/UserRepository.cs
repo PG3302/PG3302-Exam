@@ -37,17 +37,7 @@ namespace TravelDatabase.Repositories
 			List<User> users = travelDbContext.User.ToList();
 			return users.Select(u => MapUser(u)).ToList();
 		}
-        public User? GetUserById(long id)
-        {
-            using TravelDbContext travelDbContext = new();
-            return travelDbContext.User.Find(id);
-        }
-        public User? GetUserByUsername(string username)
-        {
-            using TravelDbContext travelDbContext = new();
-            return travelDbContext.User.FirstOrDefault(u => u.Name == username);
-        }
-
+        
         public void DeleteUser(int userId) 
 		{
 			using TravelDbContext travelDbContext = new();

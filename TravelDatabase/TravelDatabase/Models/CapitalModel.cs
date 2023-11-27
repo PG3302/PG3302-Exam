@@ -8,10 +8,10 @@ namespace TravelDatabase.Models
 		public Coordinate Coordinate { get; private set; }
 		public Continent Continent { get; private set; }
 
-		public CapitalModel(int id, string name , Coordinate coordinate , Continent continent) {
+		public CapitalModel(int id, string name , decimal longitude, decimal latitude , Continent continent) {
 			Id = id;
 			Name = name;
-			Coordinate = coordinate;
+			Coordinate = new Coordinate((double) longitude , (double) latitude);
 			Continent = continent;
 		}
 

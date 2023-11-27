@@ -14,8 +14,8 @@ namespace TravelDatabase.Repositories
             Trip trip = new()
             {
                 UserId = userId,
-                DepartureId = departLocation,
-                ArrivalId = arrivalLocation,
+                DepartureCapitalId = departLocation,
+                ArrivalCapitalId = arrivalLocation,
             };
             Logger.LogInfo($" Adding trip: {trip}");
             travelDbContext.Add(trip);
@@ -39,8 +39,8 @@ namespace TravelDatabase.Repositories
             Logger.LogInfo("Attempting to get Trip by Id: " + tripId);
             return travelDbContext.Trip
                 .Where(t => t.Id == tripId)
-                .Include(t => t.Arrival)
-                .Include(t => t.Departure)
+                .Include(t => t.ArrivalCapital)
+                .Include(t => t.DepartureCapital)
                 .Include(t => t.User)
                 .FirstOrDefault();
         }
@@ -50,9 +50,9 @@ namespace TravelDatabase.Repositories
             using TravelDbContext travelDbContext = new TravelDbContext();
             Logger.LogInfo($"Getting trips by capital: {capital}");
             return travelDbContext.Trip
-                .Include(t => t.Departure)
-                .Include(t => t.Arrival)
-                .Where(t => t.DepartureId == capital.Id || t.ArrivalId == capital.Id)
+                .Include(t => t.DepartureCapital)
+                .Include(t => t.ArrivalCapital)
+                .Where(t => t.DepartureCapitalId == capital.Id || t.ArrivalCapitalId == capital.Id)
                 .ToList();
         }
 
@@ -61,8 +61,8 @@ namespace TravelDatabase.Repositories
             using TravelDbContext travelDbContext = new();
             Logger.LogInfo("Attempting to get all trips...");
             return travelDbContext.Trip
-                .Include(t => t.Arrival)
-                .Include(t => t.Departure)
+                .Include(t => t.ArrivalCapital)
+                .Include(t => t.DepartureCapital)
                 .Include(t => t.User)
                 .ToList();
         }
@@ -81,8 +81,8 @@ namespace TravelDatabase.Repositories
             Logger.LogInfo($"Editing trip: {oldTrip}");
 
             oldTrip.UserId = userId;
-            oldTrip.DepartureId = departLocation;
-            oldTrip.ArrivalId = arrivalLocation;
+            oldTrip.DepartureCapitalId = departLocation;
+            oldTrip.ArrivalCapitalId = arrivalLocation;
             Logger.LogInfo($"New version of trip: {oldTrip}");
 
             travelDbContext.SaveChanges();

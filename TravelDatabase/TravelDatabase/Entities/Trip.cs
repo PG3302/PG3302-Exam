@@ -9,9 +9,9 @@ namespace TravelDatabase.Entities {
 		public int Id { get; set; } //PK
 		public User? User {	get; set; } //Navigation Property
 		public int UserId { get; set; }
-		public Capital? Departure { get; set; }
-		public int DepartureId { get; set; } //FK
-		public Capital? Arrival { get; set; }
-		public int ArrivalId { get; set; } //FK
+		public Capital? DepartureCapital { get; set; }
+		public int DepartureCapitalId { get; set; } //FK
+		public Capital? ArrivalCapital { get; set; }
+		public int ArrivalCapitalId { get; set; } //FK
 	}
 }

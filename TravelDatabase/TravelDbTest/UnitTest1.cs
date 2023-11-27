@@ -16,19 +16,15 @@ namespace TravelDbTest
 
 		[Test]
 		public void AddUserTest() {
-			int userId = UserRepository.AddUser("test", new CapitalRepository().GetAllCapitals().First(), 0);
+			int userId = UserRepository.AddUser(new TravelDatabase.Models.UserModel("test" , "test@test.com" , false));
 			Assert.That(1 , Is.EqualTo(userId));
 		} // test DB can be found \\TravelDatabase\TravelDbTest\bin\Debug\net6.0\Resources
 
-		[Test]
-		public void AddUserOutsideAdminSpecsFails() {
-			Assert.Throws<Exception>(() => UserRepository.AddUser("test" , new TravelDatabase.Entities.Capital() , 3)); 
-			//throws<exception> thinks it's recieving an int. lambda fix
 		}
 		[Test]
 		public void AddCapitalTest() {
 			int capitalId = CapitalRepository.AddCapital("test" , 0 , 1 , 2);
-			var allCapitals = new CapitalRepository().GetAllCapitals();
+			var allCapitals = new CapitalRepository().GetCapitalAll();
 			Assert.That(allCapitals.Any(capital => capital.CapitalName.Contains("test")));
 		}
 	}

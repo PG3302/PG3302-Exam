@@ -1,33 +1,26 @@
 ﻿using TravelDatabase.Models;
-using TravelPlanner.TravelPlannerApp.Data.Log;
-using TravelPlanner.TravelPlannerApp.Repository.Database;
+using TravelDatabase.Repositories;
 
 namespace TravelPlanner.TravelPlannerApp.Service {
 	public class UserService
     {
-        private readonly MockUserDatabase userDatabase = new();
+        private readonly UserRepository _userRepository = new();
 
-        public UserModel AddUser(string username, CapitalModel capital, bool isAdmin = false)
+        public UserModel AddUser(string name, string email, bool isAdmin = false)
         {
-            UserModel newUser = new(username, capital, isAdmin);
+            UserModel newUser = new(name, email, isAdmin);
 
-            return userDatabase.AddUser(newUser);
+            return _userRepository.AddUser(newUser);
         }
 
-        public UserModel? GetUserByUsername(string username)
+        public List<UserModel> GetUserAll()
         {
-            UserModel? requestedUser = userDatabase.GetUserByUsername(username);
-
-            //Security for finding brute force attacks
-            if (requestedUser == null) 
-                Logger.LogInfo($"Request for username {username} not found.");
-
-            return requestedUser;
+            return _userRepository.GetUserAll();
         }
 
-        public UserModel? GetUserById(long id)
+        public UserModel? GetUserByEmail(string email)
         {
-            return userDatabase.GetUserById(id);
+            return _userRepository.GetUserByEmail(email);
         }
     }
 }

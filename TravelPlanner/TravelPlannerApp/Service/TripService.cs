@@ -1,39 +1,41 @@
 ﻿using TravelDatabase.Models;
+using TravelDatabase.Repositories;
 
 namespace TravelPlanner.TravelPlannerApp.Service {
 	internal class TripService
     {
-        //private readonly MockTripDatabase tripDatabase = new();
+        private readonly TripRepository _tripRepository = new();
+        private readonly UserRepository _userRepository = new();
+        private readonly CapitalRepository _capitalRepository = new();
 
-        public TripModel AddTrip(UserModel user, CapitalModel start, CapitalModel destination)
+        public TripModel AddTrip(string userEmail, int departureCapitalId, int arrivalCapitalId)
         {
-            TripModel newTrip = new(user, start, destination)
-            {
-                Price = CalculateTripPrice(start, destination)
-            };
+            UserModel user = _userRepository.GetUserByUsername(userEmail);
+            CapitalModel departureCapital = _capitalRepository.GetCapitalById(departureCapitalId);
+            CapitalModel arrivalCapital = _capitalRepository.GetCapitalById(arrivalCapitalId);
+            TripModel newTrip = new(user, departureCapital, arrivalCapital);
 
-            return tripDatabase.AddTrip(newTrip);
+            return _tripRepository.AddTrip(newTrip);
         }
 
-        public TripModel? GetTripByUsername(string username)
+        public List<TripModel> GetTripAll()
         {
-            TripModel? requestedTrip = tripDatabase.GetTripByUsername(username);
-
-            return requestedTrip;
+            return _tripRepository.GetTripAll();
         }
 
-        public TripModel? GetTripById(long id)
+        public TripModel GetTripById(int tripId)
         {
-            return tripDatabase.GetTripById(id);
+            return _tripRepository.GetTripById(tripId);
         }
 
-        private int CalculateTripPrice(CapitalModel start, CapitalModel destination)
+        public List<TripModel> GetTripByUser(string userEmail)
         {
-            double distance = start.Coordinate - destination.Coordinate;
-            double absoluteDistance = Math.Abs(distance);
-            int price = Convert.ToInt32(absoluteDistance * 100);
+            return _tripRepository.GetTripByUser(userEmail);
+        }
 
-            return price;
+        public List<TripModel> GetTripByCapital(int capitalId)
+        {
+            return _tripRepository.GetTripsByCapital(capitalId);
         }
     }
 }

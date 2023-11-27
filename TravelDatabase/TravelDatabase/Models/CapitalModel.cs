@@ -3,17 +3,13 @@
 namespace TravelDatabase.Models
 {
     public class CapitalModel : Model {
-		public string Name {
-			get; private set;
-		}
-		public Coordinate Coordinate {
-			get; private set;
-		}
-		public Continent Continent {
-			get; private set;
-		}
+        public int Id { get; private set; }
+        public string Name { get; private set; }
+		public Coordinate Coordinate { get; private set; }
+		public Continent Continent { get; private set; }
 
-		public CapitalModel(string name , Coordinate coordinate , Continent continent) {
+		public CapitalModel(int id, string name , Coordinate coordinate , Continent continent) {
+			Id = id;
 			Name = name;
 			Coordinate = coordinate;
 			Continent = continent;

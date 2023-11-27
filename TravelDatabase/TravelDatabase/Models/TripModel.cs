@@ -6,7 +6,8 @@
 		public CapitalModel DestinationCapital { get; private set; }
 		public double Price { get; private set; }
 
-		public TripModel(UserModel user , CapitalModel startingCapital , CapitalModel destinationCapital) {
+		public TripModel(int id, UserModel user , CapitalModel startingCapital , CapitalModel destinationCapital) {
+			Id = id;
 			User = user;
 			StartingCapital = startingCapital;
 			DestinationCapital = destinationCapital;

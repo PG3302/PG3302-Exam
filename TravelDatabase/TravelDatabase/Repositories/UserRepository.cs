@@ -8,7 +8,7 @@ namespace TravelDatabase.Repositories
 {
     public class UserRepository 
 		{
-		public static int AddUser(UserModel newUser) {
+		public static UserModel AddUser(UserModel newUser) {
 			using TravelDbContext travelDbContext = new();
 			if (!travelDbContext.User.Any(u => u.Email == newUser.Email)) //if input email does not exist in DB list w user emails 
 				{
@@ -24,19 +24,32 @@ namespace TravelDatabase.Repositories
 				Logger.LogInfo($"Adding user to DB: {user}"); 
 				travelDbContext.User.Add(user);
 				travelDbContext.SaveChanges();
-
-				return user.Id;
+				return MapUser(user);
 			}
 			throw new Exception("Admin value not allowed");
 		}
 
 		//Only Admins should get access to this
-		public List<UserModel?> GetAllUsers(int userId) 
+		public List<UserModel?> GetUserAll() 
 		{
 			using TravelDbContext travelDbContext = new();
 			List<User> users = travelDbContext.User.ToList();
 			return users.Select(u => MapUser(u)).ToList();
 		}
+
+		public UserModel? GetUserByEmail(string email)
+        {
+			using TravelDbContext travelDbContext = new();
+			User? user = travelDbContext.User.FirstOrDefault(u => u.Email == email);
+			return MapUser(user);
+        }
+
+		public UserModel? GetUserById(int id)
+        {
+			using TravelDbContext travelDbContext = new();
+			User? user = travelDbContext.User.Find(id);
+			return MapUser(user);
+        }
         
         public void DeleteUser(int userId) 
 		{
@@ -54,20 +67,6 @@ namespace TravelDatabase.Repositories
 			oldUser.Admin = Admin;
 			travelDbContext.SaveChanges();
 		}
-
-		public UserModel? GetUserById(int id)
-        {
-			using TravelDbContext travelDbContext = new();
-			User? user = travelDbContext.User.Find(id);
-			return MapUser(user);
-        }
-        
-		public UserModel? GetUserByEmail(string email)
-        {
-			using TravelDbContext travelDbContext = new();
-			User? user = travelDbContext.User.FirstOrDefault(u => u.Email == email);
-			return MapUser(user);
-        }
 
 		internal static UserModel? MapUser(User? user) {
 			if (user == null) {

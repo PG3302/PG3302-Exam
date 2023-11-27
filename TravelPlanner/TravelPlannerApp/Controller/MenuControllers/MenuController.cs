@@ -1,3 +1,4 @@
+using TravelDatabase.Models;
 using TravelPlanner.TravelPlannerApp.Controller.UserControllers;
 
 namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers

@@ -3,32 +3,36 @@ using Microsoft.Extensions.Logging;
 using TravelDatabase.Data.DataType.DataAccess.SqLite;
 using TravelDatabase.Data.Log;
 using TravelDatabase.Entities;
+using TravelDatabase.Models;
 
 namespace TravelDatabase.Repositories
 {
     public class TripRepository
     {
-        public static void AddTrip(int userId, int departLocation, int arrivalLocation)
+        public static TripModel AddTrip(TripModel newTrip)
         {
             using TravelDbContext travelDbContext = new();
-            Trip trip = new()
+            Trip trip = new();
             {
-                UserId = userId,
-                DepartureCapitalId = departLocation,
-                ArrivalCapitalId = arrivalLocation,
-            };
+                trip.UserId = newTrip.User.Id;
+				trip.DepartureCapitalId = newTrip.StartingCapital.Id;
+                trip.ArrivalCapitalId = newTrip.DestinationCapital.Id;
+            }
             Logger.LogInfo($" Adding trip: {trip}");
             travelDbContext.Add(trip);
             travelDbContext.SaveChanges();
-        }
-        public List<Trip> GetTripByUser(int userId)
-        {
-            using TravelDbContext travelDbContext = new();
-            Logger.LogInfo("Attempting to get all trips from user ID: " + userId);
-            return travelDbContext.Trip.Where(trip => trip.UserId == userId).ToList();
+            return MapTrip(trip);
         }
 
-        public Trip? GetTripById(int tripId)
+        public List<TripModel> GetTripAll()
+        {
+            using TravelDbContext travelDbContext = new();
+            List<Trip> trips = travelDbContext.Trip.ToList();
+            Logger.LogInfo("Attempting to get all trips...");
+            return trips.Select(t => MapTrip(t)).ToList();
+        }
+
+        public TripModel GetTripById(int tripId)
         {
             using TravelDbContext travelDbContext = new();
             if (tripId <= 0)
@@ -37,34 +41,26 @@ namespace TravelDatabase.Repositories
                 return null;
             }
             Logger.LogInfo("Attempting to get Trip by Id: " + tripId);
-            return travelDbContext.Trip
-                .Where(t => t.Id == tripId)
-                .Include(t => t.ArrivalCapital)
-                .Include(t => t.DepartureCapital)
-                .Include(t => t.User)
-                .FirstOrDefault();
+            Trip? trip = travelDbContext.Trip.Find(tripId);
+            return MapTrip(trip);
         }
 
-        public List<Trip> GetTripsByCapital(Capital capital)
+        public List<TripModel> GetTripByUser(string email)
+        {
+            using TravelDbContext travelDbContext = new();
+            Logger.LogInfo($"Attempting to get all trips with mail: {email}!");
+            List<Trip> trips = travelDbContext.Trip.Where(t => t.User.Email == email).ToList();
+            return trips.Select(t => MapTrip(t)).ToList();
+        }
+
+        public List<TripModel> GetTripsByCapital(Capital capital)
         {
             using TravelDbContext travelDbContext = new TravelDbContext();
             Logger.LogInfo($"Getting trips by capital: {capital}");
-            return travelDbContext.Trip
-                .Include(t => t.DepartureCapital)
-                .Include(t => t.ArrivalCapital)
-                .Where(t => t.DepartureCapitalId == capital.Id || t.ArrivalCapitalId == capital.Id)
-                .ToList();
-        }
-
-        public List<Trip> GetTripAll()
-        {
-            using TravelDbContext travelDbContext = new();
-            Logger.LogInfo("Attempting to get all trips...");
-            return travelDbContext.Trip
-                .Include(t => t.ArrivalCapital)
-                .Include(t => t.DepartureCapital)
-                .Include(t => t.User)
-                .ToList();
+            List<Trip> trips = travelDbContext.Trip.Where(
+                t => t.DepartureCapital.CapitalName == capital.CapitalName || 
+                t.ArrivalCapital.CapitalName == capital.CapitalName).ToList();
+            return trips.Select(t => MapTrip(t)).ToList();
         }
         public void DeleteTrip(int tripId)
         {
@@ -86,6 +82,17 @@ namespace TravelDatabase.Repositories
             Logger.LogInfo($"New version of trip: {oldTrip}");
 
             travelDbContext.SaveChanges();
+        }
+
+        internal static TripModel? MapTrip(Trip? trip) {
+            if (trip == null) {
+                return null;
+            }
+            return new TripModel(
+                trip.Id , 
+                UserRepository.MapUser(trip.User) , 
+                CapitalRepository.MapCapital(trip.DepartureCapital) , 
+                CapitalRepository.MapCapital(trip.ArrivalCapital));
         }
     }
 }

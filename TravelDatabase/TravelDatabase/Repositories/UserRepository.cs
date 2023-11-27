@@ -69,11 +69,15 @@ namespace TravelDatabase.Repositories
 			return MapUser(user);
         }
 
-		private UserModel? MapUser(User? user) {
+		internal static UserModel? MapUser(User? user) {
 			if (user == null) {
 				return null;
 			}
-			return new UserModel(user.Name! , user.Email!, user.Admin == 1);
+			return new UserModel(
+				user.Id,
+				user.Name! , 
+				user.Email!, 
+				user.Admin == 1);
 		}
 	}
 }

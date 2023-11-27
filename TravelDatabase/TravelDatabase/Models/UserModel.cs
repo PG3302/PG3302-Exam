@@ -1,5 +1,7 @@
 ﻿namespace TravelDatabase.Models {
 	public class UserModel : Model {
+		public int Id {
+		 get; set; }
 		public string Name {
 			get; private set;
 		}
@@ -10,7 +12,8 @@
 			get; private set; 
 		}
 
-		public UserModel(string name , string email , bool isAdmin = false) {
+		public UserModel(int id, string name , string email , bool isAdmin = false) {
+			Id = id;
 			Name = name;
 			Email = email; 
 			IsAdmin = isAdmin;

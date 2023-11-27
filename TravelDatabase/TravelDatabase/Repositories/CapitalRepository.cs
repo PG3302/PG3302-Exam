@@ -62,11 +62,16 @@ namespace TravelDatabase.Repositories
 			travelDbContext.SaveChanges();
 		}
 
-		private CapitalModel? MapCapital(Capital capital) {
+		internal static CapitalModel? MapCapital(Capital capital) {
 			if (capital == null) {
 				return null;
 			}
-			return new CapitalModel(capital.Id , capital.CapitalName , capital.Longitude , capital.Latitude , capital.Continent);
+			return new CapitalModel(
+				capital.Id ,
+				capital.CapitalName , 
+				capital.Longitude , 
+				capital.Latitude , 
+				capital.Continent);
 		}
 		
 	}

@@ -1,10 +1,9 @@
 ﻿using TravelDatabase.Models;
-using TravelPlanner.TravelPlannerApp.Repository.Database;
 
 namespace TravelPlanner.TravelPlannerApp.Service {
 	internal class TripService
     {
-        private readonly MockTripDatabase tripDatabase = new();
+        //private readonly MockTripDatabase tripDatabase = new();
 
         public TripModel AddTrip(UserModel user, CapitalModel start, CapitalModel destination)
         {

@@ -1,9 +1,11 @@
-﻿namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
+﻿using TravelDatabase.Models;
+
+namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
 {
     internal class UIController
     {
         private MenuController _menuController = new();
-        private User? _currentUser = null;
+        private UserModel? _currentUser = null;
 
         //!Only use _currentUser for user checks!
         private bool isLoggedIn = false;
@@ -155,7 +157,8 @@
         {
             _menuController.AddMenu("Back.", MainMenu);
 
-            _menuController.RunMenu("Please select your home capital...", MainMenu, MockCapitalList, PrintCapital);
+            //MockCapitalList no longer exist. Need to be replaced with a real list from database
+            //_menuController.RunMenu("Please select your home capital...", MainMenu, MockCapitalList, PrintCapital);
         }
 
         private void ExitConsole()

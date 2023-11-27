@@ -47,6 +47,13 @@ namespace TravelDatabase.Repositories
             using TravelDbContext travelDbContext = new();
             return travelDbContext.User.FirstOrDefault(u => u.Name == username);
         }
+		public User? GetUserByEmail(string email)
+		{
+			using TravelDbContext travelDbContext = new();
+			return travelDbContext.User.Find(email); //THIS IS WRONGs
+		}
+
+
         public void DeleteUser(int userId) 
 		{
 			using TravelDbContext travelDbContext = new();

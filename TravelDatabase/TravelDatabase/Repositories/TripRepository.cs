@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System.Text.RegularExpressions;
 using TravelDatabase.Data.DataType.DataAccess.SqLite;
 using TravelDatabase.Data.Log;
 using TravelDatabase.Entities;
@@ -53,13 +54,13 @@ namespace TravelDatabase.Repositories
             return trips.Select(t => MapTrip(t)).ToList();
         }
 
-        public List<TripModel> GetTripByCapital(Capital capital)
+        public List<TripModel> GetTripByCapital(int capitalId)
         {
             using TravelDbContext travelDbContext = new TravelDbContext();
-            Logger.LogInfo($"Getting trips by capital: {capital}");
+            Logger.LogInfo($"Getting trips by capitalId: {capitalId}");
             List<Trip> trips = travelDbContext.Trip.Where(
-                t => t.DepartureCapital.CapitalName == capital.CapitalName || 
-                t.ArrivalCapital.CapitalName == capital.CapitalName).ToList();
+                t => t.DepartureCapital.Id == capitalId || 
+                t.ArrivalCapital.Id == capitalId).ToList();
             return trips.Select(t => MapTrip(t)).ToList();
         }
         public void DeleteTrip(int tripId)

@@ -30,35 +30,35 @@ namespace TravelDatabase.Repositories {
 		//Only Admins should get access to this
 		public List<User> GetAllUserUsers(int userId) 
 		{
-			using var travelDbContext = new TravelDbContext();
+			using TravelDbContext travelDbContext = new();
 			return travelDbContext.User.ToList();
 		}
 		public void DeleteUser(int userId) 
 		{
-			using var travelDbContext = new TravelDbContext();
-			var user = travelDbContext.User.First(user => user.Id == user.Id);
+			using TravelDbContext travelDbContext = new();
+			User user = travelDbContext.User.First(user => user.Id == user.Id);
 			travelDbContext.User.Remove(user);
 			travelDbContext.SaveChanges();
 		}
 		public void EditUser(int userId , string Name , int CityId, int Admin)
 		{
-			using var travelDbContext = new TravelDbContext();
-			var oldUser = travelDbContext.User.First(user => user.Id == userId);
+			using TravelDbContext travelDbContext = new();
+			User oldUser = travelDbContext.User.First(user => user.Id == userId);
 			oldUser.Name = Name;
 			oldUser.CityId = CityId;
 			oldUser.Admin = Admin;
 			travelDbContext.SaveChanges();
 		}
 
-        public User? GetUserById(long id)
+		public User? GetUserById(long id)
         {
-			using var travelDbContext = new TravelDbContext();
+			using TravelDbContext travelDbContext = new();
 			return travelDbContext.User.Find(id);
         }
         
 		public User? GetUserByUsername(string username)
         {
-			using var travelDbContext = new TravelDbContext();
+			using TravelDbContext travelDbContext = new();
 			return travelDbContext.User.FirstOrDefault(u => u.Name == username);
         }
 

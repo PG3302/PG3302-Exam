@@ -4,7 +4,7 @@
 		Africa,
 		Antarctica,
 		Asia,
-		Oceanaria,
+		Oceania,
 		Europe,
 		NorthAmerica,
 		SouthAmerica,

@@ -1,5 +1,7 @@
 ﻿using TravelDatabase.Data.DataType.DataAccess.SqLite;
 using TravelDatabase.Entities;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace TravelDatabase.Repositories
 {
@@ -18,8 +20,7 @@ namespace TravelDatabase.Repositories
 
 			return capital.Id;
 		}
-
-		public List<Capital> GetAllCapitals() {
+		public List<Capital> GetCapitalsAll() {
 			using TravelDbContext travelDbContext = new();
 			return travelDbContext.Capital.ToList();
 		}
@@ -27,7 +28,21 @@ namespace TravelDatabase.Repositories
 			using TravelDbContext travelDbContext = new();
 			return travelDbContext.Capital.First(capital => capital.Id == id);
 		}
-		public void EditCapital(int capitalId , string name , Continent continent , decimal longitude , decimal latitude) {
+		public Capital GetCapitalByName(string name)
+		{
+			using TravelDbContext travelDbContext = new();
+			return travelDbContext.Capital.First(capital => capital.CapitalName == name);
+		}
+        public List<Capital> GetCapitalsByContinent(Continent continent)
+        {
+            using TravelDbContext travelDbContext = new TravelDbContext();
+
+            return travelDbContext.Capital
+                .Include(c => c.Continent)
+                .Where(c => c.Continent == continent)
+                .ToList();
+        }
+        public void EditCapital(int capitalId , string name , Continent continent , decimal longitude , decimal latitude) {
 			using TravelDbContext travelDbContext = new();
 			Capital oldCapital = travelDbContext.Capital.First(capital => capital.Id == capitalId);
 			oldCapital.CapitalName = name;

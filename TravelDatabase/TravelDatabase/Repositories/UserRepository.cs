@@ -1,5 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using TravelDatabase.Data.DataType.DataAccess.SqLite;
+using TravelDatabase.Data.Log;
 using TravelDatabase.Entities;
 using TravelDatabase.Models;
 
@@ -20,6 +21,8 @@ namespace TravelDatabase.Repositories
 					} else {
 						user.Admin = 1;}
 				}
+				using TravelDbContext travelDbContext = new();
+				Logger.LogInfo($"Adding user to DB: {user}"); 
 				travelDbContext.User.Add(user);
 				travelDbContext.SaveChanges();
 
@@ -35,11 +38,29 @@ namespace TravelDatabase.Repositories
 			List<User> users = travelDbContext.User.ToList();
 			return users.Select(u => MapUser(u)).ToList();
 		}
-		public void DeleteUser(int userId) 
+        public User? GetUserById(long id)
+        {
+            using TravelDbContext travelDbContext = new();
+            return travelDbContext.User.Find(id);
+        }
+        public User? GetUserByUsername(string username)
+        {
+            using TravelDbContext travelDbContext = new();
+            return travelDbContext.User.FirstOrDefault(u => u.Name == username);
+        }
+		public User? GetUserByEmail(string email)
+		{
+			using TravelDbContext travelDbContext = new();
+			return travelDbContext.User.Find(email); //THIS IS WRONGs
+		}
+
+
+        public void DeleteUser(int userId) 
 		{
 			using TravelDbContext travelDbContext = new();
 			User user = travelDbContext.User.First(user => user.Id == user.Id);
-			travelDbContext.User.Remove(user);
+            Logger.LogInfo("Deleting user: " + user.Id + ", Name: " + user.Name);
+            travelDbContext.User.Remove(user);
 			travelDbContext.SaveChanges();
 		}
 		public void EditUser(int userId , string Name , int Admin)

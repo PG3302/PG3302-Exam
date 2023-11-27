@@ -1,4 +1,4 @@
-﻿namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
+namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
 {
     internal class MenuObject
     {

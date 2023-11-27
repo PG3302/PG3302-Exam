@@ -1,4 +1,4 @@
-﻿using TravelPlanner.TravelPlannerApp.Controller.UserControllers;
+using TravelPlanner.TravelPlannerApp.Controller.UserControllers;
 
 namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
 {

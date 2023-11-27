@@ -1,10 +1,14 @@
-﻿namespace TravelPlanner
+﻿using TravelDatabase.Repositories;
+
+namespace TravelPlanner
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            TravelPlannerApp.TravelPlanner travelPlanner = new();
+			InitDatabase.InitFromCsv();
+
+			TravelPlannerApp.TravelPlanner travelPlanner = new();
 
             travelPlanner.Start();
         }

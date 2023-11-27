@@ -1,24 +1,24 @@
 ﻿using TravelDatabase.Entities;
 
 namespace TravelDatabase.Models {
-	public class Trip : Model {
+	public class TripModel : Model {
 		public long Id {
 			get; set;
 		}
-		public User User {
+		public UserModel User {
 			get; private set;
 		}
-		public Capital StartingCapital {
+		public CapitalModel StartingCapital {
 			get; private set;
 		}
-		public Capital DestinationCapital {
+		public CapitalModel DestinationCapital {
 			get; private set;
 		}
 		public int Price {
 			get; set;
 		}
 
-		public Trip(User user , Capital startingCapital , Capital destinationCapital) {
+		public TripModel(UserModel user , CapitalModel startingCapital , CapitalModel destinationCapital) {
 			User = user;
 			StartingCapital = startingCapital;
 			DestinationCapital = destinationCapital;

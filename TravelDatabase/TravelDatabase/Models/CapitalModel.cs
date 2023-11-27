@@ -1,10 +1,9 @@
 ﻿using TravelDatabase.Data.DataType;
-using TravelDatabase.Data.DataType.DataAccess.DataType;
 using TravelPlanner.TravelPlannerApp.Data.DataType;
 
 namespace TravelDatabase.Models
 {
-    public class Capital : Model {
+    public class CapitalModel : Model {
 		public long Id {
 			get; set;
 		}
@@ -18,7 +17,7 @@ namespace TravelDatabase.Models
 			get; private set;
 		}
 
-		public Capital(string name , Coordinate coordinate , Continent continent) {
+		public CapitalModel(string name , Coordinate coordinate , Continent continent) {
 			Name = name;
 			Coordinate = coordinate;
 			Continent = continent;

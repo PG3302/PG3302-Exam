@@ -8,6 +8,7 @@
         Europe,
         NorthAmerica,
         Oceania,
-        SouthAmerica
-    }
+        SouthAmerica,
+		CentralAmerica
+	}
 }

@@ -6,9 +6,10 @@
         Africa,
         Antarctica,
         Asia,
+        Oceanaria,
         Europe,
         NorthAmerica,
-        Oceania,
-        SouthAmerica
+        SouthAmerica,
+        CentralAmerica,
     }
 }

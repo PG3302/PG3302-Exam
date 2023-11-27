@@ -3,6 +3,7 @@ using CsvHelper.Configuration;
 using System.Globalization;
 using TravelDatabase.DataAccess.SqLite;
 using TravelDatabase.Entities;
+using TravelPlanner.TravelPlannerApp.Data.DataType;
 
 namespace TravelDatabase.Repositories {
 	public class InitDatabase {
@@ -36,7 +37,7 @@ namespace TravelDatabase.Repositories {
 				case "Antarctica": return Continent.Antarctica;
 				case "Asia": return Continent.Asia;
 				case "Europe": return Continent.Europe;
-				case "Australia": return Continent.Australia;
+				case "Australia": return Continent.Oceania;
 				case "North America": return Continent.NorthAmerica;
 				case "South America": return Continent.SouthAmerica;
 				case "Central America": return Continent.CentralAmerica;

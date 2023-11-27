@@ -20,7 +20,6 @@ namespace TravelDbTest
 			Assert.That(1 , Is.EqualTo(userId));
 		} // test DB can be found \\TravelDatabase\TravelDbTest\bin\Debug\net6.0\Resources
 
-		}
 		[Test]
 		public void AddCapitalTest() {
 			int capitalId = CapitalRepository.AddCapital("test" , 0 , 1 , 2);

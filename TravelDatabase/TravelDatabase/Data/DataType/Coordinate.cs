@@ -1,4 +1,4 @@
-﻿namespace TravelPlanner.TravelPlannerApp.Data.DataType
+﻿namespace TravelDatabase.Data.DataType
 {
     public class Coordinate
     {

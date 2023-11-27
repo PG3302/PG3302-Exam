@@ -1,10 +1,5 @@
-﻿using TravelDatabase.Entities;
-
-namespace TravelDatabase.Models {
+﻿namespace TravelDatabase.Models {
 	public class TripModel : Model {
-		public long Id {
-			get; set;
-		}
 		public UserModel User {
 			get; private set;
 		}
@@ -25,7 +20,7 @@ namespace TravelDatabase.Models {
 		}
 
 		public override string ToString() {
-			return $"{Id}: {User} -- {StartingCapital} -> {DestinationCapital} ({Price})";
+			return $"{User} -- {StartingCapital} -> {DestinationCapital} ({Price})";
 		}
 	}
 }

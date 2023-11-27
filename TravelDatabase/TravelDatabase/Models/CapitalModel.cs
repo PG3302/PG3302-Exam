@@ -1,12 +1,8 @@
 ﻿using TravelDatabase.Data.DataType;
-using TravelPlanner.TravelPlannerApp.Data.DataType;
 
 namespace TravelDatabase.Models
 {
     public class CapitalModel : Model {
-		public long Id {
-			get; set;
-		}
 		public string Name {
 			get; private set;
 		}
@@ -24,7 +20,7 @@ namespace TravelDatabase.Models
 		}
 
 		public override string ToString() {
-			return $"{Id} [{Continent}]: {Name} ({Coordinate.Longitude} {Coordinate.Latitude})";
+			return $"[{Continent}]: {Name} ({Coordinate.Longitude} {Coordinate.Latitude})";
 		}
 	}
 }

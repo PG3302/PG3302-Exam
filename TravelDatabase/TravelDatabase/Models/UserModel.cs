@@ -1,26 +1,23 @@
 ﻿namespace TravelDatabase.Models {
 	public class UserModel : Model {
-		public long Id {
-			get; set;
-		}
 		public string Name {
 			get; private set;
 		}
 		public bool IsAdmin {
-			get; set;
+			get; private set;
 		}
 		public string Email {
-		get; set; }
+			get; private set; 
+		}
 
-		public UserModel(long id, string name , string email , bool isAdmin = false) {
-			Id = id;
+		public UserModel(string name , string email , bool isAdmin = false) {
 			Name = name;
 			Email = email; 
 			IsAdmin = isAdmin;
 		}
 
 		public override string ToString() {
-			return $"{Id}: {Email}";
+			return $"{Email}: ${Name} " + IsAdmin ?? "(Admin)";
 		}
 	}
 }

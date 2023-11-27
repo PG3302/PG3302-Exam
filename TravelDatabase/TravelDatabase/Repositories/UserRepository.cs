@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TravelDatabase.Data.DataType.DataAccess.SqLite;
+using TravelDatabase.Data.Log;
 using TravelDatabase.Entities;
 
 namespace TravelDatabase.Repositories
@@ -20,6 +21,7 @@ namespace TravelDatabase.Repositories
 					user.Admin = admin;
 				}
 				using TravelDbContext travelDbContext = new();
+				Logger.LogInfo($"Adding user to DB: {user}"); 
 				travelDbContext.User.Add(user);
 				travelDbContext.SaveChanges();
 
@@ -29,16 +31,28 @@ namespace TravelDatabase.Repositories
 		}
 
 		//Only Admins should get access to this
-		public List<User> GetAllUserUsers(int userId) 
+		public List<User> GetUserAll(int userId) 
 		{
 			using TravelDbContext travelDbContext = new();
+			Logger.LogInfo("Admin is fetching all users...");
 			return travelDbContext.User.ToList();
 		}
-		public void DeleteUser(int userId) 
+        public User? GetUserById(long id)
+        {
+            using TravelDbContext travelDbContext = new();
+            return travelDbContext.User.Find(id);
+        }
+        public User? GetUserByUsername(string username)
+        {
+            using TravelDbContext travelDbContext = new();
+            return travelDbContext.User.FirstOrDefault(u => u.Name == username);
+        }
+        public void DeleteUser(int userId) 
 		{
 			using TravelDbContext travelDbContext = new();
 			User user = travelDbContext.User.First(user => user.Id == user.Id);
-			travelDbContext.User.Remove(user);
+            Logger.LogInfo("Deleting user: " + user.Id + ", Name: " + user.Name);
+            travelDbContext.User.Remove(user);
 			travelDbContext.SaveChanges();
 		}
 		public void EditUser(int userId , string Name , int CityId, int Admin)
@@ -50,18 +64,6 @@ namespace TravelDatabase.Repositories
 			oldUser.Admin = Admin;
 			travelDbContext.SaveChanges();
 		}
-
-		public User? GetUserById(long id)
-        {
-			using TravelDbContext travelDbContext = new();
-			return travelDbContext.User.Find(id);
-        }
-        
-		public User? GetUserByUsername(string username)
-        {
-			using TravelDbContext travelDbContext = new();
-			return travelDbContext.User.FirstOrDefault(u => u.Name == username);
-        }
 
 	}
 }

@@ -2,7 +2,6 @@
 using CsvHelper.Configuration;
 using System.Globalization;
 using TravelDatabase.Data.DataType;
-using TravelDatabase.Data.DataType.DataAccess.DataType;
 using TravelDatabase.Data.DataType.DataAccess.SqLite;
 using TravelDatabase.Entities;
 

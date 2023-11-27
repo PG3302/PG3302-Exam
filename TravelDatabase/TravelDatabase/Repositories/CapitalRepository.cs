@@ -1,6 +1,8 @@
 ﻿using TravelDatabase.Data.DataType.DataAccess.SqLite;
 using TravelDatabase.Entities;
+using TravelDatabase.Models;
 using Microsoft.EntityFrameworkCore;
+using TravelDatabase.Data.DataType;
 
 
 namespace TravelDatabase.Repositories

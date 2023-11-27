@@ -1,13 +1,12 @@
 ﻿namespace TravelDatabase.Models {
 	public class TripModel : Model {
-        public int Id { get; private set; }
+        public int Id { get; set; }
         public UserModel User { get; private set; }
 		public CapitalModel StartingCapital { get; private set; }
 		public CapitalModel DestinationCapital { get; private set; }
 		public double Price { get; private set; }
 
-		public TripModel(int id, UserModel user , CapitalModel startingCapital , CapitalModel destinationCapital) {
-			Id = id;
+		public TripModel(UserModel user , CapitalModel startingCapital , CapitalModel destinationCapital) {
 			User = user;
 			StartingCapital = startingCapital;
 			DestinationCapital = destinationCapital;

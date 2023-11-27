@@ -6,14 +6,14 @@ namespace TravelPlanner.TravelPlannerApp.Service {
     {
         private readonly MockCapitalDatabase capitalDatabase = new();
 
-        public Capital? GetCapitalByName(string name)
+        public CapitalModel? GetCapitalByName(string name)
         {
-            Capital? requestedCapital = capitalDatabase.GetCapitalByName(name);
+            CapitalModel? requestedCapital = capitalDatabase.GetCapitalByName(name);
 
             return requestedCapital;
         }
 
-        public Capital? GetCapitalById(long id)
+        public CapitalModel? GetCapitalById(long id)
         {
             return capitalDatabase.GetCapitalById(id);
         }

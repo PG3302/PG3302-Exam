@@ -6,9 +6,9 @@ namespace TravelPlanner.TravelPlannerApp.Service {
     {
         private readonly MockTripDatabase tripDatabase = new();
 
-        public Trip AddTrip(User user, Capital start, Capital destination)
+        public TripModel AddTrip(UserModel user, CapitalModel start, CapitalModel destination)
         {
-            Trip newTrip = new(user, start, destination)
+            TripModel newTrip = new(user, start, destination)
             {
                 Price = CalculateTripPrice(start, destination)
             };
@@ -16,19 +16,19 @@ namespace TravelPlanner.TravelPlannerApp.Service {
             return tripDatabase.AddTrip(newTrip);
         }
 
-        public Trip? GetTripByUsername(string username)
+        public TripModel? GetTripByUsername(string username)
         {
-            Trip? requestedTrip = tripDatabase.GetTripByUsername(username);
+            TripModel? requestedTrip = tripDatabase.GetTripByUsername(username);
 
             return requestedTrip;
         }
 
-        public Trip? GetTripById(long id)
+        public TripModel? GetTripById(long id)
         {
             return tripDatabase.GetTripById(id);
         }
 
-        private int CalculateTripPrice(Capital start, Capital destination)
+        private int CalculateTripPrice(CapitalModel start, CapitalModel destination)
         {
             double distance = start.Coordinate - destination.Coordinate;
             double absoluteDistance = Math.Abs(distance);

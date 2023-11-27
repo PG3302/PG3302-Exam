@@ -7,16 +7,16 @@ namespace TravelPlanner.TravelPlannerApp.Service {
     {
         private readonly MockUserDatabase userDatabase = new();
 
-        public User AddUser(string username, Capital capital, bool isAdmin = false)
+        public UserModel AddUser(string username, CapitalModel capital, bool isAdmin = false)
         {
-            User newUser = new(username, capital, isAdmin);
+            UserModel newUser = new(username, capital, isAdmin);
 
             return userDatabase.AddUser(newUser);
         }
 
-        public User? GetUserByUsername(string username)
+        public UserModel? GetUserByUsername(string username)
         {
-            User? requestedUser = userDatabase.GetUserByUsername(username);
+            UserModel? requestedUser = userDatabase.GetUserByUsername(username);
 
             //Security for finding brute force attacks
             if (requestedUser == null) 
@@ -25,7 +25,7 @@ namespace TravelPlanner.TravelPlannerApp.Service {
             return requestedUser;
         }
 
-        public User? GetUserById(long id)
+        public UserModel? GetUserById(long id)
         {
             return userDatabase.GetUserById(id);
         }

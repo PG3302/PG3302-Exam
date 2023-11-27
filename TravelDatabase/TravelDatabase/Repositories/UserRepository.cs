@@ -1,25 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
 using TravelDatabase.Data.DataType.DataAccess.SqLite;
 using TravelDatabase.Entities;
+using TravelDatabase.Models;
 
 namespace TravelDatabase.Repositories
 {
     public class UserRepository 
 		{
-		public static int AddUser(string username , Capital city , int admin) {
-			if (admin == 0 || admin == 1) 
+		public static int AddUser(UserModel newUser) {
+			using TravelDbContext travelDbContext = new();
+			if (!travelDbContext.User.Any(u => u.Email == newUser.Email)) //if input email does not exist in DB list w user emails 
 				{
 				User user = new();
 				{
-					user.Name = $"{username}";
-					user.CityId = city.Id; //needs city selected from Capital table
-					user.Admin = admin;
+					user.Name = $"{newUser}";
+					user.Email = newUser.Email ;
+					if (newUser.IsAdmin == false) {
+						user.Admin = 0;
+					} else {
+						user.Admin = 1;}
 				}
-				using TravelDbContext travelDbContext = new();
 				travelDbContext.User.Add(user);
 				travelDbContext.SaveChanges();
 
@@ -29,10 +29,11 @@ namespace TravelDatabase.Repositories
 		}
 
 		//Only Admins should get access to this
-		public List<User> GetAllUserUsers(int userId) 
+		public List<UserModel?> GetAllUsers(int userId) 
 		{
 			using TravelDbContext travelDbContext = new();
-			return travelDbContext.User.ToList();
+			List<User> users = travelDbContext.User.ToList();
+			return users.Select(u => MapUser(u)).ToList();
 		}
 		public void DeleteUser(int userId) 
 		{
@@ -41,27 +42,34 @@ namespace TravelDatabase.Repositories
 			travelDbContext.User.Remove(user);
 			travelDbContext.SaveChanges();
 		}
-		public void EditUser(int userId , string Name , int CityId, int Admin)
+		public void EditUser(int userId , string Name , int Admin)
 		{
 			using TravelDbContext travelDbContext = new();
 			User oldUser = travelDbContext.User.First(user => user.Id == userId);
 			oldUser.Name = Name;
-			oldUser.CityId = CityId;
 			oldUser.Admin = Admin;
 			travelDbContext.SaveChanges();
 		}
 
-		public User? GetUserById(long id)
+		public UserModel? GetUserById(int id)
         {
 			using TravelDbContext travelDbContext = new();
-			return travelDbContext.User.Find(id);
+			User? user = travelDbContext.User.Find(id);
+			return MapUser(user);
         }
         
-		public User? GetUserByUsername(string username)
+		public UserModel? GetUserByEmail(string email)
         {
 			using TravelDbContext travelDbContext = new();
-			return travelDbContext.User.FirstOrDefault(u => u.Name == username);
+			User? user = travelDbContext.User.FirstOrDefault(u => u.Email == email);
+			return MapUser(user);
         }
 
+		private UserModel? MapUser(User? user) {
+			if (user == null) {
+				return null;
+			}
+			return new UserModel(user.Id , user.Name! , user.Email!, user.Admin == 1);
+		}
 	}
 }

@@ -22,7 +22,7 @@ namespace TravelDatabase.Repositories
 
 			return capital.Id;
 		}
-		public List<Capital> GetCapitalsAll() {
+		public List<Capital> GetCapitalAll() {
 			using TravelDbContext travelDbContext = new();
 			return travelDbContext.Capital.ToList();
 		}

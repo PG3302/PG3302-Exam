@@ -114,6 +114,8 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
 
             for (int i = 0; i < _menuObjects.Count + list?.Count; i++)
             {
+                Logger.LogInfo($"i = {i}");
+
                 if (i == _menuObjects.Count && list?.Count > 0)
                 {
                     Console.WriteLine("---");

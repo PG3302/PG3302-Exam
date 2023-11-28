@@ -34,7 +34,8 @@ namespace TravelDatabase.Data.Log {
 
 		private static void WriteToLog(string formatedMessage , string? path , bool writeToConsole) {
 			FileHandler.WriteToFile(formatedMessage , path);
-			if (writeToConsole)
+
+            if (writeToConsole)
 				Console.WriteLine(formatedMessage);
 		}
 	}

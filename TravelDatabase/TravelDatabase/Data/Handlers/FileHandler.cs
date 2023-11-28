@@ -7,11 +7,11 @@ namespace TravelDatabase.Data.Handlers {
 		private static readonly string _defaultFullPath = Path.Combine(_filePath , _fileName);
 		private static readonly object _fileLock = new();
 
-		public static void WriteToFile(string message , string? path = null) {
+		public static void WriteToFile(string message, string? path = null, bool append = true) {
 			string filePath = path ?? _defaultFullPath;
 
 			lock (_fileLock) {
-				using StreamWriter output = new(filePath);
+				using StreamWriter output = new(filePath, append);
 				output.WriteLine(message);
 			}
 		}

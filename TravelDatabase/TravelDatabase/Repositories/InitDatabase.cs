@@ -4,6 +4,7 @@ using System.Globalization;
 using TravelDatabase.Data.DataType;
 using TravelDatabase.Data.DataType.DataAccess.SqLite;
 using TravelDatabase.Entities;
+using TravelDatabase.Models;
 
 namespace TravelDatabase.Repositories
 {

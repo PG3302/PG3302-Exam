@@ -6,7 +6,7 @@ namespace TravelPlanner.TravelPlannerApp.Service {
     {
         private readonly UserRepository _userRepository = new();
 
-        public UserModel AddUser(string name, string email, bool isAdmin = false)
+        public UserModel AddUser(string name, string email, bool isAdmin = true)
         {
             UserModel newUser = new(null, name, email, isAdmin);
 

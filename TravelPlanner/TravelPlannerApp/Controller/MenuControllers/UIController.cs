@@ -103,8 +103,16 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
         private void CreateUser()
         {
             Console.Clear();
+            Console.WriteLine("Enter the name: ");
+            string name = Console.ReadLine();
+
+            Console.WriteLine("Enter the email: ");
+            string email = Console.ReadLine();
+
+            UserModel addedUser = _userService.AddUser(name, email, isAdmin: true);
+            
             _menuController.AddMenu("Back.", MainMenu);
-            _menuController.RunMenu("Create user", MainMenu);
+            _menuController.RunMenu("User added to travelplanner DB: " + addedUser, MainMenu);
         }
 
 
@@ -159,8 +167,8 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
         private void ListMenu()
         {
             _menuController.AddMenu("Back.", MainMenu);
-
-            //_menuController.RunMenu("List of travel locations...", MainMenu, _capitalService.GetCapitalAll(), MainMenu);
+            _menuController.AddList(_capitalService.GetCapitalAll(), MainMenu);
+            _menuController.RunMenu("List of travel locations...", MainMenu);
         }
 
         private void ExitConsole()

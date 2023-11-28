@@ -18,9 +18,11 @@ namespace TravelPlanner.TravelPlannerApp.Service {
             return _tripRepository.AddTrip(newTrip);
         }
 
-        public List<TripModel> GetTripAll()
+        public List<Model> GetTripAll()
         {
-            return _tripRepository.GetTripAll();
+            List<Model> returnList = [.. _tripRepository.GetTripAll()];
+
+            return returnList;
         }
 
         public TripModel GetTripById(int tripId)

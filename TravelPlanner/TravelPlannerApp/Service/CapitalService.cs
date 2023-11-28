@@ -7,9 +7,11 @@ namespace TravelPlanner.TravelPlannerApp.Service {
     {
         private readonly CapitalRepository _capitalRepository = new();
         
-        public List<CapitalModel> GetCapitalAll()
+        public List<Model> GetCapitalAll()
         {
-            return _capitalRepository.GetCapitalAll();
+            List<Model> returnList = [.. _capitalRepository.GetCapitalAll()];
+
+            return returnList;
         }
         
         public CapitalModel GetCapitalById(int capitalId)

@@ -5,10 +5,10 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
 {
     internal class MenuController
     {
+        private readonly List<MenuObject> _menuObjects = new();
+        private readonly UserController _userController = new();
         private Model? _currentModel = null;
         private int _selectedMenuIndex = 0;
-        private List<MenuObject> _menuObjects = new();
-        private UserController _userController = new();
 
         public void AddMenu(string menuText, Action menuMethod)
         {

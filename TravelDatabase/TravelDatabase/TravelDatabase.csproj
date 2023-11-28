@@ -8,6 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\DataAccess\**" />
+    <EmbeddedResource Remove="Data\DataAccess\**" />
+    <None Remove="Data\DataAccess\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="bin\Debug\net6.0\Resources\Travel.db" />
   </ItemGroup>
 
@@ -28,10 +34,6 @@
     <None Update="Resources\Travel.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Data\DataAccess\" />
   </ItemGroup>
 
 </Project>

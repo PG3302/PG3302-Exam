@@ -13,9 +13,11 @@ namespace TravelPlanner.TravelPlannerApp.Service {
             return _userRepository.AddUser(newUser);
         }
 
-        public List<UserModel> GetUserAll()
+        public List<Model> GetUserAll()
         {
-            return _userRepository.GetUserAll();
+            List<Model> returnList = [.. _userRepository.GetUserAll()];
+
+            return returnList;
         }
 
         public UserModel? GetUserByEmail(string email)

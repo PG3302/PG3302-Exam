@@ -1,10 +1,15 @@
 ﻿using TravelDatabase.Models;
+using TravelPlanner.TravelPlannerApp.Service;
 
 namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
 {
     internal class UIController
     {
-        private MenuController _menuController = new();
+        private readonly MenuController _menuController = new();
+        private readonly CapitalService _capitalService = new();
+        private readonly TripService _tripService = new();
+        private readonly UserService _userService = new();
+
         private UserModel? _currentUser = null;
 
         //!Only use _currentUser for user checks!
@@ -45,7 +50,6 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
                 {
                     _menuController.AddMenu("Back.", MainMenu);
                     _menuController.RunMenu("logget inn som admin", AdminMenu);
-
                 }
                 else
                 {
@@ -152,13 +156,11 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
 
         }
 
-
         private void ListMenu()
         {
             _menuController.AddMenu("Back.", MainMenu);
 
-            //MockCapitalList no longer exist. Need to be replaced with a real list from database
-            //_menuController.RunMenu("Please select your home capital...", MainMenu, MockCapitalList, PrintCapital);
+            _menuController.RunMenu("List of travel locations...", MainMenu, _capitalService.GetCapitalAll(), MainMenu);
         }
 
         private void ExitConsole()

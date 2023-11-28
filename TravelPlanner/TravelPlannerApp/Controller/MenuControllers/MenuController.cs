@@ -7,14 +7,21 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
     {
         private readonly List<MenuObject> _menuObjects = new();
         private readonly UserController _userController = new();
+
         private Model? _currentModel = null;
         private int _selectedMenuIndex = 0;
+        private ListObject? listObject = null;
 
         public void AddMenu(string menuText, Action menuMethod)
         {
             MenuObject menuObject = new(menuText, menuMethod);
 
             _menuObjects.Add(menuObject);
+        }
+
+        public void AddList(List<Model> list, Action selectMenu)
+        {
+            listObject = new(list, selectMenu);
         }
 
         private void PrintMenu(string title, List<Model>? list = null)
@@ -53,11 +60,11 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             }
         }
 
-        public void RunMenu(string title, Action previousMenu, List<Model>? list = null, Action? selectedModelMenu = null)
+        public void RunMenu(string title, Action previousMenu)
         {
             int currentPage = 0;
             List<ConsoleKey> allowedKeys = new();
-            List<Model>? pageOfList = CreatePageOfList(list, currentPage);
+            List<Model>? pageOfList = CreatePageOfList(listObject?.List, currentPage);
             ConsoleKey keyPressed;
             Action? selectedMenu = null;
             Action nextMethod;
@@ -66,7 +73,7 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             {
                 PrintMenu(title, pageOfList);
 
-                allowedKeys = CreateListOfAllowedKeys(currentPage, pageOfList.Count, list);
+                allowedKeys = CreateListOfAllowedKeys(currentPage, pageOfList.Count, listObject?.List);
                 keyPressed = _userController.GetUserMenuChoiceKey(allowedKeys);
 
                 if (keyPressed == ConsoleKey.UpArrow)
@@ -81,13 +88,13 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
                 {
                     currentPage--;
                     _selectedMenuIndex = 0;
-                    pageOfList = CreatePageOfList(list, currentPage);
+                    pageOfList = CreatePageOfList(listObject?.List, currentPage);
                 }
                 else if (keyPressed == ConsoleKey.RightArrow)
                 {
                     currentPage++;
                     _selectedMenuIndex = 0;
-                    pageOfList = CreatePageOfList(list, currentPage);
+                    pageOfList = CreatePageOfList(listObject?.List, currentPage);
                 }
                 else if (keyPressed == ConsoleKey.Enter && _selectedMenuIndex < _menuObjects.Count) //Menu object
                 {
@@ -100,12 +107,12 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
                 }
                 else if (keyPressed == ConsoleKey.Escape)
                 {
-                    selectedModelMenu = null;
+                    listObject = new(listObject?.List, null);
                     break;
                 }
             }
 
-            nextMethod = selectedMenu ?? selectedModelMenu ?? previousMenu;
+            nextMethod = selectedMenu ?? listObject?.Method ?? previousMenu;
 
             _selectedMenuIndex = 0;
             _menuObjects.Clear();
@@ -122,6 +129,8 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             {
                 pageOfList.Add(list[i]);
             }
+
+            listObject = new(null, listObject?.Method);
 
             return pageOfList;
         }

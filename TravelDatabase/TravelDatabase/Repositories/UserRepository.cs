@@ -21,7 +21,7 @@ namespace TravelDatabase.Repositories
 					} else {
 						user.Admin = 1;}
 				}
-				Logger.LogInfo($"Adding user to DB: {user}"); 
+				Logger.LogInfo($"Adding user to DB: {user.ToString}"); 
 				travelDbContext.User.Add(user);
 				travelDbContext.SaveChanges();
 				return MapUser(user);

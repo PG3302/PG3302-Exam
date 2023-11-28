@@ -19,7 +19,7 @@ namespace TravelDatabase.Data.DataType.DataAccess.SqLite
         public DbSet<Capital> Capital => Set<Capital>();
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite(@"Data Source = Resources\Travel.db");
+            optionsBuilder.UseSqlite(@"Data Source = Data\Resources\Travel.db");
         }
     }
 }

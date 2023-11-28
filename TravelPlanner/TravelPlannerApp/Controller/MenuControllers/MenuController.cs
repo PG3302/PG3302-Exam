@@ -88,6 +88,8 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
                 else if (keyPressed == ConsoleKey.Enter && _selectedMenuIndex < _menuObjects.Count) //Menu object
                 {
                     selectedMenu = _menuObjects[_selectedMenuIndex].Method;
+                    _currentChoice = _menuObjects[_selectedMenuIndex].Text;
+                    break;
                 }
                 else if (keyPressed == ConsoleKey.Enter) //Model object
                 {
@@ -106,8 +108,6 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
 
             _selectedMenuIndex = 0;
             _menuObjects.Clear();
-
-
 
             nextMethod();
         }

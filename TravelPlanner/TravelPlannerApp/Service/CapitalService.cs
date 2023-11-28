@@ -14,7 +14,7 @@ namespace TravelPlanner.TravelPlannerApp.Service {
             return returnList;
         }
         
-        public CapitalModel GetCapitalById(int capitalId)
+        public CapitalModel? GetCapitalById(int capitalId)
         {
             return _capitalRepository.GetCapitalById(capitalId);
         }
@@ -24,9 +24,11 @@ namespace TravelPlanner.TravelPlannerApp.Service {
             return _capitalRepository.GetCapitalByName(name);
         }
 
-        public List<CapitalModel> GetCapitalByContinent(Continent continent)
+        public List<Model> GetCapitalByContinent(Continent continent)
         {
-            return _capitalRepository.GetCapitalByContinent(continent);
+            List<Model> returnList = [.. _capitalRepository.GetCapitalByContinent(continent)];
+
+            return returnList;
         }
     }
 }

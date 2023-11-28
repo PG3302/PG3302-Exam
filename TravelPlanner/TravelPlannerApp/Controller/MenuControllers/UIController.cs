@@ -188,9 +188,14 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
 
         private void ListMenuFilterContinent()
         {
-            Continent? currentContinent = null;
-
-             if (currentContinent == null)
+            if (Enum.TryParse<Continent>(_menuController.GetCurrentChoice(), out Continent currentContinent))
+            {
+                currentList = _capitalService.GetCapitalByContinent(currentContinent);
+                CapitalModel testc = _capitalService.GetCapitalByName("London");
+                Logger.LogInfo("Bla " + testc);
+                ListMenu();
+            }
+            else
             {
                 _menuController.AddMenu("Back", ListMenuFilter);
 
@@ -199,9 +204,8 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
                     _menuController.AddMenu($"{continent}", ListMenuFilterContinent);
                 }
 
-                _menuController.RunMenu("Test", MainMenu);
+                _menuController.RunMenu("Please select continent to filter.", MainMenu);
             }
-
         }
 
 

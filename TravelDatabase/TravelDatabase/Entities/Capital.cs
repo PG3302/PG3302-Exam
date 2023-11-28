@@ -17,6 +17,11 @@ namespace TravelDatabase.Entities {
 		public decimal Latitude {
 			get; set;
 		}
+
+		public override string ToString()
+		{
+			return $"Id: {Id}, Name: {CapitalName}, Continent: {Continent}, Coords:{Longitude}, {Latitude}";
+		}
 	}
 }
 

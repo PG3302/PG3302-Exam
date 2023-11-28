@@ -11,15 +11,31 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
         private readonly UserController _userController = new();
 
         private Model? _currentModel = null;
-        private int _selectedMenuIndex = 0;
         private ListObject? _listObject = null;
-        private int _itemsEachPage;
+        private int _selectedMenuIndex = 0;
         private int _currentPage = 0;
+        private int _itemsEachPage;
         private int _numberOfPages;
+        private string _currentChoice = "";
 
         public MenuController()
         {
             SetConfigValues();
+        }
+
+        public Model? GetCurrentModel()
+        {
+            return _currentModel;
+        }
+
+        public string GetCurrentChoice()
+        {
+            return _currentChoice;
+        }
+
+        public void ResetCurrentChoice()
+        {
+            _currentChoice = "";
         }
 
         public void AddMenu(string menuText, Action menuMethod)
@@ -91,6 +107,8 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             _selectedMenuIndex = 0;
             _menuObjects.Clear();
 
+
+
             nextMethod();
         }
 
@@ -111,12 +129,8 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             Console.Clear();
             Console.WriteLine(title);
 
-            Console.WriteLine(_menuObjects.Count + list?.Count);
-
             for (int i = 0; i < _menuObjects.Count + list?.Count; i++)
             {
-                Logger.LogInfo($"i = {i}");
-
                 if (i == _menuObjects.Count && list?.Count > 0)
                 {
                     Console.WriteLine("---");

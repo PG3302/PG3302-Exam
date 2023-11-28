@@ -28,46 +28,9 @@ namespace TravelDatabase.DataAccess.SqLite.Tests
 
             _dbContext.Database.EnsureCreated();
         }
-        /*
-        [Test]
-        public void AddUser_ShouldAddUserToDatabase()
-        {
-            Capital testCapital = new Capital("TestCapital", new Coordinate(0.0, 0.0), Continent.Asia);
-			User newUser = _dbContext.AddUser("TestUser" , testCapital , isAdmin: false , email: "test@example.com");
-
-            _dbContext.AddUser(newUser);
-
-            User addedUser = _dbContext.User.FirstOrDefault(u => u.Name == "TestUser");
-            Assert.IsNotNull(addedUser);
-            Assert.AreEqual(newUser.Name, addedUser.Name);
-            Assert.AreEqual(newUser.Email, addedUser.Email);
-            Assert.AreEqual(newUser.Email, addedUser.Email);
-        }
 
         [Test]
-        public void GetUserById_ShouldRetrieveUserFromDatabase()
-        {
-            User newUser = new User
-            {
-                Name = "TestUser",
-                IsAdmin = false,                
-                Email = "testuser@example.com"
-            };
-
-            _dbContext.AddUser(newUser);
-
-            // Act
-            User retrievedUser = _dbContext.GetUserByName(newUser.Id);
-
-            // Assert
-            Assert.IsNotNull(retrievedUser);
-            Assert.AreEqual(newUser.Id, retrievedUser.Id);
-            Assert.AreEqual(newUser.Name, retrievedUser.Name);
-            Assert.AreEqual(newUser.Email, retrievedUser.Email);
-        }
-
-        // Add similar tests for other methods
-        */
+        
         [TearDown]
         public void TearDown()
         {

@@ -20,19 +20,19 @@ namespace TravelDatabase.Data.Log {
 			return _instance;
 		}
 
-		public static void LogError(string message , Exception? exception = null , string? path = null , bool writeToConsole = false) {
-			string formatedMessage = $"[Error] {exception?.Message} -- {message}";
+		public static void LogError(string message, Exception? exception = null, string? path = null, bool writeToConsole = false) {
+			string formatedMessage = $"[Error] ({DateTime.Now}) {exception?.Message} -- {message}";
 
-			WriteToLog(formatedMessage , path , writeToConsole);
+			WriteToLog(formatedMessage, path, writeToConsole);
 		}
 
-		public static void LogInfo(string message , string? path = null , bool writeToConsole = false) {
-			string formatedMessage = $"[Info] {message}";
+		public static void LogInfo(string message, string? path = null, bool writeToConsole = false) {
+			string formatedMessage = $"[Info] ({DateTime.Now}) {message}";
 
-			WriteToLog(formatedMessage , path , writeToConsole);
+			WriteToLog(formatedMessage, path, writeToConsole);
 		}
 
-		private static void WriteToLog(string formatedMessage , string? path , bool writeToConsole) {
+		private static void WriteToLog(string formatedMessage, string? path, bool writeToConsole) {
 			FileHandler.WriteToFile(formatedMessage , path);
 
             if (writeToConsole)

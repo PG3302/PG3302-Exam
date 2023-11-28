@@ -15,7 +15,7 @@ namespace TravelDatabase.Repositories
             using TravelDbContext travelDbContext = new();
             Trip trip = new();
             {
-                trip.UserId = newTrip.User.Id;
+                trip.UserId = newTrip.User.Id ?? -1;
 				trip.DepartureCapitalId = newTrip.StartingCapital.Id;
                 trip.ArrivalCapitalId = newTrip.DestinationCapital.Id;
             }

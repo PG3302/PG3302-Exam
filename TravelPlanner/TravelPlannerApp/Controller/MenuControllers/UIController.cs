@@ -160,7 +160,7 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
         {
             _menuController.AddMenu("Back.", MainMenu);
 
-            _menuController.RunMenu("List of travel locations...", MainMenu, _capitalService.GetCapitalAll(), MainMenu);
+            //_menuController.RunMenu("List of travel locations...", MainMenu, _capitalService.GetCapitalAll(), MainMenu);
         }
 
         private void ExitConsole()

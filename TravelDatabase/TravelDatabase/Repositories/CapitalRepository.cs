@@ -82,7 +82,6 @@ namespace TravelDatabase.Repositories
 				Logger.LogError("Attempted to map a capital. " + capital.ToString() + ". Input == NULL");
 				return null;
 			}
-			Logger.LogInfo($"Mapping capital: {capital}");
 			return new CapitalModel(
 				capital.Id ,
 				capital.CapitalName , 

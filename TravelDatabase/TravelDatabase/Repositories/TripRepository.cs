@@ -19,8 +19,11 @@ namespace TravelDatabase.Repositories
 				trip.DepartureCapitalId = newTrip.StartingCapital.Id;
                 trip.ArrivalCapitalId = newTrip.DestinationCapital.Id;
             }
-            Logger.LogInfo($" Adding trip: {trip}");
+            Logger.LogInfo($"Attempting to add trip: {trip}");
+
             travelDbContext.Add(trip);
+            Logger.LogInfo($"Trip: {trip} added to db");
+
             travelDbContext.SaveChanges();
             return MapTrip(trip);
         }
@@ -30,6 +33,7 @@ namespace TravelDatabase.Repositories
             using TravelDbContext travelDbContext = new();
             List<Trip> trips = travelDbContext.Trip.ToList();
             Logger.LogInfo("Attempting to get all trips...");
+
             return trips.Select(t => MapTrip(t)).ToList();
         }
 
@@ -39,9 +43,11 @@ namespace TravelDatabase.Repositories
             if (tripId <= 0)
             {
                 Logger.LogError("Invalid input for trip data request: GetTripById (tripId is >0 or null)");
+
                 return null;
             }
             Logger.LogInfo("Attempting to get Trip by Id: " + tripId);
+
             Trip? trip = travelDbContext.Trip.Find(tripId);
             return MapTrip(trip);
         }
@@ -50,6 +56,7 @@ namespace TravelDatabase.Repositories
         {
             using TravelDbContext travelDbContext = new();
             Logger.LogInfo($"Attempting to get all trips with mail: {email}!");
+
             List<Trip> trips = travelDbContext.Trip.Where(t => t.User.Email == email).ToList();
             return trips.Select(t => MapTrip(t)).ToList();
         }
@@ -58,6 +65,7 @@ namespace TravelDatabase.Repositories
         {
             using TravelDbContext travelDbContext = new TravelDbContext();
             Logger.LogInfo($"Getting trips by capitalId: {capitalId}");
+
             List<Trip> trips = travelDbContext.Trip.Where(
                 t => t.DepartureCapital.Id == capitalId || 
                 t.ArrivalCapital.Id == capitalId).ToList();
@@ -68,7 +76,10 @@ namespace TravelDatabase.Repositories
             using TravelDbContext travelDbContext = new();
             Trip trip = travelDbContext.Trip.First(trip => trip.Id == tripId);
             Logger.LogInfo($"Attempting to delete trip: {trip}");
+
             travelDbContext.Trip.Remove(trip);
+            Logger.LogInfo($"Removed {trip} from database");
+
             travelDbContext.SaveChanges();
         }
         public void EditTrip(int tripId, int userId, int departLocation, int arrivalLocation)
@@ -87,6 +98,7 @@ namespace TravelDatabase.Repositories
 
         internal static TripModel? MapTrip(Trip? trip) {
             if (trip == null) {
+                Logger.LogError($"Trip: ({trip}) could not be mapped to TripModel");
                 return null;
             }
             return new TripModel(

@@ -4,13 +4,16 @@ using TravelDatabase.Models;
 using Microsoft.EntityFrameworkCore;
 using TravelDatabase.Data.DataType;
 using System.Reflection.Metadata.Ecma335;
+using TravelDatabase.Data.Log;
 
 
 namespace TravelDatabase.Repositories
 {
     public class CapitalRepository {
-		public static int AddCapital(CapitalModel newCapital) {
+		public static int AddCapital(CapitalModel newCapital) 
+		{
 			using TravelDbContext travelDbContext = new();
+            Logger.LogInfo($"Preparing {newCapital} for submitting to database");
 			if (travelDbContext.Capital.Any(c=>c.CapitalName == newCapital.Name)) {
 			}
 			Capital capital = new();
@@ -19,10 +22,11 @@ namespace TravelDatabase.Repositories
 				capital.Continent = newCapital.Continent;
 				capital.Longitude = (decimal)newCapital.Coordinate.Longitude;
 				capital.Latitude = (decimal)newCapital.Coordinate.Latitude;
-			}			
+			}
+			Logger.LogInfo($"Adding capital: {capital}");
 			travelDbContext.Capital.Add(capital);
 			travelDbContext.SaveChanges();
-
+			Logger.LogInfo($"Capital ({capital}) added");
 			return capital.Id;
 		}
 
@@ -30,42 +34,55 @@ namespace TravelDatabase.Repositories
 		{
 			using TravelDbContext travelDbContext = new();
 			List<Capital> capitals = travelDbContext.Capital.ToList();
+			Logger.LogInfo("Fetching all capitals from Db to a List with Capital objects...");
 			return capitals.Select(c => MapCapital(c)).ToList();
 		}
 
 		public CapitalModel? GetCapitalById(int capitalId) 
 			{
 			using TravelDbContext travelDbContext = new();
+			Logger.LogInfo($"Getting capital by {capitalId}");
 			Capital? capital = travelDbContext.Capital.Find(capitalId);
+			Logger.LogInfo($"Returning {capital}");
 			return MapCapital(capital);
 		}
 
 		public CapitalModel GetCapitalByName(string name)
 		{
 			using TravelDbContext travelDbContext = new();
+			Logger.LogInfo($"Getting capital by Name: {name}");
 			Capital? capital = travelDbContext.Capital.First(capital => capital.CapitalName == name);
+			Logger.LogInfo($"Found {capital}");
 			return MapCapital(capital);
 		}
         public List<CapitalModel> GetCapitalByContinent(Continent continent)
         {
             using TravelDbContext travelDbContext = new TravelDbContext();
+			Logger.LogInfo($"Getting capitals by {continent}");
 			List<Capital> capitals = travelDbContext.Capital.Include(c => c.Continent).Where(c => c.Continent == continent).ToList();
+			Logger.LogInfo($"Found list of capitals based on continent: {continent}");
             return capitals.Select(c=>MapCapital(c)).ToList();
         }
-        public void EditCapital(int capitalId , string name , Continent continent , decimal longitude , decimal latitude) {
+        public void EditCapital(int capitalId , string name , Continent continent , decimal longitude , decimal latitude) 
+		{
 			using TravelDbContext travelDbContext = new();
 			Capital oldCapital = travelDbContext.Capital.First(capital => capital.Id == capitalId);
-			oldCapital.CapitalName = name;
+            Logger.LogInfo($"Editing capital: {oldCapital}");
+            oldCapital.CapitalName = name;
 			oldCapital.Continent = continent;
 			oldCapital.Longitude = longitude;
 			oldCapital.Latitude = latitude;
+			Logger.LogInfo($"Saving edited capital as: {oldCapital}");
 			travelDbContext.SaveChanges();
 		}
 
-		internal static CapitalModel? MapCapital(Capital capital) {
+		internal static CapitalModel? MapCapital(Capital capital) 
+		{
 			if (capital == null) {
+				Logger.LogError("Attempted to map a capital. " + capital.ToString() + ". Input == NULL");
 				return null;
 			}
+			Logger.LogInfo($"Mapping capital: {capital}");
 			return new CapitalModel(
 				capital.Id ,
 				capital.CapitalName , 

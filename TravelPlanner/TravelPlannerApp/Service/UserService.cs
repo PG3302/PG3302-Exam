@@ -6,9 +6,9 @@ namespace TravelPlanner.TravelPlannerApp.Service {
     {
         private readonly UserRepository _userRepository = new();
 
-        public UserModel AddUser(int id, string name, string email, bool isAdmin = false)
+        public UserModel AddUser(string name, string email, bool isAdmin = false)
         {
-            UserModel newUser = new(id, name, email, isAdmin);
+            UserModel newUser = new(null, name, email, isAdmin);
 
             return _userRepository.AddUser(newUser);
         }

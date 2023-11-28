@@ -1,3 +1,5 @@
+using System.Configuration;
+using TravelDatabase.Data.Log;
 using TravelDatabase.Models;
 using TravelPlanner.TravelPlannerApp.Controller.UserControllers;
 
@@ -11,6 +13,12 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
         private Model? _currentModel = null;
         private int _selectedMenuIndex = 0;
         private ListObject? listObject = null;
+        private int _itemsEachPage;
+
+        public MenuController()
+        {
+            SetConfigValues();
+        }
 
         public void AddMenu(string menuText, Action menuMethod)
         {
@@ -85,10 +93,24 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             nextMethod();
         }
 
+        private void SetConfigValues()
+        {
+            try {
+                string? listItemsEachPageValue = ConfigurationManager.AppSettings["listItemsEachPage"];
+                
+                _itemsEachPage = int.Parse(listItemsEachPageValue ?? "");
+            } catch (Exception error)
+            {
+                Logger.LogError("Error when reading app.config", error);
+            }
+        }
+
         private void PrintMenu(string title, List<Model>? list = null)
         {
             Console.Clear();
             Console.WriteLine(title);
+
+            Console.WriteLine(_menuObjects.Count + list?.Count);
 
             for (int i = 0; i < _menuObjects.Count + list?.Count; i++)
             {
@@ -121,17 +143,15 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             }
         }
 
-        private List<Model> CreatePageOfList(List<Model>? list, int page, int itemsEachPage = 10)
+        private List<Model> CreatePageOfList(List<Model>? list, int page)
         {
             List<Model> pageOfList = new();
-            int startPageIndex = page * itemsEachPage;
+            int startPageIndex = page * _itemsEachPage;
 
-            for (int i = startPageIndex; i < list?.Count && i < startPageIndex + itemsEachPage; i++)
+            for (int i = startPageIndex; i < list?.Count && i < startPageIndex + _itemsEachPage; i++)
             {
                 pageOfList.Add(list[i]);
             }
-
-            //listObject = new(null, listObject?.Method);
 
             return pageOfList;
         }

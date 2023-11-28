@@ -1,5 +1,6 @@
 
 
+using TravelDatabase.Data.DataType;
 using TravelDatabase.Data.DataType.DataAccess.SqLite;
 using TravelDatabase.Entities;
 using TravelDatabase.Models;
@@ -25,14 +26,16 @@ namespace TravelDbTest
 			UserModel newUser = userRepo.AddUser(new UserModel(null , "TestUser" , "testUser@Test.com" , false));
 			Assert.That(newUser.Id , Is.Not.Null);
 		} // test DB can be found \\TravelDatabase\TravelDbTest\bin\Debug\net6.0\Resources
-		/*
+		
 		[Test]
 		public void AddCapitalTest() {
-			int capitalId = CapitalRepository.AddCapital("test" , 0 , 1 , 2);
-			var allCapitals = new CapitalRepository().GetCapitalAll();
-			Assert.That(allCapitals.Any(capital => capital.CapitalName.Contains("test")));
+			Setup();
+			CapitalRepository capitalRepo = new CapitalRepository();
+			CapitalModel newCapital = capitalRepo.AddCapital(new CapitalModel(null , "test" , 0 , 1 , Continent.Oceania));
+			List<CapitalModel> allCapitals = new CapitalRepository().GetCapitalAll();
+			Assert.That(allCapitals.Any());
 		}
-		*/
+		
 		internal static UserModel? MapUser(User? user) {
 			if (user == null) {
 			//	Logger.LogError($"Failed to map {user} to UserModel");

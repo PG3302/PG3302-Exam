@@ -16,8 +16,8 @@ namespace TravelDatabase.Repositories
             Trip trip = new();
             {
                 trip.UserId = newTrip.User.Id ?? -1;
-				trip.DepartureCapitalId = newTrip.StartingCapital.Id;
-                trip.ArrivalCapitalId = newTrip.DestinationCapital.Id;
+				trip.DepartureCapitalId = newTrip.StartingCapital.Id.Value;
+                trip.ArrivalCapitalId = newTrip.DestinationCapital.Id.Value;
             }
             Logger.LogInfo($"Attempting to add trip: {trip}");
 

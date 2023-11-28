@@ -10,7 +10,7 @@ using TravelDatabase.Data.Log;
 namespace TravelDatabase.Repositories
 {
     public class CapitalRepository {
-		public static int AddCapital(CapitalModel newCapital) 
+		public CapitalModel AddCapital(CapitalModel newCapital) 
 		{
 			using TravelDbContext travelDbContext = new();
             Logger.LogInfo($"Preparing {newCapital} for submitting to database");
@@ -27,7 +27,7 @@ namespace TravelDatabase.Repositories
 			travelDbContext.Capital.Add(capital);
 			travelDbContext.SaveChanges();
 			Logger.LogInfo($"Capital ({capital}) added");
-			return capital.Id;
+			return MapCapital(capital);
 		}
 
 		public List<CapitalModel> GetCapitalAll() 

@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using TravelDatabase.Data.DataType;
 using TravelDatabase.Data.DataType.DataAccess.SqLite;
 using TravelDatabase.Entities;
@@ -28,6 +29,17 @@ namespace TravelDbTest
                 new UserModel(null, "TestUser", "testUser@Test.com", false)
             );
             Assert.That(newUser.Id, Is.Not.Null);
+        }
+
+        public void getUserAll()
+        {
+            Setup();
+            UserRepository userRepo = new UserRepository();
+            UserModel newUser = userRepo.AddUser(
+                new UserModel(null, "TestUser", "testUser@Test.com", false)
+            );
+            List<UserModel?> users = userRepo.GetUserAll();
+            Assert.That(users.Count, Is.AtLeast(1));
         }
 
         [Test]

@@ -137,8 +137,6 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
 
         private List<ConsoleKey> CreateListOfAllowedKeys(int currentPage, int pageOfListCount = 0, List<Model>? list = null)
         {
-            Console.WriteLine($"CurrentPage: {currentPage}, PageOfListCount: {pageOfListCount}, List: {list}");
-
             int numberOfPages = (int)Math.Ceiling((list?.Count ?? 0) / 10.0);
             List<ConsoleKey> allowedKeys = new();
 

@@ -27,6 +27,7 @@ namespace TravelDatabase.Repositories
                     try
                     {
                         travelDbContext.SaveChanges();
+                        Logger.LogInfo($"User added: {user.ToString}");
                         return MapUser(user);
                     }
                     catch (Exception ex)
@@ -35,8 +36,8 @@ namespace TravelDatabase.Repositories
                         throw;
                     }
                 }
-                throw new Exception("Admin value not allowed/Email exists in db");
             }
+            return newUser;
         }
 
         //Only Admins should get access to this

@@ -5,11 +5,12 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
 {
     internal class UIController
     {
-        private readonly MenuController _menuController = new();
-        private readonly CapitalService _capitalService = new();
+        protected readonly MenuController _menuController = new();
+        protected readonly CapitalService _capitalService = new();
         private readonly TripService _tripService = new();
         private readonly UserService _userService = new();
 
+        private ListMenus? _listMenus;
         private UserModel? _currentUser = null;
 
         //!Only use _currentUser for user checks!
@@ -18,6 +19,8 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
 
         public void Start()
         {
+            _listMenus = new();
+
             MainMenu();
         }
 
@@ -115,10 +118,8 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             _menuController.RunMenu("User added to travelplanner DB: " + addedUser, MainMenu);
         }
 
-
-
         // Main Menu
-        private void MainMenu()
+        protected void MainMenu()
         {
             if (isLoggedIn == false)
             {
@@ -129,7 +130,7 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
                 _menuController.AddMenu("Logout.", LogOutMenu);
             }
 
-            _menuController.AddMenu("List.", ListMenu);
+            _menuController.AddMenu("List.", _listMenus.ListMenu);
 
             if (isLoggedIn == true)
             {
@@ -161,14 +162,6 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             {
                 _menuController.RunMenu("Welcome to Kristiania Travel Planner...", ExitConsole);
             }
-
-        }
-
-        private void ListMenu()
-        {
-            _menuController.AddMenu("Back.", MainMenu);
-            _menuController.AddList(_capitalService.GetCapitalAll(), MainMenu);
-            _menuController.RunMenu("List of travel locations...", MainMenu);
         }
 
         private void ExitConsole()

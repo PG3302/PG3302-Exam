@@ -82,7 +82,6 @@ namespace TravelDatabase.Repositories
                 Logger.LogInfo($"Getting capitals by {continent}");
                 List<Capital> capitals = travelDbContext
                     .Capital
-                    .Include(c => c.Continent)
                     .Where(c => c.Continent == continent)
                     .ToList();
                 Logger.LogInfo($"Found list of capitals based on continent: {continent}");

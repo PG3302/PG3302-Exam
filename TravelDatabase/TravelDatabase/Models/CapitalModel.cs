@@ -16,7 +16,7 @@ namespace TravelDatabase.Models
 		}
 
 		public override string ToString() {
-			return $"[{Continent}]: {Name} ({Coordinate.Longitude} {Coordinate.Latitude})";
+			return $"[Id: {Id} {Continent}]: {Name} ({Coordinate.Longitude} {Coordinate.Latitude})";
 		}
 	}
 }

@@ -1,7 +1,5 @@
 ﻿using TravelDatabase.Data.Handlers;
 using TravelDatabase.Data.Log;
-using TravelPlanner.TravelPlannerApp.Data.Handlers;
-using TravelPlanner.TravelPlannerApp.Data.Log;
 
 namespace TravelPlanner.UnitTests.TravelPlannerApp.Data {
 	internal class LoggerTests

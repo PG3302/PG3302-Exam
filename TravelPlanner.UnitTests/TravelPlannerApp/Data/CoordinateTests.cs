@@ -1,5 +1,4 @@
 ﻿using TravelDatabase.Data.DataType;
-using TravelDatabase.Data.DataType.DataAccess.DataType;
 
 namespace TravelPlanner.UnitTests.TravelPlannerApp.Data
 {

@@ -1,5 +1,4 @@
 ﻿using TravelDatabase.Data.Handlers;
-using TravelPlanner.TravelPlannerApp.Data.Handlers;
 
 namespace TravelPlanner.UnitTests.TravelPlannerApp.Data {
 	internal class FileHandlerTests

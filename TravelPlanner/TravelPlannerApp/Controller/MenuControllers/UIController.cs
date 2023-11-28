@@ -24,20 +24,46 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
         }
 
         // Admin, user and login menu's
-        private void AdminMenu()
+        private void AdminMenu() // Admin Menu's
         {
-            _menuController.AddMenu("Edit user", MainMenu);
-            _menuController.AddMenu("Edit trip", MainMenu);
+            _menuController.AddMenu("Edit user", AdminEditUser);
+            _menuController.AddMenu("Edit trip", AdminEditTrip);
             _menuController.AddMenu("Back.", MainMenu);
             _menuController.RunMenu("Welcome, Mr.Admin *brutally tips fedora*", MainMenu);
         }
 
-        private void UserMenu()
+        private void AdminEditUser()
         {
-            _menuController.AddMenu("Add trip/Search", MainMenu);
-            _menuController.AddMenu("My upcomming trips", MainMenu);
+            _menuController.AddMenu("Back.", AdminMenu);
+            _menuController.RunMenu("Edit user subpage, to be finished", MainMenu);
+        }
+
+        private void AdminEditTrip()
+        {
+            _menuController.AddMenu("Back.", AdminMenu);
+            _menuController.RunMenu("Edit trip subpage, to be finished", MainMenu);
+        }
+
+
+
+        private void UserMenu() // Reg user Menu's
+        {
+            _menuController.AddMenu("Add trip/Search", TripAddMenu);
+            _menuController.AddMenu("My upcomming trips", PlannedTripMenu);
             _menuController.AddMenu("Back.", MainMenu);
             _menuController.RunMenu("Welcome, *User*", MainMenu); //Later add specified user-name
+        }
+
+        private void TripAddMenu()
+        {
+            _menuController.AddMenu("Back.", UserMenu);
+            _menuController.RunMenu("Add trip/search, to be finished", MainMenu);
+        }
+
+        private void PlannedTripMenu()
+        {
+            _menuController.AddMenu("Back.", UserMenu);
+            _menuController.RunMenu("My saved/upcomming trips, to be finished", MainMenu);
         }
 
         private void LoginMenu()

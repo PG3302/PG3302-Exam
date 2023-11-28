@@ -3,12 +3,23 @@ using CsvHelper.Configuration;
 using System.Globalization;
 using TravelDatabase.Data.DataType;
 using TravelDatabase.Data.DataType.DataAccess.SqLite;
+using TravelDatabase.Data.Log;
 using TravelDatabase.Entities;
 using TravelDatabase.Models;
 
 namespace TravelDatabase.Repositories
 {
     public class InitDatabase {
+		public static void Init() {
+			using (TravelDbContext db = new()) {
+				if (db.Capital.Any()) {
+					Logger.LogInfo("Database already populated. Cancelling Initialization");
+					return;
+				}
+			}
+			InitFromCsv();
+			AddTestUsers();
+		}
 		public static void InitFromCsv() {
 			CsvConfiguration config = new CsvConfiguration(CultureInfo.InvariantCulture) {
 				HasHeaderRecord = true
@@ -46,6 +57,11 @@ namespace TravelDatabase.Repositories
 				default: throw new Exception("No Continent matched");
 					//can be shortened w parse enum to string w no space for N /S / C America
 			}
+		}
+		private static void AddTestUsers() {
+			UserRepository userRepo = new UserRepository();
+			userRepo.AddUser(new UserModel(null , "TestUser" , "testUser@Test.com" , false));
+			userRepo.AddUser(new UserModel(null , "TestAdmin" , "testAdmin@Test.com" , true));
 		}
 	}
 }

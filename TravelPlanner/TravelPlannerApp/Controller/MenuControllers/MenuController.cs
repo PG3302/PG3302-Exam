@@ -24,42 +24,6 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             listObject = new(list, selectMenu);
         }
 
-        private void PrintMenu(string title, List<Model>? list = null)
-        {
-            Console.Clear();
-            Console.WriteLine(title);
-
-            for (int i = 0; i < _menuObjects.Count + list?.Count; i++)
-            {
-                if (i == _menuObjects.Count && list?.Count > 0)
-                {
-                    Console.WriteLine("---");
-                }
-
-                if (i == _selectedMenuIndex)
-                {
-                    Console.ForegroundColor = ConsoleColor.Blue;
-                    Console.Write("[O]");
-                    Console.ResetColor();
-                }
-                else
-                {
-                    Console.ForegroundColor = ConsoleColor.DarkBlue;
-                    Console.Write("[ ]");
-                    Console.ResetColor();
-                }
-
-                if (i < _menuObjects.Count)
-                {
-                    Console.WriteLine($" {_menuObjects[i].Text}");
-                }
-                else
-                {
-                    Console.WriteLine($" {list?[i - _menuObjects.Count].ToString()}");
-                }
-            }
-        }
-
         public void RunMenu(string title, Action previousMenu)
         {
             int currentPage = 0;
@@ -113,11 +77,48 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             }
 
             nextMethod = selectedMenu ?? listObject?.Method ?? previousMenu;
+            listObject = new(null, listObject?.Method);
 
             _selectedMenuIndex = 0;
             _menuObjects.Clear();
 
             nextMethod();
+        }
+
+        private void PrintMenu(string title, List<Model>? list = null)
+        {
+            Console.Clear();
+            Console.WriteLine(title);
+
+            for (int i = 0; i < _menuObjects.Count + list?.Count; i++)
+            {
+                if (i == _menuObjects.Count && list?.Count > 0)
+                {
+                    Console.WriteLine("---");
+                }
+
+                if (i == _selectedMenuIndex)
+                {
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.Write("[O]");
+                    Console.ResetColor();
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkBlue;
+                    Console.Write("[ ]");
+                    Console.ResetColor();
+                }
+
+                if (i < _menuObjects.Count)
+                {
+                    Console.WriteLine($" {_menuObjects[i].Text}");
+                }
+                else
+                {
+                    Console.WriteLine($" {list?[i - _menuObjects.Count].ToString()}");
+                }
+            }
         }
 
         private List<Model> CreatePageOfList(List<Model>? list, int page, int itemsEachPage = 10)
@@ -130,14 +131,14 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
                 pageOfList.Add(list[i]);
             }
 
-            listObject = new(null, listObject?.Method);
+            //listObject = new(null, listObject?.Method);
 
             return pageOfList;
         }
 
         private List<ConsoleKey> CreateListOfAllowedKeys(int currentPage, int pageOfListCount = 0, List<Model>? list = null)
         {
-            Console.WriteLine($"CurrentPage: {currentPage}, PageOfListCount: {pageOfListCount}, List: {list}");
+            Console.WriteLine($"CurrentPage: {currentPage}, PageOfListCount: {pageOfListCount}, List: {list?.Count}");
 
             int numberOfPages = (int)Math.Ceiling((list?.Count ?? 0) / 10.0);
             List<ConsoleKey> allowedKeys = new();

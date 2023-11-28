@@ -60,7 +60,7 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             }
         }
 
-        public void RunMenu(string title, Action previousMenu, List<Model>? list = null, Action? selectedModelMenu = null)
+        public void RunMenu(string title, Action previousMenu, List<Model>? list = null, )
         {
             int currentPage = 0;
             List<ConsoleKey> allowedKeys = new();
@@ -107,12 +107,12 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
                 }
                 else if (keyPressed == ConsoleKey.Escape)
                 {
-                    selectedModelMenu = null;
+                    listObject = new(listObject?.List, null);
                     break;
                 }
             }
 
-            nextMethod = selectedMenu ?? selectedModelMenu ?? previousMenu;
+            nextMethod = selectedMenu ?? listObject?.Method ?? previousMenu;
 
             _selectedMenuIndex = 0;
             _menuObjects.Clear();

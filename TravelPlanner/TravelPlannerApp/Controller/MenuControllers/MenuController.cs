@@ -7,14 +7,21 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
     {
         private readonly List<MenuObject> _menuObjects = new();
         private readonly UserController _userController = new();
+
         private Model? _currentModel = null;
         private int _selectedMenuIndex = 0;
+        private ListObject? listObject = null;
 
         public void AddMenu(string menuText, Action menuMethod)
         {
             MenuObject menuObject = new(menuText, menuMethod);
 
             _menuObjects.Add(menuObject);
+        }
+
+        public void AddList(List<Model> list, Action selectMenu)
+        {
+            listObject = new(list, selectMenu);
         }
 
         private void PrintMenu(string title, List<Model>? list = null)

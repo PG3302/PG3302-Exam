@@ -49,7 +49,7 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
 
             if (_currentUser?.IsAdmin ?? false)
             {
-                _menuController.AddMenu("Admin", AdminMenu);
+                _menuController.AddMenu("Admin.", AdminMenu);
             }
 
             _menuController.AddMenu("Locations.", FilterCapitalList);

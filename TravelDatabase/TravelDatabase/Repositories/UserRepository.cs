@@ -82,8 +82,7 @@ namespace TravelDatabase.Repositories
             {
                 using TravelDbContext travelDbContext = new();
                 Logger.LogInfo($"Attempting to delete user with userId: {userId}");
-                User user = travelDbContext.User.First(user => user.Id == user.Id);
-                Logger.LogInfo($"Found {user}. Attempting to delete...");
+                User user = travelDbContext.User.FirstOrDefault((User u) => u.Id == userId); Logger.LogInfo($"Found {user}. Attempting to delete...");
                 travelDbContext.User.Remove(user);
                 Logger.LogInfo($"Deleting user: {user}");
                 travelDbContext.SaveChanges();

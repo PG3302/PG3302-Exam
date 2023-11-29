@@ -24,5 +24,10 @@ namespace TravelPlanner.TravelPlannerApp.Service {
         {
             return _userRepository.GetUserByEmail(email.ToLower());
         }
+
+        public void DeleteUser(int userId)
+        {
+            _userRepository.DeleteUser(userId);
+        }
     }
 }

@@ -12,7 +12,7 @@
 			StartingCapital = startingCapital;
 			DestinationCapital = destinationCapital;
 
-			Price = startingCapital.Coordinate - destinationCapital.Coordinate;
+			Price = (startingCapital.Coordinate - destinationCapital.Coordinate) * 10;
 		}
 
 		public override string ToString() {

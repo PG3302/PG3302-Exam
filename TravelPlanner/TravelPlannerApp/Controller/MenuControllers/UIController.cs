@@ -16,7 +16,6 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
 
         private UserModel? _currentUser = null;
         private List<Model>? _currentList = null;
-        private ModelType? _currentModelType = null;
         private string? _currentMessage;
 
         #region MAIN
@@ -71,8 +70,19 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
         private void DeleteUserMenu()
         {
             _menuController.AddMenu("Back.", AdminMenu);
-
+            _menuController.AddList(_userService.GetUserAll(), DeleteUserSubMenu);
+            _menuController.RunMenu("WARNING! Please select a user to delete permanently.", AdminMenu);
         }
+
+        private void DeleteUserSubMenu()
+        {
+            UserModel? deletedUser = (UserModel?)_menuController.GetCurrentModel();
+
+            _userService.DeleteUser(deletedUser?.Id ?? -1);
+
+            MainMenu();
+        }
+
         #endregion
 
         #region TRIP MENU
@@ -104,6 +114,8 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             {
                 Logger.LogError("Wrong value when adding trips. ", new NullReferenceException());
             }
+
+            MainMenu();
 ;       }
 
         private void SeeTripsMenu()
@@ -173,12 +185,6 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
         #endregion
 
         #region LIST MENUS
-        /*private void CapitalListMenu()
-        {
-            _currentModelType = ModelType.Capital;
-            FilterCapitalList();
-        }*/
-
         private void FilterCapitalList()
         {
             #region MAIN LIST PART
@@ -198,7 +204,7 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
                 _menuController.AddList(_currentList ?? _capitalService.GetCapitalAll(), MainMenu, true);
             }
             
-            _menuController.RunMenu(_currentMessage ?? $"List of {_currentModelType}s.", MainMenu);
+            _menuController.RunMenu(_currentMessage ?? $"List of capitals.", MainMenu);
 
             if (_menuController.GetCurrentModel() != null)
             {

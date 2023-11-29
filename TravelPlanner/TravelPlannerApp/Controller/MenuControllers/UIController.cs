@@ -25,7 +25,8 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
         private void ExitConsole()
         {
             Console.Clear();
-            Console.WriteLine("Hope you enjoyed your stay :)\nPress any key to leave...");
+            Console.WriteLine("Hope you enjoyed your stay :)" +
+                "\nPress any key to leave...");
             Console.ReadKey();
             Environment.Exit(0);
         }
@@ -130,8 +131,6 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
         #endregion
 
         #region LOGIN
-
-
         private void LoginMenu()
         {
             Console.Clear();
@@ -141,20 +140,17 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
 
             _currentMessage = _userController.GetUserString().ToLower();
 
-            if (_currentMessage.Length < 3)
+            if (_currentMessage.Length > 3)
             {
-                MainMenu();
-                return;
+                _currentUser = _userService.GetUserByEmail(_currentMessage);
+
+                if (_currentUser == null)
+                {
+                    CreateUser();
+                }
+
+                _currentMessage = "";
             }
-
-            _currentUser = _userService.GetUserByEmail(_currentMessage);
-
-            if (_currentUser == null)
-            {
-                CreateUser();
-            }
-
-            _currentMessage = "";
 
             MainMenu();
         }
@@ -180,7 +176,6 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
 
             MainMenu();
         }
-
         #endregion
 
         #region LIST MENUS

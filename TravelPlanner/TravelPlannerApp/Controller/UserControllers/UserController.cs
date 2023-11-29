@@ -1,4 +1,6 @@
-﻿using TravelPlanner.TravelPlannerApp.Controller.ConsoleControllers;
+﻿using System.Configuration;
+using TravelDatabase.Data.Log;
+using TravelPlanner.TravelPlannerApp.Controller.ConsoleControllers;
 
 namespace TravelPlanner.TravelPlannerApp.Controller.UserControllers
 {
@@ -6,13 +8,45 @@ namespace TravelPlanner.TravelPlannerApp.Controller.UserControllers
     {
         private readonly ConsoleController _consoleController = new();
 
+        int minNameLength;
+
+        public UserController()
+        {
+            SetConfigValues();
+        }
+
+        private void SetConfigValues()
+        {
+            try
+            {
+                string? minNameLengthValue = ConfigurationManager.AppSettings["minNameLength"];
+                minNameLength = int.Parse(minNameLengthValue ?? "3");
+
+                if (minNameLength < 1)
+                {
+                    Logger.LogError("Illegal value for MinNameLength", new ArgumentNullException());
+                }
+            }
+            catch (Exception error)
+            {
+                Logger.LogError("Error when reading app.config", error);
+            }
+        }
+
         public string GetUserString()
         {
-            string userInput;
+            string userInput = "";
 
             _consoleController.ShowCursor();
+            while (userInput.Length < minNameLength)
+            {
+                userInput = Console.ReadLine() ?? "";
 
-            userInput = Console.ReadLine() ?? "";
+                if (userInput.Length < minNameLength)
+                {
+                    Console.Write($"Value too small. Min value {minNameLength}. Please provide a valid value: ");
+                }
+            }
 
             _consoleController.HideCursor();
 

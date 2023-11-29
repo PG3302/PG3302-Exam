@@ -14,9 +14,9 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
 
         private UserModel? _currentUser = null;
 
-        //!Only use _currentUser for user checks!
-        private bool isLoggedIn = false;
-        private bool isAdmin = false;
+        //REMOVE
+        bool isLoggedIn = false;
+        bool isAdmin = false;
 
         #region MAIN
         public void Start()
@@ -32,66 +32,28 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             Environment.Exit(0);
         }
 
-        // MAIN MENU AND USER MENU SHOULD BE THE SAME, USE CONDITIONAL CHECKS TO SEE WHICH MENU SHOWS
         private void MainMenu()
         {
             _currentList = null;
 
-            if (isLoggedIn == false)
+            if (_currentUser != null)
+            {
+                _menuController.AddMenu("Logout.", LogOutMenu);
+                _menuController.AddMenu("Trips.", TripMenu);
+            } else
             {
                 _menuController.AddMenu("Login.", LoginMenu);
             }
-            else
+
+            if (_currentUser?.IsAdmin ?? false)
             {
-                _menuController.AddMenu("Logout.", LogOutMenu);
+                _menuController.AddMenu("Admin", AdminMenu);
             }
 
-            _menuController.AddMenu("List.", CapitalListMenu);
-
-            if (isLoggedIn == true)
-            {
-                if (!isAdmin)
-                {
-                    _menuController.AddMenu("My Trips", UserMenu);
-                }
-
-                if (isAdmin)
-                {
-                    _menuController.AddMenu("Admin Page", AdminMenu);
-                }
-            }
-
+            _menuController.AddMenu("Locations.", CapitalListMenu);
             _menuController.AddMenu("Exit.", ExitConsole);
 
-            if (isLoggedIn == true)
-            {
-                if (isAdmin)
-                {
-                    _menuController.RunMenu(
-                        "Welcome to Kristiania Travel Planner, Admin",
-                        ExitConsole
-                    );
-                }
-                else
-                {
-                    _menuController.RunMenu(
-                        "Welcome to Kristiania Travel Planner, *User Name*",
-                        ExitConsole
-                    );
-                }
-            }
-            else
-            {
-                _menuController.RunMenu("Welcome to Kristiania Travel Planner...", ExitConsole);
-            }
-        }
-
-        private void UserMenu() // Reg user Menu's
-        {
-            _menuController.AddMenu("Add trip/Search", TripAddMenu);
-            _menuController.AddMenu("My upcomming trips", PlannedTripMenu);
-            _menuController.AddMenu("Back.", MainMenu);
-            _menuController.RunMenu("Welcome, *User*", MainMenu); //Later add specified user-name
+            _menuController.RunMenu($"Welcome to Kristiania Travel Planner {_currentUser?.Name ?? ""} :)", ExitConsole);
         }
         #endregion
 
@@ -120,18 +82,24 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
         #endregion
 
         #region TRIP MENU
-        private void TripAddMenu()
+        private void TripMenu()
         {
-            _menuController.AddMenu("Back.", UserMenu);
-            _menuController.RunMenu("Add trip/search, to be finished", MainMenu);
+            _menuController.AddMenu("Back.", MainMenu);
+            _menuController.AddMenu("Add Trip", AddTripMenu);
+            _menuController.AddMenu("List Trips.", SeeTripsMenu);
+            _menuController.RunMenu("Please select what operation you would like for trips.", MainMenu);
         }
 
-        private void PlannedTripMenu()
+        private void AddTripMenu()
         {
-            _menuController.AddMenu("Back.", UserMenu);
-            _menuController.RunMenu("My saved/upcomming trips, to be finished", MainMenu);
+            _currentMessage = "Please select departure capital...";
+
         }
 
+        private void SeeTripsMenu()
+        {
+
+        }
         #endregion
 
         #region LOGIN
@@ -153,7 +121,7 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
                 else
                 {
                     _menuController.AddMenu("Back.", MainMenu);
-                    _menuController.RunMenu("logget inn med vanlig acc", UserMenu);
+                    _menuController.RunMenu("logget inn med vanlig acc", MainMenu);
                 }
             }
             _menuController.AddMenu("Back.", MainMenu);
@@ -245,6 +213,7 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
 
         private List<Model>? _currentList = null;
         private ModelType? _currentModelType = null;
+        private string? _currentMessage;
 
         private void ListMenu()
         {
@@ -271,11 +240,11 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
                     new MissingFieldException()
                 );
             }
+
+            _menuController.RunMenu(_currentMessage ?? $"List of {_currentModelType}s.", MainMenu);
             #endregion
 
             #region SELECT FILTER PART
-            _menuController.RunMenu($"List of {_currentModelType}s.", MainMenu);
-
             _menuController.AddMenu("Back.", ListMenu);
             if (_currentModelType == ModelType.Capital)
             {

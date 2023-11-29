@@ -38,7 +38,12 @@ namespace TravelDatabase.Repositories
             lock (_lock)
             {
                 using TravelDbContext travelDbContext = new();
-                List<Trip> trips = travelDbContext.Trip.ToList();
+                List<Trip> trips = travelDbContext
+                    .Trip
+                    .Include(t => t.User)
+                    .Include(t => t.DepartureCapital)
+                    .Include(t => t.ArrivalCapital)
+                    .ToList();
                 Logger.LogInfo("Attempting to get all trips...");
 
                 return trips.Select(t => MapTrip(t)).ToList();
@@ -77,7 +82,13 @@ namespace TravelDatabase.Repositories
                 using TravelDbContext travelDbContext = new();
                 Logger.LogInfo($"Attempting to get all trips with mail: {email}!");
 
-                List<Trip> trips = travelDbContext.Trip.Where(t => t.User.Email == email).ToList();
+                List<Trip> trips = travelDbContext
+                    .Trip
+                    .Include(t => t.User)
+                    .Include(t => t.DepartureCapital)
+                    .Include(t => t.ArrivalCapital)
+                    .Where(t => t.User.Email == email)
+                    .ToList();
                 return trips.Select(t => MapTrip(t)).ToList();
             }
         }
@@ -91,6 +102,9 @@ namespace TravelDatabase.Repositories
 
                 List<Trip> trips = travelDbContext
                     .Trip
+                    .Include(t => t.User)
+                    .Include(t => t.DepartureCapital)
+                    .Include(t => t.ArrivalCapital)
                     .Where(
                         t => t.DepartureCapital.Id == capitalId || t.ArrivalCapital.Id == capitalId
                     )
@@ -104,7 +118,12 @@ namespace TravelDatabase.Repositories
             lock (_lock)
             {
                 using TravelDbContext travelDbContext = new();
-                Trip trip = travelDbContext.Trip.First(trip => trip.Id == tripId);
+                Trip trip = travelDbContext
+                    .Trip
+                    .Include(t => t.User)
+                    .Include(t => t.DepartureCapital)
+                    .Include(t => t.ArrivalCapital)
+                    .First(trip => trip.Id == tripId);
                 Logger.LogInfo($"Attempting to delete trip: {trip}");
 
                 travelDbContext.Trip.Remove(trip);
@@ -119,7 +138,12 @@ namespace TravelDatabase.Repositories
             lock (_lock)
             {
                 using TravelDbContext travelDbContext = new();
-                Trip oldTrip = travelDbContext.Trip.First(trip => trip.Id == tripId);
+                Trip oldTrip = travelDbContext
+                    .Trip
+                    .Include(t => t.User)
+                    .Include(t => t.DepartureCapital)
+                    .Include(t => t.ArrivalCapital)
+                    .First(trip => trip.Id == tripId);
                 Logger.LogInfo($"Editing trip: {oldTrip}");
 
                 oldTrip.UserId = userId;

@@ -1,4 +1,4 @@
-using System.Collections.Immutable;
+using NUnit.Framework.Legacy;
 using TravelDatabase.Data.DataType;
 using TravelDatabase.Data.DataType.DataAccess.SqLite;
 using TravelDatabase.Entities;
@@ -18,8 +18,10 @@ namespace TravelDbTest
             travelDbContext.RemoveRange(travelDbContext.User);
             travelDbContext.SaveChanges();
             InitDatabase.InitFromCsv();
+         
         }
 
+        #region [User tests]
         [Test]
         public void AddUserTest()
         {
@@ -30,8 +32,8 @@ namespace TravelDbTest
             );
             Assert.That(newUser.Id, Is.Not.Null);
         }
-
-        public void getUserAll()
+        [Test]
+        public void GetUserAllTest()
         {
             Setup();
             UserRepository userRepo = new UserRepository();
@@ -41,6 +43,45 @@ namespace TravelDbTest
             List<UserModel?> users = userRepo.GetUserAll();
             Assert.That(users.Count, Is.AtLeast(1));
         }
+
+
+        [Test]
+        public void MapUser_WhenUserIsNotNull()
+        {
+            Setup();
+            User user = new()
+            {
+                Id = 1,
+                Name = "John Doe",
+                Email = "john@example.com",
+                Admin = 1
+            };
+            UserModel result = MapUser(user);
+
+            ClassicAssert.NotNull(result);
+            Assert.That(user.Id, Is.EqualTo( result.Id));
+            Assert.That(user.Name, Is.EqualTo(result.Name));
+            Assert.That(user.Email, Is.EqualTo(result.Email));
+            Assert.That(user.Admin == 1, Is.EqualTo(result.IsAdmin));
+        }
+
+        [Test]
+        public void MapUser_WhenUserIsNull()
+        {
+            User user = null;
+            UserModel result = MapUser(user);
+            ClassicAssert.IsNull(result);
+        }
+
+        internal static UserModel? MapUser(User? user)
+        {
+            if (user == null)
+            {
+                return null;
+            }
+            return new UserModel(user.Id, user.Name!, user.Email!, user.Admin == 1);
+        }
+        #endregion
 
         [Test]
         public void AddCapitalTest()
@@ -52,15 +93,6 @@ namespace TravelDbTest
             );
             List<CapitalModel> allCapitals = new CapitalRepository().GetCapitalAll();
             Assert.That(allCapitals.Any());
-        }
-
-        internal static UserModel? MapUser(User? user)
-        {
-            if (user == null)
-            {
-                return null;
-            }
-            return new UserModel(user.Id, user.Name!, user.Email!, user.Admin == 1);
         }
 
         internal static CapitalModel? MapCapital(Capital capital)

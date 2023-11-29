@@ -11,8 +11,8 @@ namespace TravelPlanner.TravelPlannerApp.Service {
         public TripModel AddTrip(string userEmail, int departureCapitalId, int arrivalCapitalId)
         {
             UserModel? user = _userRepository.GetUserByEmail(userEmail);
-            CapitalModel departureCapital = _capitalRepository.GetCapitalById(departureCapitalId);
-            CapitalModel arrivalCapital = _capitalRepository.GetCapitalById(arrivalCapitalId);
+            CapitalModel? departureCapital = _capitalRepository.GetCapitalById(departureCapitalId);
+            CapitalModel? arrivalCapital = _capitalRepository.GetCapitalById(arrivalCapitalId);
             TripModel newTrip = new(null, user, departureCapital, arrivalCapital);
 
             return _tripRepository.AddTrip(newTrip);

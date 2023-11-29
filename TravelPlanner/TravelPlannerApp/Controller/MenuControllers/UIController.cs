@@ -12,7 +12,7 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
         private readonly TripService _tripService = new();
         private readonly UserService _userService = new();
 
-        private UserModel? _currentUser = new(1234, "Bob", "bob@bob.com");
+        private UserModel? _currentUser = new(1, "TestUser", "testUser@Test.com");
 
         //REMOVE
         bool isLoggedIn = false;

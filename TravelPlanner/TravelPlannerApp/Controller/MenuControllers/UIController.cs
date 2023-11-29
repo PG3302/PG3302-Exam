@@ -19,7 +19,7 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
         private string? _currentMessage;
 
         #region MAIN
-        public void Start()
+        internal void Start()
         {
             MainMenu();            
         }

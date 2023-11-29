@@ -8,7 +8,7 @@ namespace TravelPlanner.TravelPlannerApp.Service {
         private readonly UserRepository _userRepository = new();
         private readonly CapitalRepository _capitalRepository = new();
 
-        public TripModel AddTrip(string userEmail, int departureCapitalId, int arrivalCapitalId)
+        internal TripModel AddTrip(string userEmail, int departureCapitalId, int arrivalCapitalId)
         {
             UserModel? user = _userRepository.GetUserByEmail(userEmail);
             CapitalModel? departureCapital = _capitalRepository.GetCapitalById(departureCapitalId);
@@ -18,16 +18,11 @@ namespace TravelPlanner.TravelPlannerApp.Service {
             return _tripRepository.AddTrip(newTrip);
         }
 
-        public List<Model> GetTripAll()
+        internal List<Model> GetTripAll()
         {
             List<Model> returnList = [.. _tripRepository.GetTripAll()];
 
             return returnList;
-        }
-
-        public TripModel GetTripById(int tripId)
-        {
-            return _tripRepository.GetTripById(tripId);
         }
 
         public List<Model> GetTripByUser(string userEmail)
@@ -35,11 +30,6 @@ namespace TravelPlanner.TravelPlannerApp.Service {
             List<Model> returnList = [.. _tripRepository.GetTripByUser(userEmail)];
 
             return returnList;
-        }
-
-        public List<TripModel> GetTripByCapital(int capitalId)
-        {
-            return _tripRepository.GetTripByCapital(capitalId);
         }
     }
 }

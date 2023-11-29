@@ -1,11 +1,10 @@
-﻿using TravelPlanner.TravelPlannerApp.Controller.ConsoleControllers;
-using TravelPlanner.TravelPlannerApp.Controller.MenuControllers;
+﻿using TravelPlanner.TravelPlannerApp.Controller.MenuControllers;
 
 namespace TravelPlanner.TravelPlannerApp
 {
     internal class TravelPlanner
     {
-        public void Start()
+        internal void Start()
         {
             UIController interfaceController = new();
             interfaceController.Start();

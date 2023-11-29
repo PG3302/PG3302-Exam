@@ -1,6 +1,4 @@
-﻿using System.Text.RegularExpressions;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.EntityFrameworkCore;
 using TravelDatabase.Data.DataType.DataAccess.SqLite;
 using TravelDatabase.Data.Log;
 using TravelDatabase.Entities;

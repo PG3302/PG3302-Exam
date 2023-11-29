@@ -18,22 +18,22 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
         private int _numberOfPages;
         private string _currentChoice = "";
 
-        public MenuController()
+        internal MenuController()
         {
             SetConfigValues();
         }
 
-        public Model? GetCurrentModel()
+        internal Model? GetCurrentModel()
         {
             return _currentModel;
         }
 
-        public string GetCurrentChoice()
+        internal string GetCurrentChoice()
         {
             return _currentChoice;
         }
 
-        public void ResetMenuController()
+        internal void ResetMenuController()
         {
             _currentModel = null;
             _selectedMenuIndex = 0;
@@ -42,19 +42,19 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             _currentChoice = "";
         }
 
-        public void AddMenu(string menuText, Action menuMethod, bool breakOut = false)
+        internal void AddMenu(string menuText, Action menuMethod, bool breakOut = false)
         {
             MenuObject menuObject = new(menuText, menuMethod, breakOut);
 
             _menuObjects.Add(menuObject);
         }
 
-        public void AddList(List<Model> list, Action selectMenu, bool breakOut = false)
+        internal void AddList(List<Model> list, Action selectMenu, bool breakOut = false)
         {
             _listObject = new(list, selectMenu, breakOut);
         }
 
-        public void RunMenu(string title, Action previousMenu)
+        internal void RunMenu(string title, Action previousMenu)
         {
             _currentPage = 0;
             List<ConsoleKey> allowedKeys = [];

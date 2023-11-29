@@ -4,13 +4,13 @@ using TravelPlanner.TravelPlannerApp.Controller.ConsoleControllers;
 
 namespace TravelPlanner.TravelPlannerApp.Controller.UserControllers
 {
-    public class UserController
+    internal class UserController
     {
         private readonly ConsoleController _consoleController = new();
 
         int minNameLength;
 
-        public UserController()
+        internal UserController()
         {
             SetConfigValues();
         }
@@ -33,7 +33,7 @@ namespace TravelPlanner.TravelPlannerApp.Controller.UserControllers
             }
         }
 
-        public string GetUserString(bool allowEmpty = false)
+        internal string GetUserString(bool allowEmpty = false)
         {
             string userInput = "";
 
@@ -56,7 +56,7 @@ namespace TravelPlanner.TravelPlannerApp.Controller.UserControllers
             return userInput;
         }
 
-        public int GetUserInt()
+        internal int GetUserInt()
         {
             _consoleController.ShowCursor();
 
@@ -68,7 +68,7 @@ namespace TravelPlanner.TravelPlannerApp.Controller.UserControllers
             return intValue;
         }
 
-        public int GetUserIntMinMax(int minValue, int maxValue)
+        internal int GetUserIntMinMax(int minValue, int maxValue)
         {
             int value = 0;
             bool validValue = false;
@@ -94,7 +94,7 @@ namespace TravelPlanner.TravelPlannerApp.Controller.UserControllers
             return value;
         }
 
-        public ConsoleKey GetUserMenuChoiceKey(List<ConsoleKey> arrowKeysAllowed)
+        internal ConsoleKey GetUserMenuChoiceKey(List<ConsoleKey> arrowKeysAllowed)
         {
             ConsoleKey keyPressed = Console.ReadKey(true).Key;
             bool validValue = false;

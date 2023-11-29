@@ -30,9 +30,11 @@ namespace TravelPlanner.TravelPlannerApp.Service {
             return _tripRepository.GetTripById(tripId);
         }
 
-        public List<TripModel> GetTripByUser(string userEmail)
+        public List<Model> GetTripByUser(string userEmail)
         {
-            return _tripRepository.GetTripByUser(userEmail);
+            List<Model> returnList = [.. _tripRepository.GetTripByUser(userEmail)];
+
+            return returnList;
         }
 
         public List<TripModel> GetTripByCapital(int capitalId)

@@ -1,4 +1,5 @@
-﻿using TravelDatabase.Models;
+﻿using TravelDatabase.Data.Log;
+using TravelDatabase.Models;
 using TravelDatabase.Repositories;
 
 // Database saves here: \\TravelDatabase\TravelDatabase\bin\Debug\net6.0\Resources

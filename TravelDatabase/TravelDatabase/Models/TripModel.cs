@@ -16,7 +16,7 @@
 		}
 
 		public override string ToString() {
-			return $"{User} -- {StartingCapital} -> {DestinationCapital} ({Price})";
+			return $"[{User.Email}] {StartingCapital.Name} -> {DestinationCapital.Name} ({(int)Price} NOK)";
 		}
 	}
 }

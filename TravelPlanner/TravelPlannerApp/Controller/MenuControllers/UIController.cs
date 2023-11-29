@@ -2,6 +2,7 @@
 using TravelDatabase.Data.Log;
 using TravelDatabase.Models;
 using TravelPlanner.TravelPlannerApp.Service;
+using TravelPlanner.TravelPlannerApp.Controller.UserControllers;
 
 namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
 {
@@ -11,17 +12,16 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
         private readonly CapitalService _capitalService = new();
         private readonly TripService _tripService = new();
         private readonly UserService _userService = new();
+        private readonly UserController _userController = new();
 
-        private UserModel? _currentUser = new(1, "TestUser", "testUser@Test.com");
-
-        //REMOVE
-        bool isLoggedIn = false;
-        bool isAdmin = false;
+        //private UserModel? _currentUser = new(1, "TestUser", "testUser@Test.com");
+        //private UserModel? _currentUser = new(2, "TestAdmin", "testAdmin@Test.com", true);
+        private UserModel? _currentUser = null;
 
         #region MAIN
         public void Start()
         {
-            MainMenu();
+            MainMenu();            
         }
 
         private void ExitConsole()
@@ -50,8 +50,6 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             {
                 _menuController.AddMenu("Admin", AdminMenu);
             }
-
-            _menuController.AddMenu("tmp", TripListMenu);
 
             _menuController.AddMenu("Locations.", CapitalListMenu);
             _menuController.AddMenu("Exit.", ExitConsole);
@@ -117,7 +115,19 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
 
         private void SeeTripsMenu()
         {
+            List<TripModel> tripList = new();
 
+            _menuController.AddMenu("Back.", TripMenu);
+
+            if (_currentUser?.IsAdmin ?? false)
+            {
+                _menuController.AddList(_tripService.GetTripAll(), TripMenu);
+            } else
+            {
+                _menuController.AddList(_tripService.GetTripByUser(_currentUser?.Email ?? ""), TripMenu);
+            }
+
+            _menuController.RunMenu("List of all previous trips...", TripMenu);
         }
         #endregion
 
@@ -126,65 +136,28 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
 
         private void LoginMenu()
         {
-            if (isLoggedIn == false)
-            {
-                TmpLoginSomething();
-            }
-            else
-            {
-                if (isAdmin)
-                {
-                    _menuController.AddMenu("Back.", MainMenu);
-                    _menuController.RunMenu("logget inn som admin", AdminMenu);
-                }
-                else
-                {
-                    _menuController.AddMenu("Back.", MainMenu);
-                    _menuController.RunMenu("logget inn med vanlig acc", MainMenu);
-                }
-            }
-            _menuController.AddMenu("Back.", MainMenu);
-        }
-
-        // Login/Logout section
-        private void TmpLoginSomething()
-        {
             Console.Clear();
-            _menuController.AddMenu("Login", LoginSubPage);
-            _menuController.AddMenu("Create user", CreateUser);
-            _menuController.AddMenu("Back.", MainMenu);
-            _menuController.RunMenu(
-                "You are currently not logged in. Do you wish you log in or create a user?",
-                MainMenu
-            );
-        }
 
-        private void LoginSubPage()
-        {
-            Console.Clear();
-            _menuController.AddMenu("Standard User", LoginRegUser);
-            _menuController.AddMenu("Admin user", LoginAdminUser);
-            _menuController.AddMenu("Back.", MainMenu);
-            _menuController.RunMenu("Login/login", MainMenu);
-        }
+            string email;
+            
+            Console.Write("Welcome :) Please log in." +
+                "\nEmail: ");
 
-        private void LoginRegUser()
-        {
-            isLoggedIn = true;
+            email = _userController.GetUserString();
+
+            _currentUser = _userService.GetUserByEmail(email);
+
+            if (_currentUser == null)
+            {
+                
+            }
+
             MainMenu();
-        }
 
-        private void LoginAdminUser()
-        {
-            isLoggedIn = true;
-            isAdmin = true;
-            MainMenu();
         }
-
         private void LogOutMenu()
         {
-            isLoggedIn = false;
-            isAdmin = false;
+            _currentUser = null;
             MainMenu();
         }
 

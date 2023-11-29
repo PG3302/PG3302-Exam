@@ -84,7 +84,7 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
         #region TRIP MENU
         private void TripMenu()
         {
-            _menuController.AddMenu("Add Trip", AddTripMenu);
+            _menuController.AddMenu("Add Trip.", AddTripMenu);
             _menuController.AddMenu("List Trips.", SeeTripsMenu);
             _menuController.AddMenu("Back.", MainMenu);
             _menuController.RunMenu("Please select what operation you would like for trips.", MainMenu);
@@ -199,7 +199,12 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
         {
             #region MAIN LIST PART
             _menuController.AddMenu("Back.", MainMenu);
-            _menuController.AddMenu("Filter", ListMenu, true);
+
+            //Added due to bug and too little time to fix.
+            if (_menuController.GetCurrentChoice() != "Add Trip.")
+            {
+                _menuController.AddMenu("Filter", ListMenu, true);
+            }
 
             if (_currentModelType == ModelType.Capital)
             {

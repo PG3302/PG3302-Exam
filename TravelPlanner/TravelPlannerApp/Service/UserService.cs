@@ -29,5 +29,10 @@ namespace TravelPlanner.TravelPlannerApp.Service {
         {
             _userRepository.DeleteUser(userId);
         }
+
+        public void EditUser(int userId, string name, bool admin)
+        {
+            _userRepository.EditUser(userId, name, admin ? 1 : 0);
+        }
     }
 }

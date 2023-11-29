@@ -58,16 +58,22 @@ namespace TravelPlanner.TravelPlannerApp.Controller.UserControllers
 
         public int GetUserInt()
         {
+            _consoleController.ShowCursor();
+
             //https://stackoverflow.com/questions/45030/how-to-parse-a-string-into-a-nullable-int
             _ = int.TryParse(Console.ReadLine(), out int intValue) ? intValue : 0;
+
+            _consoleController.HideCursor();
 
             return intValue;
         }
 
-        public int GetUserMenuChoiceInt(int minValue, int maxValue)
+        public int GetUserIntMinMax(int minValue, int maxValue)
         {
             int value = 0;
             bool validValue = false;
+
+            _consoleController.ShowCursor();
 
             while (!validValue)
             {
@@ -82,6 +88,8 @@ namespace TravelPlanner.TravelPlannerApp.Controller.UserControllers
                     Console.Write($"Please type in a valid number between {minValue} - {maxValue}: ");
                 }
             }
+
+            _consoleController.HideCursor();
 
             return value;
         }

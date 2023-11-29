@@ -40,20 +40,20 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
 
             if (_currentUser != null)
             {
-                _menuController.AddMenu("Logout.", LogOutMenu);
-                _menuController.AddMenu("Trips.", TripMenu);
+                _menuController.AddMenu("Logout", LogOutMenu);
+                _menuController.AddMenu("Trips", TripMenu);
             } else
             {
-                _menuController.AddMenu("Login.", LoginMenu);
+                _menuController.AddMenu("Login", LoginMenu);
             }
 
             if (_currentUser?.IsAdmin ?? false)
             {
-                _menuController.AddMenu("Admin.", AdminMenu);
+                _menuController.AddMenu("Admin", AdminMenu);
             }
 
-            _menuController.AddMenu("Locations.", FilterCapitalList);
-            _menuController.AddMenu("Exit.", ExitConsole);
+            _menuController.AddMenu("Locations", FilterCapitalList);
+            _menuController.AddMenu("Exit", ExitConsole);
 
             _menuController.RunMenu($"Welcome to Kristiania Travel Planner {_currentUser?.Name ?? ""} :)", ExitConsole);
         }
@@ -62,14 +62,15 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
         #region ADMIN
         private void AdminMenu()
         {
-            _menuController.AddMenu("Back.", MainMenu);
-            _menuController.AddMenu("Delete User.", DeleteUserMenu);
+            _menuController.AddMenu("Back", MainMenu);
+            _menuController.AddMenu("Delete User", DeleteUserMenu);
+            _menuController.AddMenu("Edit User", EditUserMenu);
             _menuController.RunMenu("Welcome admin. Please select an option.", MainMenu);
         }
 
         private void DeleteUserMenu()
         {
-            _menuController.AddMenu("Back.", AdminMenu);
+            _menuController.AddMenu("Back", AdminMenu);
             _menuController.AddList(_userService.GetUserAll(), DeleteUserSubMenu);
             _menuController.RunMenu("WARNING! Please select a user to delete permanently.", AdminMenu);
         }
@@ -83,14 +84,60 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             MainMenu();
         }
 
+        private void EditUserMenu()
+        {
+            _menuController.AddMenu("Back", AdminMenu);
+            _menuController.AddList(_userService.GetUserAll(), EditUserSubMenu);
+            _menuController.RunMenu("Please select a user to edit.", AdminMenu);
+        }
+
+        private void EditUserSubMenu()
+        {
+            Console.Clear();
+            UserModel? oldUser = (UserModel?)_menuController.GetCurrentModel();
+            string? name = null;
+            bool? admin = null;
+            int? adminResponse = null;
+
+            Console.Write($"Old value {oldUser?.Name}. Please provide a new name. Leave empty to keep the old value." +
+                $"\nName: ");
+
+            name = _userController.GetUserString(true);
+
+            if (name == "")
+            {
+                name = null;
+            }
+
+            Console.Write($"Old value {oldUser?.IsAdmin}. Please select admin access (1 = admin, 0 = normal user)." +
+                $"\nAdmin: ");
+
+            adminResponse = _userController.GetUserIntMinMax(0, 1);
+
+            if (adminResponse == 0)
+            {
+                admin = false;
+            } else if (adminResponse == 1)
+            {
+                admin = true;
+            } else
+            {
+                Logger.LogError("Invalid number for edit user admin value. ", new NotSupportedException());
+            }
+
+            _userService.EditUser(oldUser?.Id ?? -1, name ?? oldUser?.Name, admin ?? oldUser?.IsAdmin ?? false);
+
+            AdminMenu();
+        }
+
         #endregion
 
         #region TRIP MENU
         private void TripMenu()
         {
-            _menuController.AddMenu("Add Trip.", AddTripMenu);
-            _menuController.AddMenu("List Trips.", SeeTripsMenu);
-            _menuController.AddMenu("Back.", MainMenu);
+            _menuController.AddMenu("Add Trip", AddTripMenu);
+            _menuController.AddMenu("List Trips", SeeTripsMenu);
+            _menuController.AddMenu("Back", MainMenu);
             _menuController.RunMenu("Please select what operation you would like for trips.", MainMenu);
         }
 
@@ -122,7 +169,7 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
         {
             List<TripModel> tripList = new();
 
-            _menuController.AddMenu("Back.", TripMenu);
+            _menuController.AddMenu("Back", TripMenu);
 
             if (_currentUser?.IsAdmin ?? false)
             {
@@ -155,7 +202,7 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
                     CreateUser();
                 }
 
-                _currentMessage = "";
+                _currentMessage = null;
             }
 
             MainMenu();
@@ -188,15 +235,15 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
         private void FilterCapitalList()
         {
             #region MAIN LIST PART
-            _menuController.AddMenu("Back.", MainMenu);
+            _menuController.AddMenu("Back", MainMenu);
 
             //Added due to bug and too little time to fix.
-            if (_menuController.GetCurrentChoice() != "Add Trip.")
+            if (_menuController.GetCurrentChoice() != "Add Trip")
             {
                 _menuController.AddMenu("Filter", FilterCapitalList, true);
             }
 
-            if ((_menuController.GetCurrentChoice() == "Locations.") || (Enum.TryParse<Continent>(_menuController.GetCurrentChoice(), out Continent currentContinent)))
+            if ((_menuController.GetCurrentChoice() == "Locations") || (Enum.TryParse<Continent>(_menuController.GetCurrentChoice(), out Continent currentContinent)))
             {
                 _menuController.AddList(_currentList ?? _capitalService.GetCapitalAll(), MainMenu);
             } else 
@@ -213,10 +260,10 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             #endregion
 
             #region SELECT FILTER PART
-            _menuController.AddMenu("Back.", FilterCapitalList);
+            _menuController.AddMenu("Back", FilterCapitalList);
             _menuController.AddMenu("Continent", FilterCapitalList, true);
 
-            _menuController.RunMenu($"Filter capital.", FilterCapitalList);
+            _menuController.RunMenu($"Filter Capital", FilterCapitalList);
             #endregion
 
             #region FILTER PART

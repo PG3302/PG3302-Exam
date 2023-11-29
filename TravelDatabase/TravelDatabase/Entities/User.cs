@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TravelDatabase.Entities {
+﻿namespace TravelDatabase.Entities {
 	public class User {
 		public int Id { get; set; } //PK
 		public string? Name { get; set; }

@@ -130,10 +130,10 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
         private void CreateUser()
         {
             Console.Clear();
-            Console.WriteLine("Enter the name: ");
+            Console.Write("Enter the name: ");
             string name = Console.ReadLine();
 
-            Console.WriteLine("Enter the email: ");
+            Console.Write("Enter the email: ");
             string email = Console.ReadLine();
 
             try
@@ -212,14 +212,32 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
 
 
 
-        private List<Model>? currentList = null;
+        private List<Model>? _currentList = null;
+        private ModelType? _currentModelType = null;
 
         private void ListMenu()
         {
+            _currentModelType = ModelType.Capital;
+
             _menuController.AddMenu("Back.", MainMenu);
             _menuController.AddMenu("Filter", ListMenuFilter);
-            _menuController.AddList(currentList ?? _capitalService.GetCapitalAll(), MainMenu);
+
+            if (_currentModelType == ModelType.Capital)
+            {
+                _menuController.AddList(_currentList ?? _capitalService.GetCapitalAll(), MainMenu, true);
+            } else if (_currentModelType == ModelType.Trip)
+            {
+                _menuController.AddList(_currentList ?? _tripService.GetTripAll(), MainMenu, true);
+            } else if (_currentModelType == ModelType.User)
+            {
+                _menuController.AddList(_currentList ?? _userService.GetUserAll(), MainMenu, true);
+            } else
+            {
+                Logger.LogError("No currentModeType found in list menu.", new MissingFieldException());
+            }
+
             _menuController.RunMenu("List of travel locations.", MainMenu);
+
         }
 
         private void ListMenuFilter()
@@ -233,7 +251,7 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
         {
             if (Enum.TryParse<Continent>(_menuController.GetCurrentChoice(), out Continent currentContinent))
             {
-                currentList = _capitalService.GetCapitalByContinent(currentContinent);
+                _currentList = _capitalService.GetCapitalByContinent(currentContinent);
                 CapitalModel testc = _capitalService.GetCapitalByName("London");
                 Logger.LogInfo("Bla " + testc);
                 ListMenu();

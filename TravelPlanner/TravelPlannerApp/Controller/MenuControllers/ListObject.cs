@@ -6,11 +6,13 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
     {
         public Action? Method { get; private set; }
         public List<Model>? List { get; private set; }
+        public bool? BreakOut { get; set; }
 
-        public ListObject(List<Model>? list, Action? method)
+        public ListObject(List<Model>? list, Action? method, bool? breakOut)
         {
             Method = method;
             List = list;
+            BreakOut = breakOut;
         }
     }
 }

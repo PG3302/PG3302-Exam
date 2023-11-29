@@ -45,9 +45,9 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             _menuObjects.Add(menuObject);
         }
 
-        public void AddList(List<Model> list, Action selectMenu)
+        public void AddList(List<Model> list, Action selectMenu, bool breakOut = false)
         {
-            _listObject = new(list, selectMenu);
+            _listObject = new(list, selectMenu, breakOut);
         }
 
         public void RunMenu(string title, Action previousMenu)
@@ -58,6 +58,7 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             ConsoleKey keyPressed;
             Action? selectedMenu = null;
             Action nextMethod;
+            _numberOfPages = SetNumberOfPages();
 
             while (selectedMenu == null)
             {
@@ -98,18 +99,24 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
                 }
                 else if (keyPressed == ConsoleKey.Escape)
                 {
-                    _listObject = new(_listObject?.List, null);
+                    _listObject = new(_listObject?.List, null, _listObject?.BreakOut);
                     break;
                 }
             }
 
             nextMethod = selectedMenu ?? _listObject?.Method ?? previousMenu;
-            _listObject = new(null, _listObject?.Method);
+            _listObject = new(null, _listObject?.Method, _listObject?.BreakOut);
 
             _selectedMenuIndex = 0;
             _menuObjects.Clear();
 
-            nextMethod();
+            Logger.LogInfo(_currentModel?.ToString() ?? "It was null");
+
+            if ((!_listObject?.BreakOut ?? true) || _currentModel == null)
+            {
+                Logger.LogInfo("I'm here!");
+                nextMethod();
+            }
         }
 
         private void SetConfigValues()
@@ -161,7 +168,7 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
 
             if (_listObject?.List?.Count > 0)
             {
-                Console.WriteLine($"Showing {_itemsEachPage} each page. Page {_currentPage + 1} of {_numberOfPages}");
+                Console.WriteLine($"Page {_currentPage + 1} of {_numberOfPages} ({_itemsEachPage} pr. page)");
             }
         }
 
@@ -178,10 +185,13 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             return pageOfList;
         }
 
+        private int SetNumberOfPages()
+        {
+            return (int)Math.Ceiling((_listObject?.List?.Count ?? 0) / (double)_itemsEachPage);
+        }
+
         private List<ConsoleKey> CreateListOfAllowedKeys(int pageOfListCount = 0)
         {
-            _numberOfPages = (int)Math.Ceiling((_listObject?.List?.Count ?? 0) / (double)_itemsEachPage);
-
             List<ConsoleKey> allowedKeys = new();
 
             if (_selectedMenuIndex > 0)

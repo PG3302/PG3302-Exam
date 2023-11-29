@@ -12,7 +12,7 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
         private readonly TripService _tripService = new();
         private readonly UserService _userService = new();
 
-        private UserModel? _currentUser = null;
+        private UserModel? _currentUser = new(1234, "Bob", "bob@bob.com");
 
         //REMOVE
         bool isLoggedIn = false;
@@ -35,6 +35,7 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
         private void MainMenu()
         {
             _currentList = null;
+            _menuController.ResetMenuController();
 
             if (_currentUser != null)
             {
@@ -84,17 +85,35 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
         #region TRIP MENU
         private void TripMenu()
         {
-            _menuController.AddMenu("Back.", MainMenu);
             _menuController.AddMenu("Add Trip", AddTripMenu);
             _menuController.AddMenu("List Trips.", SeeTripsMenu);
+            _menuController.AddMenu("Back.", MainMenu);
             _menuController.RunMenu("Please select what operation you would like for trips.", MainMenu);
         }
 
         private void AddTripMenu()
         {
-            _currentMessage = "Please select departure capital...";
+            CapitalModel? departureCapital;
+            CapitalModel? arrivalCapital;
 
-        }
+            _currentMessage = "Please select departure capital...";
+            CapitalListMenu();
+            departureCapital = (CapitalModel?)_menuController.GetCurrentModel();
+
+            _currentMessage = "Please select arrival capital...";
+            CapitalListMenu();
+            arrivalCapital = (CapitalModel?)_menuController.GetCurrentModel();
+
+            if (departureCapital != null || arrivalCapital != null || _currentUser != null)
+            {
+                _tripService.AddTrip(_currentUser?.Email ?? "", departureCapital?.Id ?? -1, arrivalCapital?.Id ?? -1);
+            } else
+            {
+                Logger.LogError("Wrong value when adding trips. ", new NullReferenceException());
+            }
+
+
+;        }
 
         private void SeeTripsMenu()
         {
@@ -223,7 +242,13 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
 
             if (_currentModelType == ModelType.Capital)
             {
-                _menuController.AddList(_currentList ?? _capitalService.GetCapitalAll(), MainMenu);
+                if ((_menuController.GetCurrentChoice() == "Locations.") || (Enum.TryParse<Continent>(_menuController.GetCurrentChoice(), out Continent currentContinent)))
+                {
+                    _menuController.AddList(_currentList ?? _capitalService.GetCapitalAll(), MainMenu);
+                } else 
+                {
+                    _menuController.AddList(_currentList ?? _capitalService.GetCapitalAll(), MainMenu, true);
+                }
             }
             else if (_currentModelType == ModelType.Trip)
             {
@@ -242,6 +267,11 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             }
 
             _menuController.RunMenu(_currentMessage ?? $"List of {_currentModelType}s.", MainMenu);
+
+            if (_menuController.GetCurrentModel() != null)
+            {
+                return;
+            }
             #endregion
 
             #region SELECT FILTER PART
@@ -276,7 +306,6 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
                 )
                 {
                     _currentList = _capitalService.GetCapitalByContinent(currentContinent);
-                    CapitalModel testc = _capitalService.GetCapitalByName("London");
                     ListMenu();
                 }
             }

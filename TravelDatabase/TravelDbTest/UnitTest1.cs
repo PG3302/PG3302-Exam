@@ -18,7 +18,6 @@ namespace TravelDbTest
             travelDbContext.RemoveRange(travelDbContext.User);
             travelDbContext.SaveChanges();
             InitDatabase.InitFromCsv();
-         
         }
 
         #region [User tests]
@@ -32,6 +31,7 @@ namespace TravelDbTest
             );
             Assert.That(newUser.Id, Is.Not.Null);
         }
+
         [Test]
         public void GetUserAllTest()
         {
@@ -44,22 +44,22 @@ namespace TravelDbTest
             Assert.That(users.Count, Is.AtLeast(1));
         }
 
-
         [Test]
         public void MapUser_WhenUserIsNotNull()
         {
             Setup();
-            User user = new()
-            {
-                Id = 1,
-                Name = "John Doe",
-                Email = "john@example.com",
-                Admin = 1
-            };
+            User user =
+                new()
+                {
+                    Id = 1,
+                    Name = "John Doe",
+                    Email = "john@example.com",
+                    Admin = 1
+                };
             UserModel result = MapUser(user);
 
             ClassicAssert.NotNull(result);
-            Assert.That(user.Id, Is.EqualTo( result.Id));
+            Assert.That(user.Id, Is.EqualTo(result.Id));
             Assert.That(user.Name, Is.EqualTo(result.Name));
             Assert.That(user.Email, Is.EqualTo(result.Email));
             Assert.That(user.Admin == 1, Is.EqualTo(result.IsAdmin));

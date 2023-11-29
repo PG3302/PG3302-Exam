@@ -125,8 +125,11 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
 
         private void SetConfigValues()
         {
-            try {
-                string? listItemsEachPageValue = ConfigurationManager.AppSettings["listItemsEachPage"];
+            try
+            {
+                string? listItemsEachPageValue = ConfigurationManager.AppSettings[
+                    "listItemsEachPage"
+                ];
                 int itemsEachPage = int.Parse(listItemsEachPageValue ?? "1");
 
                 if (itemsEachPage < 1)
@@ -135,7 +138,8 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
                 }
 
                 _itemsEachPage = itemsEachPage;
-            } catch (Exception error)
+            }
+            catch (Exception error)
             {
                 Logger.LogError("Error when reading app.config", error);
             }
@@ -178,7 +182,9 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
 
             if (_listObject?.List?.Count > 0)
             {
-                Console.WriteLine($"Page {_currentPage + 1} of {_numberOfPages} ({_itemsEachPage} pr. page)");
+                Console.WriteLine(
+                    $"Page {_currentPage + 1} of {_numberOfPages} ({_itemsEachPage} pr. page)"
+                );
             }
         }
 
@@ -187,7 +193,11 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             List<Model> pageOfList = new();
             int startPageIndex = _currentPage * _itemsEachPage;
 
-            for (int i = startPageIndex; i < _listObject?.List?.Count && i < startPageIndex + _itemsEachPage; i++)
+            for (
+                int i = startPageIndex;
+                i < _listObject?.List?.Count && i < startPageIndex + _itemsEachPage;
+                i++
+            )
             {
                 pageOfList.Add(_listObject?.List?[i]);
             }

@@ -1,4 +1,4 @@
-﻿namespace TravelDatabase.Models {
-	public abstract class Model {
-	}
+﻿namespace TravelDatabase.Models
+{
+    public abstract class Model { }
 }

@@ -18,7 +18,8 @@ namespace TravelDatabase.Migrations
                 defaultValue: 0,
                 oldClrType: typeof(string),
                 oldType: "TEXT",
-                oldNullable: true);
+                oldNullable: true
+            );
         }
 
         /// <inheritdoc />
@@ -30,7 +31,8 @@ namespace TravelDatabase.Migrations
                 type: "TEXT",
                 nullable: true,
                 oldClrType: typeof(int),
-                oldType: "INTEGER");
+                oldType: "INTEGER"
+            );
         }
     }
 }

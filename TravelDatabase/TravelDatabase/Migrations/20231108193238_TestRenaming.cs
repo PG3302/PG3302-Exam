@@ -16,7 +16,8 @@ namespace TravelDatabase.Migrations
                 type: "TEXT",
                 nullable: false,
                 oldClrType: typeof(int),
-                oldType: "INTEGER");
+                oldType: "INTEGER"
+            );
 
             migrationBuilder.AlterColumn<decimal>(
                 name: "Latitude",
@@ -24,7 +25,8 @@ namespace TravelDatabase.Migrations
                 type: "TEXT",
                 nullable: false,
                 oldClrType: typeof(int),
-                oldType: "INTEGER");
+                oldType: "INTEGER"
+            );
         }
 
         /// <inheritdoc />
@@ -36,7 +38,8 @@ namespace TravelDatabase.Migrations
                 type: "INTEGER",
                 nullable: false,
                 oldClrType: typeof(decimal),
-                oldType: "TEXT");
+                oldType: "TEXT"
+            );
 
             migrationBuilder.AlterColumn<int>(
                 name: "Latitude",
@@ -44,7 +47,8 @@ namespace TravelDatabase.Migrations
                 type: "INTEGER",
                 nullable: false,
                 oldClrType: typeof(decimal),
-                oldType: "TEXT");
+                oldType: "TEXT"
+            );
         }
     }
 }

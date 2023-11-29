@@ -30,12 +30,10 @@ namespace TravelDatabase.DataAccess.SqLite.Tests
         }
 
         [Test]
-        
         [TearDown]
         public void TearDown()
         {
             _dbContext.Dispose();
         }
-        
     }
 }

@@ -45,9 +45,12 @@ namespace TravelPlanner.TravelPlannerApp.Controller.UserControllers
                 if (allowEmpty && userInput.Length == 0)
                 {
                     break;
-                } else if (userInput.Length < minNameLength!)
+                }
+                else if (userInput.Length < minNameLength!)
                 {
-                    Console.Write($"Value too small. Min value {minNameLength}. Please provide a valid value: ");
+                    Console.Write(
+                        $"Value too small. Min value {minNameLength}. Please provide a valid value: "
+                    );
                 }
             }
 
@@ -85,7 +88,9 @@ namespace TravelPlanner.TravelPlannerApp.Controller.UserControllers
                 }
                 else
                 {
-                    Console.Write($"Please type in a valid number between {minValue} - {maxValue}: ");
+                    Console.Write(
+                        $"Please type in a valid number between {minValue} - {maxValue}: "
+                    );
                 }
             }
 

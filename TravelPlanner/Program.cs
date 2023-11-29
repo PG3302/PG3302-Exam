@@ -6,9 +6,9 @@ namespace TravelPlanner
     {
         static void Main(string[] args)
         {
-			InitDatabase.Init();
+            InitDatabase.Init();
 
-			TravelPlannerApp.TravelPlanner travelPlanner = new();
+            TravelPlannerApp.TravelPlanner travelPlanner = new();
 
             travelPlanner.Start();
         }

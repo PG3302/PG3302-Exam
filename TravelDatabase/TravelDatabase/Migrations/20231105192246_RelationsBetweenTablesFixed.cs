@@ -10,45 +10,35 @@ namespace TravelDatabase.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Trip_Capital_CapitalId",
-                table: "Trip");
+            migrationBuilder.DropForeignKey(name: "FK_Trip_Capital_CapitalId", table: "Trip");
 
-            migrationBuilder.DropForeignKey(
-                name: "FK_User_Capital_CapitalId",
-                table: "User");
+            migrationBuilder.DropForeignKey(name: "FK_User_Capital_CapitalId", table: "User");
 
-            migrationBuilder.DropIndex(
-                name: "IX_Trip_CapitalId",
-                table: "Trip");
+            migrationBuilder.DropIndex(name: "IX_Trip_CapitalId", table: "Trip");
 
-            migrationBuilder.DropColumn(
-                name: "City",
-                table: "User");
+            migrationBuilder.DropColumn(name: "City", table: "User");
 
-            migrationBuilder.DropColumn(
-                name: "CapitalId",
-                table: "Trip");
+            migrationBuilder.DropColumn(name: "CapitalId", table: "Trip");
 
-            migrationBuilder.RenameColumn(
-                name: "CapitalId",
-                table: "User",
-                newName: "CityId");
+            migrationBuilder.RenameColumn(name: "CapitalId", table: "User", newName: "CityId");
 
             migrationBuilder.RenameIndex(
                 name: "IX_User_CapitalId",
                 table: "User",
-                newName: "IX_User_CityId");
+                newName: "IX_User_CityId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Trip_ArrivalId",
                 table: "Trip",
-                column: "ArrivalId");
+                column: "ArrivalId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Trip_DepartureId",
                 table: "Trip",
-                column: "DepartureId");
+                column: "DepartureId"
+            );
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Trip_Capital_ArrivalId",
@@ -56,7 +46,8 @@ namespace TravelDatabase.Migrations
                 column: "ArrivalId",
                 principalTable: "Capital",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.NoAction);
+                onDelete: ReferentialAction.NoAction
+            );
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Trip_Capital_DepartureId",
@@ -64,7 +55,8 @@ namespace TravelDatabase.Migrations
                 column: "DepartureId",
                 principalTable: "Capital",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.NoAction);
+                onDelete: ReferentialAction.NoAction
+            );
 
             migrationBuilder.AddForeignKey(
                 name: "FK_User_Capital_CityId",
@@ -72,65 +64,58 @@ namespace TravelDatabase.Migrations
                 column: "CityId",
                 principalTable: "Capital",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.NoAction);
+                onDelete: ReferentialAction.NoAction
+            );
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Trip_Capital_ArrivalId",
-                table: "Trip");
+            migrationBuilder.DropForeignKey(name: "FK_Trip_Capital_ArrivalId", table: "Trip");
 
-            migrationBuilder.DropForeignKey(
-                name: "FK_Trip_Capital_DepartureId",
-                table: "Trip");
+            migrationBuilder.DropForeignKey(name: "FK_Trip_Capital_DepartureId", table: "Trip");
 
-            migrationBuilder.DropForeignKey(
-                name: "FK_User_Capital_CityId",
-                table: "User");
+            migrationBuilder.DropForeignKey(name: "FK_User_Capital_CityId", table: "User");
 
-            migrationBuilder.DropIndex(
-                name: "IX_Trip_ArrivalId",
-                table: "Trip");
+            migrationBuilder.DropIndex(name: "IX_Trip_ArrivalId", table: "Trip");
 
-            migrationBuilder.DropIndex(
-                name: "IX_Trip_DepartureId",
-                table: "Trip");
+            migrationBuilder.DropIndex(name: "IX_Trip_DepartureId", table: "Trip");
 
-            migrationBuilder.RenameColumn(
-                name: "CityId",
-                table: "User",
-                newName: "CapitalId");
+            migrationBuilder.RenameColumn(name: "CityId", table: "User", newName: "CapitalId");
 
             migrationBuilder.RenameIndex(
                 name: "IX_User_CityId",
                 table: "User",
-                newName: "IX_User_CapitalId");
+                newName: "IX_User_CapitalId"
+            );
 
             migrationBuilder.AddColumn<string>(
                 name: "City",
                 table: "User",
                 type: "TEXT",
-                nullable: true);
+                nullable: true
+            );
 
             migrationBuilder.AddColumn<int>(
                 name: "CapitalId",
                 table: "Trip",
                 type: "INTEGER",
-                nullable: true);
+                nullable: true
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Trip_CapitalId",
                 table: "Trip",
-                column: "CapitalId");
+                column: "CapitalId"
+            );
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Trip_Capital_CapitalId",
                 table: "Trip",
                 column: "CapitalId",
                 principalTable: "Capital",
-                principalColumn: "Id");
+                principalColumn: "Id"
+            );
 
             migrationBuilder.AddForeignKey(
                 name: "FK_User_Capital_CapitalId",
@@ -138,7 +123,8 @@ namespace TravelDatabase.Migrations
                 column: "CapitalId",
                 principalTable: "Capital",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.Cascade
+            );
         }
     }
 }

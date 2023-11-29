@@ -1,42 +1,53 @@
 ﻿using TravelDatabase.Data.Handlers;
 
-namespace TravelDatabase.Data.Log {
-	//Singleton design pattern from https://csharpindepth.com/Articles/Singleton
-	public class Logger {
-		private static Logger? _instance = null;
-		private static readonly object _constructLock = new();
+namespace TravelDatabase.Data.Log
+{
+    //Singleton design pattern from https://csharpindepth.com/Articles/Singleton
+    public class Logger
+    {
+        private static Logger? _instance = null;
+        private static readonly object _constructLock = new();
 
-		private Logger() {
+        private Logger() { }
 
-		}
+        public static Logger GetLogger()
+        {
+            if (_instance == null)
+            {
+                lock (_constructLock)
+                {
+                    _instance ??= new();
+                }
+            }
 
-		public static Logger GetLogger() {
-			if (_instance == null) {
-				lock (_constructLock) {
-					_instance ??= new();
-				}
-			}
+            return _instance;
+        }
 
-			return _instance;
-		}
+        public static void LogError(
+            string message,
+            Exception? exception = null,
+            string? path = null,
+            bool writeToConsole = false
+        )
+        {
+            string formatedMessage = $"[Error] ({DateTime.Now}) {exception?.Message} -- {message}";
 
-		public static void LogError(string message, Exception? exception = null, string? path = null, bool writeToConsole = false) {
-			string formatedMessage = $"[Error] ({DateTime.Now}) {exception?.Message} -- {message}";
+            WriteToLog(formatedMessage, path, writeToConsole);
+        }
 
-			WriteToLog(formatedMessage, path, writeToConsole);
-		}
+        public static void LogInfo(string message, string? path = null, bool writeToConsole = false)
+        {
+            string formatedMessage = $"[Info] ({DateTime.Now}) {message}";
 
-		public static void LogInfo(string message, string? path = null, bool writeToConsole = false) {
-			string formatedMessage = $"[Info] ({DateTime.Now}) {message}";
+            WriteToLog(formatedMessage, path, writeToConsole);
+        }
 
-			WriteToLog(formatedMessage, path, writeToConsole);
-		}
-
-		private static void WriteToLog(string formatedMessage, string? path, bool writeToConsole) {
-			FileHandler.WriteToFile(formatedMessage , path);
+        private static void WriteToLog(string formatedMessage, string? path, bool writeToConsole)
+        {
+            FileHandler.WriteToFile(formatedMessage, path);
 
             if (writeToConsole)
-				Console.WriteLine(formatedMessage);
-		}
-	}
+                Console.WriteLine(formatedMessage);
+        }
+    }
 }

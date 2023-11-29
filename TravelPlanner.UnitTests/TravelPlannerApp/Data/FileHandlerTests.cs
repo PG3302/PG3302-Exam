@@ -1,7 +1,8 @@
 ﻿using TravelDatabase.Data.Handlers;
 
-namespace TravelPlanner.UnitTests.TravelPlannerApp.Data {
-	internal class FileHandlerTests
+namespace TravelPlanner.UnitTests.TravelPlannerApp.Data
+{
+    internal class FileHandlerTests
     {
         private static readonly string folderLocation = Directory.GetCurrentDirectory();
         private static readonly string fileName = "FileHandlerTest.txt";

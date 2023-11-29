@@ -1,8 +1,8 @@
 ﻿using TravelDatabase.Data.DataType;
 using TravelDatabase.Data.Log;
 using TravelDatabase.Models;
-using TravelPlanner.TravelPlannerApp.Service;
 using TravelPlanner.TravelPlannerApp.Controller.UserControllers;
+using TravelPlanner.TravelPlannerApp.Service;
 
 namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
 {
@@ -21,14 +21,13 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
         #region MAIN
         internal void Start()
         {
-            MainMenu();            
+            MainMenu();
         }
 
         private void ExitConsole()
         {
             Console.Clear();
-            Console.WriteLine("Hope you enjoyed your stay :)" +
-                "\nPress any key to leave...");
+            Console.WriteLine("Hope you enjoyed your stay :)" + "\nPress any key to leave...");
             Console.ReadKey();
             Environment.Exit(0);
         }
@@ -42,7 +41,8 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             {
                 _menuController.AddMenu("Logout", LogOutMenu);
                 _menuController.AddMenu("Trips", TripMenu);
-            } else
+            }
+            else
             {
                 _menuController.AddMenu("Login", LoginMenu);
             }
@@ -55,7 +55,10 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             _menuController.AddMenu("Locations", FilterCapitalList);
             _menuController.AddMenu("Exit", ExitConsole);
 
-            _menuController.RunMenu($"Welcome to Kristiania Travel Planner {_currentUser?.Name ?? ""} :)", ExitConsole);
+            _menuController.RunMenu(
+                $"Welcome to Kristiania Travel Planner {_currentUser?.Name ?? ""} :)",
+                ExitConsole
+            );
         }
         #endregion
 
@@ -72,7 +75,10 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
         {
             _menuController.AddMenu("Back", AdminMenu);
             _menuController.AddList(_userService.GetUserAll(), DeleteUserSubMenu);
-            _menuController.RunMenu("WARNING! Please select a user to delete permanently.", AdminMenu);
+            _menuController.RunMenu(
+                "WARNING! Please select a user to delete permanently.",
+                AdminMenu
+            );
         }
 
         private void DeleteUserSubMenu()
@@ -99,8 +105,10 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             bool? admin = null;
             int? adminResponse = null;
 
-            Console.Write($"Old value {oldUser?.Name}. Please provide a new name. Leave empty to keep the old value." +
-                $"\nName: ");
+            Console.Write(
+                $"Old value {oldUser?.Name}. Please provide a new name. Leave empty to keep the old value."
+                    + $"\nName: "
+            );
 
             name = _userController.GetUserString(true);
 
@@ -109,23 +117,34 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
                 name = null;
             }
 
-            Console.Write($"Old value {oldUser?.IsAdmin}. Please select admin access (1 = admin, 0 = normal user)." +
-                $"\nAdmin: ");
+            Console.Write(
+                $"Old value {oldUser?.IsAdmin}. Please select admin access (1 = admin, 0 = normal user)."
+                    + $"\nAdmin: "
+            );
 
             adminResponse = _userController.GetUserIntMinMax(0, 1);
 
             if (adminResponse == 0)
             {
                 admin = false;
-            } else if (adminResponse == 1)
+            }
+            else if (adminResponse == 1)
             {
                 admin = true;
-            } else
+            }
+            else
             {
-                Logger.LogError("Invalid number for edit user admin value. ", new NotSupportedException());
+                Logger.LogError(
+                    "Invalid number for edit user admin value. ",
+                    new NotSupportedException()
+                );
             }
 
-            _userService.EditUser(oldUser?.Id ?? -1, name ?? oldUser?.Name, admin ?? oldUser?.IsAdmin ?? false);
+            _userService.EditUser(
+                oldUser?.Id ?? -1,
+                name ?? oldUser?.Name,
+                admin ?? oldUser?.IsAdmin ?? false
+            );
 
             AdminMenu();
         }
@@ -138,7 +157,10 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             _menuController.AddMenu("Add Trip", AddTripMenu);
             _menuController.AddMenu("List Trips", SeeTripsMenu);
             _menuController.AddMenu("Back", MainMenu);
-            _menuController.RunMenu("Please select what operation you would like for trips.", MainMenu);
+            _menuController.RunMenu(
+                "Please select what operation you would like for trips.",
+                MainMenu
+            );
         }
 
         private void AddTripMenu()
@@ -156,14 +178,20 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
 
             if (departureCapital != null || arrivalCapital != null || _currentUser != null)
             {
-                _tripService.AddTrip(_currentUser?.Email ?? "", departureCapital?.Id ?? -1, arrivalCapital?.Id ?? -1);
-            } else
+                _tripService.AddTrip(
+                    _currentUser?.Email ?? "",
+                    departureCapital?.Id ?? -1,
+                    arrivalCapital?.Id ?? -1
+                );
+            }
+            else
             {
                 Logger.LogError("Wrong value when adding trips. ", new NullReferenceException());
             }
 
             MainMenu();
-;       }
+            ;
+        }
 
         private void SeeTripsMenu()
         {
@@ -174,9 +202,13 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             if (_currentUser?.IsAdmin ?? false)
             {
                 _menuController.AddList(_tripService.GetTripAll(), TripMenu);
-            } else
+            }
+            else
             {
-                _menuController.AddList(_tripService.GetTripByUser(_currentUser?.Email ?? ""), TripMenu);
+                _menuController.AddList(
+                    _tripService.GetTripByUser(_currentUser?.Email ?? ""),
+                    TripMenu
+                );
             }
 
             _menuController.RunMenu("List of all previous trips...", TripMenu);
@@ -188,8 +220,9 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
         {
             Console.Clear();
 
-            Console.Write("Welcome :) Please log in, or leave blank to return to main menu." +
-                "\nEmail: ");
+            Console.Write(
+                "Welcome :) Please log in, or leave blank to return to main menu." + "\nEmail: "
+            );
 
             _currentMessage = _userController.GetUserString(true).ToLower();
 
@@ -220,8 +253,9 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
 
             Console.Clear();
 
-            Console.Write($"{_currentMessage} not found. Please create a new user..." +
-                $"\nName: ");
+            Console.Write(
+                $"{_currentMessage} not found. Please create a new user..." + $"\nName: "
+            );
 
             name = _userController.GetUserString();
 
@@ -243,14 +277,27 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
                 _menuController.AddMenu("Filter", FilterCapitalList, true);
             }
 
-            if ((_menuController.GetCurrentChoice() == "Locations") || (Enum.TryParse<Continent>(_menuController.GetCurrentChoice(), out Continent currentContinent)))
+            if (
+                (_menuController.GetCurrentChoice() == "Locations")
+                || (
+                    Enum.TryParse<Continent>(
+                        _menuController.GetCurrentChoice(),
+                        out Continent currentContinent
+                    )
+                )
+            )
             {
                 _menuController.AddList(_currentList ?? _capitalService.GetCapitalAll(), MainMenu);
-            } else 
-            {
-                _menuController.AddList(_currentList ?? _capitalService.GetCapitalAll(), MainMenu, true);
             }
-            
+            else
+            {
+                _menuController.AddList(
+                    _currentList ?? _capitalService.GetCapitalAll(),
+                    MainMenu,
+                    true
+                );
+            }
+
             _menuController.RunMenu(_currentMessage ?? $"List of capitals.", MainMenu);
 
             if (_menuController.GetCurrentModel() != null)

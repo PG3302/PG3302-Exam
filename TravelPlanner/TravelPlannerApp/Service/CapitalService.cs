@@ -2,8 +2,9 @@
 using TravelDatabase.Models;
 using TravelDatabase.Repositories;
 
-namespace TravelPlanner.TravelPlannerApp.Service {
-	internal class CapitalService
+namespace TravelPlanner.TravelPlannerApp.Service
+{
+    internal class CapitalService
     {
         private readonly CapitalRepository _capitalRepository = new();
 

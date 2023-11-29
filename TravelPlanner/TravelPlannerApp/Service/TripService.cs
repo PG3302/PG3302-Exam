@@ -1,8 +1,9 @@
 ﻿using TravelDatabase.Models;
 using TravelDatabase.Repositories;
 
-namespace TravelPlanner.TravelPlannerApp.Service {
-	internal class TripService
+namespace TravelPlanner.TravelPlannerApp.Service
+{
+    internal class TripService
     {
         private readonly TripRepository _tripRepository = new();
         private readonly UserRepository _userRepository = new();

@@ -88,8 +88,8 @@ namespace TravelDatabase.Repositories
         private static void AddTestUsers()
         {
             UserRepository userRepo = new UserRepository();
-            userRepo.AddUser(new UserModel(null, "TestUser", "testUser@Test.com", false));
-            userRepo.AddUser(new UserModel(null, "TestAdmin", "testAdmin@Test.com", true));
+            userRepo.AddUser(new UserModel(null, "TestUser", "testuser@Test.com", false));
+            userRepo.AddUser(new UserModel(null, "TestAdmin", "testadmin@Test.com", true));
         }
 
         private static void AddTestTrips()

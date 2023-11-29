@@ -27,7 +27,7 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
         private void ExitConsole()
         {
             Console.Clear();
-            Console.WriteLine("Quit stuff complete... Press any key to leave...");
+            Console.WriteLine("Hope you enjoyed your stay :)\nPress any key to leave...");
             Console.ReadKey();
             Environment.Exit(0);
         }
@@ -50,6 +50,8 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             {
                 _menuController.AddMenu("Admin", AdminMenu);
             }
+
+            _menuController.AddMenu("tmp", TripListMenu);
 
             _menuController.AddMenu("Locations.", CapitalListMenu);
             _menuController.AddMenu("Exit.", ExitConsole);
@@ -111,9 +113,7 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             {
                 Logger.LogError("Wrong value when adding trips. ", new NullReferenceException());
             }
-
-
-;        }
+;       }
 
         private void SeeTripsMenu()
         {
@@ -227,6 +227,12 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
         private void CapitalListMenu()
         {
             _currentModelType = ModelType.Capital;
+            ListMenu();
+        }
+
+        private void TripListMenu()
+        {
+            _currentModelType = ModelType.Trip;
             ListMenu();
         }
 

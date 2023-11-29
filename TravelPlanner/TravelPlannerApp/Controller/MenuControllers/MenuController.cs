@@ -33,8 +33,12 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             return _currentChoice;
         }
 
-        public void ResetCurrentChoice()
+        public void ResetMenuController()
         {
+            _currentModel = null;
+            _selectedMenuIndex = 0;
+            _currentPage = 0;
+            _numberOfPages = 0;
             _currentChoice = "";
         }
 
@@ -123,8 +127,14 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
         {
             try {
                 string? listItemsEachPageValue = ConfigurationManager.AppSettings["listItemsEachPage"];
-                
-                _itemsEachPage = int.Parse(listItemsEachPageValue ?? "");
+                int itemsEachPage = int.Parse(listItemsEachPageValue ?? "1");
+
+                if (itemsEachPage < 1)
+                {
+                    Logger.LogError("Illegal value for ItemsEachPage", new ArgumentNullException());
+                }
+
+                _itemsEachPage = itemsEachPage;
             } catch (Exception error)
             {
                 Logger.LogError("Error when reading app.config", error);

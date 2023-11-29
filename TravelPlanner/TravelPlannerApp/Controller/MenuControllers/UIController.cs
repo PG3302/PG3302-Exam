@@ -136,10 +136,27 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             Console.WriteLine("Enter the email: ");
             string email = Console.ReadLine();
 
-            UserModel addedUser = _userService.AddUser(name, email, isAdmin: true);
-            
-            _menuController.AddMenu("Back.", MainMenu);
-            _menuController.RunMenu("User added to travelplanner DB: " + addedUser, MainMenu);
+            try
+            {
+                UserModel addedUser = _userService.AddUser(name, email, isAdmin: false);
+
+                _menuController.AddMenu("Back.", MainMenu);
+                _menuController.RunMenu("User added to travelplanner DB: " + addedUser, MainMenu);
+            }
+            catch (Exception ex)
+            {
+                // Handle the exception and display an error message
+                Console.WriteLine($"Failed to create user. Error: {ex.Message}");
+
+                // You can also log the exception if needed
+                Logger.LogError($"Failed to create user. Error: {ex}");
+
+                // Add the "Back" menu to return to the main menu
+                _menuController.AddMenu("Back.", MainMenu);
+
+                // Run the menu with an error message at the top
+                _menuController.RunMenu("Failed to create user. Please try again.", MainMenu);
+            }
         }
 
         // Main Menu

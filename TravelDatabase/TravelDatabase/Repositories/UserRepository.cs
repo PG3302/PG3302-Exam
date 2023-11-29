@@ -37,7 +37,7 @@ namespace TravelDatabase.Repositories
                     }
                 }
             }
-            return newUser;
+            throw new Exception("User already exists");
         }
 
         //Only Admins should get access to this

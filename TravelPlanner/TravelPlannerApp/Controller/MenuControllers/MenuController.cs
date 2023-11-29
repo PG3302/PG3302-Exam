@@ -38,9 +38,9 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             _currentChoice = "";
         }
 
-        public void AddMenu(string menuText, Action menuMethod)
+        public void AddMenu(string menuText, Action menuMethod, bool breakOut = false)
         {
-            MenuObject menuObject = new(menuText, menuMethod);
+            MenuObject menuObject = new(menuText, menuMethod, breakOut);
 
             _menuObjects.Add(menuObject);
         }
@@ -59,6 +59,7 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             Action? selectedMenu = null;
             Action nextMethod;
             _numberOfPages = SetNumberOfPages();
+            bool breakOut = false;
 
             while (selectedMenu == null)
             {
@@ -90,11 +91,13 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
                 {
                     selectedMenu = _menuObjects[_selectedMenuIndex].Method;
                     _currentChoice = _menuObjects[_selectedMenuIndex].Text;
+                    breakOut = _menuObjects[_selectedMenuIndex].BreakOut;
                     break;
                 }
                 else if (keyPressed == ConsoleKey.Enter) //Model object
                 {
                     _currentModel = pageOfList[_selectedMenuIndex - _menuObjects.Count];
+                    breakOut = _listObject?.BreakOut ?? false;
                     break;
                 }
                 else if (keyPressed == ConsoleKey.Escape)
@@ -110,11 +113,8 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             _selectedMenuIndex = 0;
             _menuObjects.Clear();
 
-            Logger.LogInfo(_currentModel?.ToString() ?? "It was null");
-
-            if ((!_listObject?.BreakOut ?? true) || _currentModel == null)
+            if (!breakOut)
             {
-                Logger.LogInfo("I'm here!");
                 nextMethod();
             }
         }

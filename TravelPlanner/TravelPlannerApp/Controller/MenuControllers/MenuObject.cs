@@ -1,14 +1,9 @@
 namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
 {
-    internal class MenuObject
+    internal class MenuObject(string text, Action method, bool breakOut = false)
     {
-        public Action Method { get; private set; }
-        public string Text { get; private set; }
-
-        public MenuObject(string text, Action method)
-        {
-            Method = method;
-            Text = text;
-        }
+        public Action Method { get; private set; } = method;
+        public string Text { get; private set; } = text;
+        public bool BreakOut { get; private set; } = breakOut;
     }
 }

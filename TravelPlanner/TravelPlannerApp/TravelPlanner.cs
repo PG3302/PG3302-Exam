@@ -7,8 +7,6 @@ namespace TravelPlanner.TravelPlannerApp
     {
         public void Start()
         {
-            ConsoleController.SetConsoleDisplay();
-
             UIController interfaceController = new();
             interfaceController.Start();
         }

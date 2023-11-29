@@ -1,13 +1,23 @@
 ﻿namespace TravelPlanner.TravelPlannerApp.Controller.ConsoleControllers
 {
-    internal static class ConsoleController
+    internal class ConsoleController
     {
-        public static void SetConsoleDisplay()
+        internal ConsoleController()
+        {
+            Console.Title = "Kristiania Travel Planner";
+            HideCursor();
+        }
+
+        internal void ShowCursor()
+        {
+            Console.CursorVisible = true;
+        }
+
+        internal void HideCursor()
         {
             Console.CursorVisible = false;
-            //Console.ForegroundColor = ConsoleColor.Red;
-            Console.Title = "Kristiania Travel Planner";
-
         }
+
+
     }
 }

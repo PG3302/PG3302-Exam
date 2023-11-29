@@ -1,10 +1,22 @@
-﻿namespace TravelPlanner.TravelPlannerApp.Controller.UserControllers
+﻿using TravelPlanner.TravelPlannerApp.Controller.ConsoleControllers;
+
+namespace TravelPlanner.TravelPlannerApp.Controller.UserControllers
 {
     public class UserController
     {
+        private readonly ConsoleController _consoleController = new();
+
         public string GetUserString()
         {
-            return Console.ReadLine() ?? "";
+            string userInput;
+
+            _consoleController.ShowCursor();
+
+            userInput = Console.ReadLine() ?? "";
+
+            _consoleController.HideCursor();
+
+            return userInput;
         }
 
         public int GetUserInt()

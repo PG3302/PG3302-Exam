@@ -14,8 +14,6 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
         private readonly UserService _userService = new();
         private readonly UserController _userController = new();
 
-        //private UserModel? _currentUser = new(1, "TestUser", "testUser@Test.com");
-        //private UserModel? _currentUser = new(2, "TestAdmin", "testAdmin@Test.com", true);
         private UserModel? _currentUser = null;
 
         #region MAIN
@@ -139,7 +137,7 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             Console.Clear();
 
             string email;
-            
+
             Console.Write("Welcome :) Please log in." +
                 "\nEmail: ");
 
@@ -149,12 +147,12 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
 
             if (_currentUser == null)
             {
-                
+                CreateUser();
             }
 
             MainMenu();
-
         }
+
         private void LogOutMenu()
         {
             _currentUser = null;
@@ -164,6 +162,13 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
         // Create user
         private void CreateUser()
         {
+            Console.Clear();
+            
+
+
+
+            /*
+            
             Console.Clear();
             Console.Write("Enter the name: ");
             string name = Console.ReadLine();
@@ -191,7 +196,7 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
 
                 // Run the menu with an error message at the top
                 _menuController.RunMenu("Failed to create user. Please try again.", MainMenu);
-            }
+            }*/
         }
 
         #endregion

@@ -136,19 +136,25 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
         {
             Console.Clear();
 
-            string email;
-
-            Console.Write("Welcome :) Please log in." +
+            Console.Write("Welcome :) Please log in, or leave blank to return to main menu." +
                 "\nEmail: ");
 
-            email = _userController.GetUserString();
+            _currentMessage = _userController.GetUserString().ToLower();
 
-            _currentUser = _userService.GetUserByEmail(email);
+            if (_currentMessage.Length < 3)
+            {
+                MainMenu();
+                return;
+            }
+
+            _currentUser = _userService.GetUserByEmail(_currentMessage);
 
             if (_currentUser == null)
             {
                 CreateUser();
             }
+
+            _currentMessage = "";
 
             MainMenu();
         }
@@ -159,44 +165,20 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             MainMenu();
         }
 
-        // Create user
         private void CreateUser()
         {
+            string name;
+
             Console.Clear();
-            
 
+            Console.Write($"{_currentMessage} not found. Please create a new user..." +
+                $"\nName: ");
 
+            name = _userController.GetUserString();
 
-            /*
-            
-            Console.Clear();
-            Console.Write("Enter the name: ");
-            string name = Console.ReadLine();
+            _currentUser = _userService.AddUser(name, _currentMessage ?? "");
 
-            Console.Write("Enter the email: ");
-            string email = Console.ReadLine();
-
-            try
-            {
-                UserModel addedUser = _userService.AddUser(name, email, isAdmin: false);
-
-                _menuController.AddMenu("Back.", MainMenu);
-                _menuController.RunMenu("User added to travelplanner DB: " + addedUser, MainMenu);
-            }
-            catch (Exception ex)
-            {
-                // Handle the exception and display an error message
-                Console.WriteLine($"Failed to create user. Error: {ex.Message}");
-
-                // You can also log the exception if needed
-                Logger.LogError($"Failed to create user. Error: {ex}");
-
-                // Add the "Back" menu to return to the main menu
-                _menuController.AddMenu("Back.", MainMenu);
-
-                // Run the menu with an error message at the top
-                _menuController.RunMenu("Failed to create user. Please try again.", MainMenu);
-            }*/
+            MainMenu();
         }
 
         #endregion

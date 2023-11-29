@@ -6,7 +6,7 @@ namespace TravelPlanner.TravelPlannerApp.Service {
     {
         private readonly UserRepository _userRepository = new();
 
-        public UserModel AddUser(string name, string email, bool isAdmin = true)
+        public UserModel AddUser(string name, string email, bool isAdmin = false)
         {
             UserModel newUser = new(null, name, email, isAdmin);
 
@@ -22,7 +22,7 @@ namespace TravelPlanner.TravelPlannerApp.Service {
 
         public UserModel? GetUserByEmail(string email)
         {
-            return _userRepository.GetUserByEmail(email);
+            return _userRepository.GetUserByEmail(email.ToLower());
         }
     }
 }

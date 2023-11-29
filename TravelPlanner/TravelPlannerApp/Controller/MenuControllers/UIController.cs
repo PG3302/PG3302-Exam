@@ -15,6 +15,8 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
         private readonly UserController _userController = new();
 
         private UserModel? _currentUser = null;
+        private List<Model>? _currentList = null;
+        private string? _currentMessage;
 
         #region MAIN
         public void Start()
@@ -47,10 +49,10 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
 
             if (_currentUser?.IsAdmin ?? false)
             {
-                _menuController.AddMenu("Admin", AdminMenu);
+                _menuController.AddMenu("Admin.", AdminMenu);
             }
 
-            _menuController.AddMenu("Locations.", CapitalListMenu);
+            _menuController.AddMenu("Locations.", FilterCapitalList);
             _menuController.AddMenu("Exit.", ExitConsole);
 
             _menuController.RunMenu($"Welcome to Kristiania Travel Planner {_currentUser?.Name ?? ""} :)", ExitConsole);
@@ -58,25 +60,27 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
         #endregion
 
         #region ADMIN
-
-        private void AdminMenu() // Admin Menu's
+        private void AdminMenu()
         {
-            _menuController.AddMenu("Edit user", AdminEditUser);
-            _menuController.AddMenu("Edit trip", AdminEditTrip);
             _menuController.AddMenu("Back.", MainMenu);
-            _menuController.RunMenu("Welcome, Mr.Admin *brutally tips fedora*", MainMenu);
+            _menuController.AddMenu("Delete User.", DeleteUserMenu);
+            _menuController.RunMenu("Welcome admin. Please select an option.", MainMenu);
         }
 
-        private void AdminEditUser()
+        private void DeleteUserMenu()
         {
             _menuController.AddMenu("Back.", AdminMenu);
-            _menuController.RunMenu("Edit user subpage, to be finished", MainMenu);
+            _menuController.AddList(_userService.GetUserAll(), DeleteUserSubMenu);
+            _menuController.RunMenu("WARNING! Please select a user to delete permanently.", AdminMenu);
         }
 
-        private void AdminEditTrip()
+        private void DeleteUserSubMenu()
         {
-            _menuController.AddMenu("Back.", AdminMenu);
-            _menuController.RunMenu("Edit trip subpage, to be finished", MainMenu);
+            UserModel? deletedUser = (UserModel?)_menuController.GetCurrentModel();
+
+            _userService.DeleteUser(deletedUser?.Id ?? -1);
+
+            MainMenu();
         }
 
         #endregion
@@ -96,11 +100,11 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             CapitalModel? arrivalCapital;
 
             _currentMessage = "Please select departure capital...";
-            CapitalListMenu();
+            FilterCapitalList();
             departureCapital = (CapitalModel?)_menuController.GetCurrentModel();
 
             _currentMessage = "Please select arrival capital...";
-            CapitalListMenu();
+            FilterCapitalList();
             arrivalCapital = (CapitalModel?)_menuController.GetCurrentModel();
 
             if (departureCapital != null || arrivalCapital != null || _currentUser != null)
@@ -110,6 +114,8 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             {
                 Logger.LogError("Wrong value when adding trips. ", new NullReferenceException());
             }
+
+            MainMenu();
 ;       }
 
         private void SeeTripsMenu()
@@ -179,17 +185,7 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
         #endregion
 
         #region LIST MENUS
-        private void CapitalListMenu()
-        {
-            _currentModelType = ModelType.Capital;
-            ListMenu();
-        }
-
-        private List<Model>? _currentList = null;
-        private ModelType? _currentModelType = null;
-        private string? _currentMessage;
-
-        private void ListMenu()
+        private void FilterCapitalList()
         {
             #region MAIN LIST PART
             _menuController.AddMenu("Back.", MainMenu);
@@ -197,36 +193,18 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             //Added due to bug and too little time to fix.
             if (_menuController.GetCurrentChoice() != "Add Trip.")
             {
-                _menuController.AddMenu("Filter", ListMenu, true);
+                _menuController.AddMenu("Filter", FilterCapitalList, true);
             }
 
-            if (_currentModelType == ModelType.Capital)
+            if ((_menuController.GetCurrentChoice() == "Locations.") || (Enum.TryParse<Continent>(_menuController.GetCurrentChoice(), out Continent currentContinent)))
             {
-                if ((_menuController.GetCurrentChoice() == "Locations.") || (Enum.TryParse<Continent>(_menuController.GetCurrentChoice(), out Continent currentContinent)))
-                {
-                    _menuController.AddList(_currentList ?? _capitalService.GetCapitalAll(), MainMenu);
-                } else 
-                {
-                    _menuController.AddList(_currentList ?? _capitalService.GetCapitalAll(), MainMenu, true);
-                }
-            }
-            else if (_currentModelType == ModelType.Trip)
+                _menuController.AddList(_currentList ?? _capitalService.GetCapitalAll(), MainMenu);
+            } else 
             {
-                _menuController.AddList(_currentList ?? _tripService.GetTripAll(), MainMenu);
+                _menuController.AddList(_currentList ?? _capitalService.GetCapitalAll(), MainMenu, true);
             }
-            else if (_currentModelType == ModelType.User)
-            {
-                _menuController.AddList(_currentList ?? _userService.GetUserAll(), MainMenu);
-            }
-            else
-            {
-                Logger.LogError(
-                    "No currentModeType found in list menu.",
-                    new MissingFieldException()
-                );
-            }
-
-            _menuController.RunMenu(_currentMessage ?? $"List of {_currentModelType}s.", MainMenu);
+            
+            _menuController.RunMenu(_currentMessage ?? $"List of capitals.", MainMenu);
 
             if (_menuController.GetCurrentModel() != null)
             {
@@ -235,40 +213,30 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             #endregion
 
             #region SELECT FILTER PART
-            _menuController.AddMenu("Back.", ListMenu);
-            if (_currentModelType == ModelType.Capital)
-            {
-                _menuController.AddMenu("Continent", ListMenu, true);
-            }
-            else if (_currentModelType == ModelType.Trip) { }
-            else if (_currentModelType == ModelType.User) { }
+            _menuController.AddMenu("Back.", FilterCapitalList);
+            _menuController.AddMenu("Continent", FilterCapitalList, true);
 
-            _menuController.RunMenu($"Filter {_currentModelType}.", ListMenu);
+            _menuController.RunMenu($"Filter capital.", FilterCapitalList);
             #endregion
 
             #region FILTER PART
-            _menuController.AddMenu("Back", ListMenu);
+            _menuController.AddMenu("Back", FilterCapitalList);
 
-            if (_currentModelType == ModelType.Capital)
+            //Continent currentContinent;
+
+            foreach (string continent in Enum.GetNames(typeof(Continent)))
             {
-                foreach (string continent in Enum.GetNames(typeof(Continent)))
-                {
-                    _menuController.AddMenu($"{continent}", ListMenu, true);
-                }
-
-                _menuController.RunMenu("Please select continent to filter.", MainMenu);
-
-                if (
-                    Enum.TryParse<Continent>(
-                        _menuController.GetCurrentChoice(),
-                        out Continent currentContinent
-                    )
-                )
-                {
-                    _currentList = _capitalService.GetCapitalByContinent(currentContinent);
-                    ListMenu();
-                }
+                _menuController.AddMenu($"{continent}", FilterCapitalList, true);
             }
+
+            _menuController.RunMenu("Please select continent to filter.", MainMenu);
+
+            if (Enum.TryParse<Continent>(_menuController.GetCurrentChoice(), out currentContinent))
+            {
+                _currentList = _capitalService.GetCapitalByContinent(currentContinent);
+                FilterCapitalList();
+            }
+
             #endregion
         }
         #endregion

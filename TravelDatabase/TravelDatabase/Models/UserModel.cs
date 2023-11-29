@@ -13,7 +13,7 @@
 		}
 
 		public override string ToString() {
-			return $"{Email}: ${Name} " + IsAdmin ?? "(Admin)";
+			return $"{Email}: {Name} -- Admin: {IsAdmin}";
 		}
 	}
 }

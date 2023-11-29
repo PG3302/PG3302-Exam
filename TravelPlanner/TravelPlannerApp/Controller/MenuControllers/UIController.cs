@@ -67,11 +67,17 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             {
                 if (isAdmin)
                 {
-                    _menuController.RunMenu("Welcome to Kristiania Travel Planner, Admin", ExitConsole);
+                    _menuController.RunMenu(
+                        "Welcome to Kristiania Travel Planner, Admin",
+                        ExitConsole
+                    );
                 }
                 else
                 {
-                    _menuController.RunMenu("Welcome to Kristiania Travel Planner, *User Name*", ExitConsole);
+                    _menuController.RunMenu(
+                        "Welcome to Kristiania Travel Planner, *User Name*",
+                        ExitConsole
+                    );
                 }
             }
             else
@@ -126,8 +132,6 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             _menuController.RunMenu("My saved/upcomming trips, to be finished", MainMenu);
         }
 
-
-
         #endregion
 
         #region LOGIN
@@ -162,7 +166,10 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             _menuController.AddMenu("Login", LoginSubPage);
             _menuController.AddMenu("Create user", CreateUser);
             _menuController.AddMenu("Back.", MainMenu);
-            _menuController.RunMenu("You are currently not logged in. Do you wish you log in or create a user?", MainMenu);
+            _menuController.RunMenu(
+                "You are currently not logged in. Do you wish you log in or create a user?",
+                MainMenu
+            );
         }
 
         private void LoginSubPage()
@@ -186,6 +193,7 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             isAdmin = true;
             MainMenu();
         }
+
         private void LogOutMenu()
         {
             isLoggedIn = false;
@@ -247,15 +255,21 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             if (_currentModelType == ModelType.Capital)
             {
                 _menuController.AddList(_currentList ?? _capitalService.GetCapitalAll(), MainMenu);
-            } else if (_currentModelType == ModelType.Trip)
+            }
+            else if (_currentModelType == ModelType.Trip)
             {
                 _menuController.AddList(_currentList ?? _tripService.GetTripAll(), MainMenu);
-            } else if (_currentModelType == ModelType.User)
+            }
+            else if (_currentModelType == ModelType.User)
             {
                 _menuController.AddList(_currentList ?? _userService.GetUserAll(), MainMenu);
-            } else
+            }
+            else
             {
-                Logger.LogError("No currentModeType found in list menu.", new MissingFieldException());
+                Logger.LogError(
+                    "No currentModeType found in list menu.",
+                    new MissingFieldException()
+                );
             }
             #endregion
 
@@ -266,13 +280,9 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             if (_currentModelType == ModelType.Capital)
             {
                 _menuController.AddMenu("Continent", ListMenu, true);
-            } else if (_currentModelType == ModelType.Trip)
-            {
-
-            } else if (_currentModelType == ModelType.User)
-            {
-
             }
+            else if (_currentModelType == ModelType.Trip) { }
+            else if (_currentModelType == ModelType.User) { }
 
             _menuController.RunMenu($"Filter {_currentModelType}.", ListMenu);
             #endregion
@@ -289,7 +299,12 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
 
                 _menuController.RunMenu("Please select continent to filter.", MainMenu);
 
-                if (Enum.TryParse<Continent>(_menuController.GetCurrentChoice(), out Continent currentContinent))
+                if (
+                    Enum.TryParse<Continent>(
+                        _menuController.GetCurrentChoice(),
+                        out Continent currentContinent
+                    )
+                )
                 {
                     _currentList = _capitalService.GetCapitalByContinent(currentContinent);
                     CapitalModel testc = _capitalService.GetCapitalByName("London");

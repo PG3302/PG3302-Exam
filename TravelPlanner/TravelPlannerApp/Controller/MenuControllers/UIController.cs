@@ -138,9 +138,9 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
             Console.Write("Welcome :) Please log in, or leave blank to return to main menu." +
                 "\nEmail: ");
 
-            _currentMessage = _userController.GetUserString().ToLower();
+            _currentMessage = _userController.GetUserString(true).ToLower();
 
-            if (_currentMessage.Length > 3)
+            if (_currentMessage.Length > 0)
             {
                 _currentUser = _userService.GetUserByEmail(_currentMessage);
 
@@ -182,12 +182,6 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
         private void CapitalListMenu()
         {
             _currentModelType = ModelType.Capital;
-            ListMenu();
-        }
-
-        private void TripListMenu()
-        {
-            _currentModelType = ModelType.Trip;
             ListMenu();
         }
 

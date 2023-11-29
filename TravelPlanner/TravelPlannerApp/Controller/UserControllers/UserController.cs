@@ -33,7 +33,7 @@ namespace TravelPlanner.TravelPlannerApp.Controller.UserControllers
             }
         }
 
-        public string GetUserString()
+        public string GetUserString(bool allowEmpty = false)
         {
             string userInput = "";
 
@@ -42,7 +42,10 @@ namespace TravelPlanner.TravelPlannerApp.Controller.UserControllers
             {
                 userInput = Console.ReadLine() ?? "";
 
-                if (userInput.Length < minNameLength)
+                if (allowEmpty && userInput.Length == 0)
+                {
+                    break;
+                } else if (userInput.Length < minNameLength!)
                 {
                     Console.Write($"Value too small. Min value {minNameLength}. Please provide a valid value: ");
                 }

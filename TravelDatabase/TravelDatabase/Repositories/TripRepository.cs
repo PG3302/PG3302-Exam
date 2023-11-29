@@ -23,13 +23,13 @@ namespace TravelDatabase.Repositories
                     trip.DepartureCapitalId = newTrip.StartingCapital.Id.Value;
                     trip.ArrivalCapitalId = newTrip.DestinationCapital.Id.Value;
                 }
-                Logger.LogInfo($"Attempting to add trip: {trip}");
+                Logger.LogInfo($"Attempting to add trip: {newTrip}");
 
                 travelDbContext.Add(trip);
-                Logger.LogInfo($"Trip: {trip} added to db");
+                Logger.LogInfo($"Trip: {newTrip} added to db");
 
                 travelDbContext.SaveChanges();
-                return MapTrip(trip);
+                return GetTripById(trip.Id);
             }
         }
 
@@ -60,7 +60,12 @@ namespace TravelDatabase.Repositories
                 }
                 Logger.LogInfo("Attempting to get Trip by Id: " + tripId);
 
-                Trip? trip = travelDbContext.Trip.Find(tripId);
+                Trip? trip = travelDbContext
+                    .Trip
+                    .Include(t => t.User)
+                    .Include(t => t.ArrivalCapital)
+                    .Include(t => t.DepartureCapital)
+                    .First(x => x.Id == tripId);
                 return MapTrip(trip);
             }
         }

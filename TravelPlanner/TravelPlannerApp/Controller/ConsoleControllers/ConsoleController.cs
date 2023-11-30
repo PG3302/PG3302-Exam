@@ -17,5 +17,10 @@
         {
             Console.CursorVisible = false;
         }
+
+        internal void MoveCursor(int left, int top)
+        {
+            Console.SetCursorPosition(left, Console.CursorTop - top);
+        }
     }
 }

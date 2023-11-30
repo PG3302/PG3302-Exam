@@ -1,6 +1,7 @@
 ﻿using TravelDatabase.Data.DataType;
 using TravelDatabase.Data.Log;
 using TravelDatabase.Models;
+using TravelPlanner.TravelPlannerApp.Controller.ConsoleControllers;
 using TravelPlanner.TravelPlannerApp.Controller.UserControllers;
 using TravelPlanner.TravelPlannerApp.Service;
 
@@ -13,6 +14,7 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
         private readonly TripService _tripService = new();
         private readonly UserService _userService = new();
         private readonly UserController _userController = new();
+        private readonly ConsoleController _consoleController = new();
 
         private UserModel? _currentUser = null;
         private List<Model>? _currentList = null;
@@ -73,8 +75,22 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
 
         private void DeleteUserMenu()
         {
+            List<Model> allUsers = _userService.GetUserAll();
+            List<Model> standardUsers = [];
+            UserModel? currentUser;
+
+            for (int i = 0; i < allUsers.Count; i++)
+            {
+                currentUser = (UserModel)allUsers[i];
+
+                if (!currentUser.IsAdmin)
+                {
+                    standardUsers.Add(allUsers[i]);
+                }
+            }
+
             _menuController.AddMenu("Back", AdminMenu);
-            _menuController.AddList(_userService.GetUserAll(), DeleteUserSubMenu);
+            _menuController.AddList(standardUsers, DeleteUserSubMenu);
             _menuController.RunMenu(
                 "WARNING! Please select a user to delete permanently.",
                 AdminMenu
@@ -114,6 +130,8 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
 
             if (name == "")
             {
+                _consoleController.MoveCursor(6, 1);
+                Console.WriteLine(oldUser?.Name);
                 name = null;
             }
 

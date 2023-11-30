@@ -135,27 +135,28 @@ namespace TravelPlanner.TravelPlannerApp.Controller.MenuControllers
                 name = null;
             }
 
-            Console.Write(
-                $"Old value {oldUser?.IsAdmin}. Please select admin access (1 = admin, 0 = normal user)."
-                    + $"\nAdmin: "
-            );
+            if (oldUser?.Id != _currentUser?.Id)
+            {
+                Console.Write($"Old value {oldUser?.IsAdmin}. Please select admin access (1 = admin, 0 = normal user)." +
+                    $"\nAdmin: ");
 
-            adminResponse = _userController.GetUserIntMinMax(0, 1);
+                adminResponse = _userController.GetUserIntMinMax(0, 1);
 
-            if (adminResponse == 0)
-            {
-                admin = false;
-            }
-            else if (adminResponse == 1)
-            {
-                admin = true;
-            }
-            else
-            {
-                Logger.LogError(
-                    "Invalid number for edit user admin value. ",
-                    new NotSupportedException()
-                );
+                if (adminResponse == 0)
+                {
+                    admin = false;
+                }
+                else if (adminResponse == 1)
+                {
+                    admin = true;
+                }
+                else
+                {
+                    Logger.LogError(
+                        "Invalid number for edit user admin value. ",
+                        new NotSupportedException()
+                    );
+                }
             }
 
             _userService.EditUser(
